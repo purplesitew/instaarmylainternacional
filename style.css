@@ -5,42 +5,54 @@
 
 html,
 body {
+  margin: 0;
+  padding: 0;
   width: 100%;
   min-height: 100%;
-  margin: 0;
 }
-
 
 body {
   min-height: 100vh;
   min-height: 100dvh;
   font-family: Arial, sans-serif;
   background-color: #180b24;
-  background-image: url("./fondo.jpg");
-  background-size: contain;
-  background-position: center top;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
 }
 
+/* Fondo adaptable */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image: url("./fondo.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* Imagen de inicio */
 #pantalla-inicio {
   position: fixed;
   inset: 0;
   z-index: 9999;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   height: 100dvh;
-  background: #000;
+  background: #180b24;
+  overflow: hidden;
 }
 
 #pantalla-inicio img {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
+  object-position: center;
 }
 
+/* Aplicación */
 #aplicacion {
+  position: relative;
   min-height: 100vh;
   min-height: 100dvh;
   width: 100%;
