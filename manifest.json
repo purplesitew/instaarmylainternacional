@@ -1,0 +1,12 @@
+
+{
+  "name": "Insta Army la internacional",
+  "short_name": "Insta Army",
+  "description": "Aplicación oficial de la comunidad Insta Army",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#180b24",
+  "theme_color": "#6a0dad"
+}
