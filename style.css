@@ -1,0 +1,51 @@
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+}
+
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  font-family: Arial, sans-serif;
+  background-color: #180b24;
+  background-image: url("./fondo.jpg");
+  background-size: contain;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+#pantalla-inicio {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  background: #000;
+}
+
+#pantalla-inicio img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+#aplicacion {
+  min-height: 100vh;
+  min-height: 100dvh;
+  width: 100%;
+}
+
+.oculta {
+  display: none !important;
+}
