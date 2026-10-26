@@ -1,5 +1,5 @@
 
-const CACHE_NAME = "insta-army-internacional-v4";
+const CACHE_NAME = "insta-army-internacional-v5";
 
 const ARCHIVOS_INICIALES = [
     "./",
