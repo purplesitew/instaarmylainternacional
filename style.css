@@ -61,3 +61,27 @@ body::before {
 .oculta {
   display: none !important;
 }
+
+/* Botón de descarga: esquina superior izquierda */
+.boton-instalar {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 10000;
+  width: 65px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Imagen del botón */
+.boton-instalar img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
