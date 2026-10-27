@@ -15,7 +15,7 @@ const ARCHIVOS_INICIALES = [
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then((cache) => cache.addAll(ARCHIVOS))
+      .then((cache) => cache.addAll(ARCHIVOS_INICIALES))
       .then(() => self.skipWaiting())
   );
 });
