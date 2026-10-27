@@ -1,5 +1,6 @@
 
-const CACHE_NAME = "insta-army-internacional-v5";
+const CACHE_NAME = "insta-army-internacional-v6";
+
 
 const ARCHIVOS_INICIALES = [
     "./",
@@ -8,8 +9,11 @@ const ARCHIVOS_INICIALES = [
     "./style.css",
     "./app.js",
     "./inicio.jpg",
-    "./fondo.jpg"
+    "./fondo.jpg",
+    "./botondescarga.png",
+    "./btnddescarga.mp3"
 ];
+
 
 // Instalar la aplicación y guardar sus archivos básicos
 self.addEventListener("install", (event) => {
