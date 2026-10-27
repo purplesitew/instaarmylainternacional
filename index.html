@@ -21,7 +21,31 @@
 </button>
 
 <audio id="sonidoDescarga" src="./btnddescarga.mp3" preload="auto"></audio>
-    <!-- Aquí construiremos la aplicación -->
+
+<section id="menu-credenciales">
+  <h1>INSTA ARMY</h1>
+  <p>Elige tu credencial favorita 💜</p>
+
+  <div id="lista-credenciales" class="lista-credenciales">
+    <!-- Aquí aparecerán las 10 plantillas -->
+  </div>
+</section>
+
+<section id="creador-credencial" class="oculta">
+  <!-- Aquí construiremos después el creador de credenciales -->
+</section>
+
+<div id="vista-previa" class="modal-vista-previa oculta">
+  <div class="contenido-vista-previa">
+    <img id="imagen-vista-previa" src="" alt="Vista previa de la credencial">
+
+    <div class="botones-vista-previa">
+      <button id="btnCrearCredencial" type="button">CREAR</button>
+      <button id="btnCerrarVista" type="button">CERRAR</button>
+    </div>
+  </div>
+</div>
+
   </main>
 
  <script src="./app.js"></script>
