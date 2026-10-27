@@ -1,5 +1,5 @@
 
-const CACHE_NAME = "insta-army-internacional-v7";
+const CACHE_NAME = "insta-army-internacional-v8";
 
 
 const ARCHIVOS_INICIALES = [
@@ -11,7 +11,8 @@ const ARCHIVOS_INICIALES = [
     "./inicio.jpg",
     "./fondo.jpg",
     "./botondescarga.png",
-    "./btnddescarga.mp3"
+    "./btnddescarga.mp3",
+    "./icono.png"
 ];
 
 
