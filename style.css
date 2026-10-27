@@ -63,12 +63,15 @@ body::before {
 }
 
 /* Botón de descarga: esquina superior izquierda */
+
+/* Botón de descarga junto a las plantillas */
 .boton-instalar {
   position: fixed;
-  top: 12px;
-  left: 12px;
+  top: 50%;
+  left: 18px;
+  transform: translateY(-50%);
   z-index: 10000;
-  width: 110px;
+  width: 130px;
   margin: 0;
   padding: 0;
   border: none;
@@ -76,6 +79,7 @@ body::before {
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
+
 
 /* Imagen del botón */
 .boton-instalar img {
