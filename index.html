@@ -24,6 +24,17 @@
     <!-- Aquí construiremos la aplicación -->
   </main>
 
-  <script src="./app.js"></script>
+ <script src="./app.js"></script>
+
+<script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("./sw.js")
+        .then(() => console.log("Insta Army: aplicación preparada"))
+        .catch((error) => console.error("Error al registrar:", error));
+    });
+  }
+</script>
+
 </body>
 </html>
