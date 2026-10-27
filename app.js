@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", () => {
   const pantallaInicio = document.getElementById("pantalla-inicio");
   const aplicacion = document.getElementById("aplicacion");
@@ -7,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (pantallaInicio) {
       pantallaInicio.style.display = "none";
     }
+
     if (aplicacion) {
       aplicacion.classList.remove("oculta");
     }
@@ -58,7 +58,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let plantillaSeleccionada = null;
 
-  if (listaCredenciales) {
+  if (
+    listaCredenciales &&
+    vistaPrevia &&
+    imagenVistaPrevia &&
+    btnCerrarVista &&
+    btnCrearCredencial
+  ) {
     for (let i = 1; i <= 10; i++) {
       const imagen = document.createElement("img");
       imagen.src = `./B${i}.jpeg`;
@@ -73,17 +79,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       listaCredenciales.appendChild(imagen);
     }
-  }
 
-  if (btnCerrarVista) {
     btnCerrarVista.addEventListener("click", () => {
       vistaPrevia.classList.add("oculta");
       imagenVistaPrevia.src = "";
       plantillaSeleccionada = null;
     });
-  }
 
-  if (btnCrearCredencial) {
     btnCrearCredencial.addEventListener("click", () => {
       if (!plantillaSeleccionada) {
         alert("Primero selecciona una plantilla.");
@@ -93,11 +95,4 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("Plantilla seleccionada: " + plantillaSeleccionada);
     });
   }
-});
-
-  window.addEventListener("appinstalled", () => {
-    if (botonInstalar) {
-      botonInstalar.style.display = "none";
-    }
-  });
 });
