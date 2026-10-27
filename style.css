@@ -115,13 +115,16 @@ body::before {
 }
 
 /* Galería de las 10 plantillas */
+
 .lista-credenciales {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 14px;
   width: min(100%, 900px);
   align-items: center;
+  margin-left: 145px;
 }
+
 
 .plantilla-credencial {
   display: block;
