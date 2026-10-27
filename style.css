@@ -85,3 +85,128 @@ body::before {
   object-fit: contain;
 }
 
+/* Menú de plantillas */
+#menu-credenciales {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+}
+
+#menu-credenciales h1 {
+  margin: 0 0 8px;
+  font-size: clamp(24px, 4vw, 38px);
+  text-shadow: 0 0 12px #a855f7;
+}
+
+#menu-credenciales p {
+  margin: 0 0 24px;
+  font-size: 16px;
+}
+
+/* Galería de las 10 plantillas */
+.lista-credenciales {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+  width: min(100%, 900px);
+  align-items: center;
+}
+
+.plantilla-credencial {
+  display: block;
+  width: 100%;
+  max-height: 220px;
+  object-fit: contain;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  filter: drop-shadow(0 0 6px rgba(192, 132, 252, 0.5));
+}
+
+.plantilla-credencial:hover {
+  transform: scale(1.05);
+}
+
+/* Ventana ampliada */
+.modal-vista-previa {
+  position: fixed;
+  inset: 0;
+  z-index: 20000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background: rgba(12, 4, 20, 0.92);
+}
+
+.modal-vista-previa.oculta {
+  display: none !important;
+}
+
+.contenido-vista-previa {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  max-width: 95vw;
+  max-height: 95dvh;
+}
+
+#imagen-vista-previa {
+  display: block;
+  max-width: 90vw;
+  max-height: 75dvh;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+.botones-vista-previa {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.botones-vista-previa button {
+  min-width: 120px;
+  padding: 13px 24px;
+  border: 2px solid #d8b4fe;
+  border-radius: 30px;
+  background: #6a0dad;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.botones-vista-previa button:hover {
+  background: #8b2bd1;
+}
+
+/* Ajustes para celulares */
+@media (max-width: 600px) {
+  #menu-credenciales {
+    padding: 20px 12px;
+  }
+
+  .lista-credenciales {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .plantilla-credencial {
+    max-height: 200px;
+  }
+
+  .botones-vista-previa button {
+    min-width: 110px;
+  }
+}
+
