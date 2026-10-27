@@ -2,6 +2,7 @@
 const CACHE_NAME = "insta-army-internacional-v11";
 
 
+
 const ARCHIVOS_INICIALES = [
     "./",
     "./index.html",
@@ -12,8 +13,19 @@ const ARCHIVOS_INICIALES = [
     "./fondo.jpg",
     "./botondescarga.png",
     "./btnddescarga.mp3",
-    "./icono.png"
+    "./icono.png",
+    "./B1.jpeg",
+    "./B2.jpeg",
+    "./B3.jpeg",
+    "./B4.jpeg",
+    "./B5.jpeg",
+    "./B6.jpeg",
+    "./B7.jpeg",
+    "./B8.jpeg",
+    "./B9.jpeg",
+    "./B10.jpeg"
 ];
+
 
 
 // Instalar la aplicación y guardar sus archivos básicos
