@@ -201,17 +201,17 @@ left: 50px;
 
 /* Ajustes para celulares */
 @media (max-width: 600px) {
-  #menu-credenciales {
-    padding: 20px 12px;
-  }
+ #menu-credenciales {
+  padding: 50vh 12px 20px;
+}
 
 
-  .lista-credenciales {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 12px;
-    margin-left: 0;
-    width: 100%;
-  }
+ .lista-credenciales {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  margin-left: 0;
+  width: 100%;
+}
 
 
   .plantilla-credencial {
