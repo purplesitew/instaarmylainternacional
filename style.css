@@ -120,12 +120,13 @@ left: 50px;
 
 .lista-credenciales {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
   width: min(100%, 900px);
   align-items: center;
-  margin-left: 145px;
+  margin-left: 0;
 }
+
 
 
 .plantilla-credencial {
