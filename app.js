@@ -14,6 +14,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Botón de instalación
   const botonInstalar = document.getElementById("btnInstalar");
+
+
+  // Ocultar el botón si la PWA ya está instalada
+  const modoAplicacionInstalada =
+    window.matchMedia("(display-mode: standalone)").matches ||
+    window.navigator.standalone === true;
+
+  if (modoAplicacionInstalada && botonInstalar) {
+    botonInstalar.style.display = "none";
+  }
+
   const sonidoDescarga = document.getElementById("sonidoDescarga");
 
   let instalacionPendiente = null;
