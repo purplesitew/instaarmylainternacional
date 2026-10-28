@@ -203,10 +203,14 @@ body::before {
     padding: 20px 12px;
   }
 
+
   .lista-credenciales {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;
+    margin-left: 0;
+    width: 100%;
   }
+
 
   .plantilla-credencial {
     max-height: 200px;
