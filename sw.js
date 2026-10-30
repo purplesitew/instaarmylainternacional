@@ -1,5 +1,5 @@
 
-const CACHE_NAME = "insta-army-internacional-v19";
+const CACHE_NAME = "insta-army-internacional-v20";
 
 
 
