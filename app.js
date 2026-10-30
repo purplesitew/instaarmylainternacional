@@ -68,6 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnCrearCredencial = document.getElementById("btnCrearCredencial");
 
   let plantillaSeleccionada = null;
+  const credencialesVistas = new Set();
 
   if (
     listaCredenciales &&
@@ -76,17 +77,29 @@ document.addEventListener("DOMContentLoaded", () => {
     btnCerrarVista &&
     btnCrearCredencial
   ) {
+    btnCrearCredencial.style.display = "none";
     for (let i = 1; i <= 10; i++) {
       const imagen = document.createElement("img");
       imagen.src = `./B${i}.jpeg`;
       imagen.alt = `Plantilla de credencial ${i}`;
       imagen.className = "plantilla-credencial";
 
-      imagen.addEventListener("click", () => {
-        plantillaSeleccionada = `B${i}.jpeg`;
-        imagenVistaPrevia.src = `./${plantillaSeleccionada}`;
-        vistaPrevia.classList.remove("oculta");
-      });
+     
+imagen.addEventListener("click", () => {
+  plantillaSeleccionada = `B${i}.jpeg`;
+
+  // Registrar que esta credencial ya fue vista
+  credencialesVistas.add(i);
+
+  // Mostrar CREAR solamente después de revisar las 10
+  if (credencialesVistas.size === 10) {
+    btnCrearCredencial.style.display = "block";
+  }
+
+  imagenVistaPrevia.src = `./${plantillaSeleccionada}`;
+  vistaPrevia.classList.remove("oculta");
+});
+
 
       listaCredenciales.appendChild(imagen);
     }
