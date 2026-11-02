@@ -224,3 +224,141 @@ transform: translate(-50%, -50%);
   }
 }
 
+
+/* ===================================
+   FORMULARIO DE CREDENCIALES
+=================================== */
+
+#creador-credencial {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 35px 15px;
+  color: white;
+}
+
+.formulario-contenedor {
+  width: min(100%, 950px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(130px, 0.8fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.formulario-datos,
+.formulario-vista-credencial {
+  padding: 20px;
+  border: 1px solid #b56be8;
+  border-radius: 18px;
+  background: rgba(24, 11, 36, 0.92);
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.25);
+}
+
+.formulario-datos h2 {
+  text-align: center;
+  font-size: 22px;
+  color: #e9d5ff;
+}
+
+.formulario-datos h3,
+.formulario-vista-credencial h3 {
+  font-size: 15px;
+  color: #e9d5ff;
+}
+
+#formularioRegistro {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#formularioRegistro > label {
+  font-weight: bold;
+}
+
+#formularioRegistro input[type="text"],
+#formularioRegistro input[type="tel"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #c084fc;
+  border-radius: 9px;
+  background: #fff;
+  color: #24102f;
+  font-size: 15px;
+}
+
+#formularioRegistro small {
+  color: #e9d5ff;
+  line-height: 1.5;
+  font-size: 12px;
+}
+
+#formularioRegistro label:has(input[type="radio"]) {
+  font-size: 14px;
+  font-weight: normal;
+}
+
+#formularioRegistro button {
+  margin-top: 12px;
+  padding: 13px;
+  border: none;
+  border-radius: 25px;
+  background: #8b2bd1;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.formulario-vista-credencial {
+  text-align: center;
+}
+
+#miniatura-credencial {
+  display: block;
+  width: 100%;
+  max-height: 280px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+/* Adaptación para celulares */
+@media (max-width: 600px) {
+  #creador-credencial {
+    padding: 15px 8px;
+  }
+
+  .formulario-contenedor {
+    grid-template-columns: minmax(0, 1.5fr) minmax(105px, 0.8fr);
+    gap: 8px;
+  }
+
+  .formulario-datos,
+  .formulario-vista-credencial {
+    padding: 10px;
+  }
+
+  .formulario-datos h2 {
+    font-size: 17px;
+  }
+
+  .formulario-datos h3,
+  .formulario-vista-credencial h3 {
+    font-size: 12px;
+  }
+
+  #formularioRegistro input[type="text"],
+  #formularioRegistro input[type="tel"] {
+    padding: 9px 6px;
+    font-size: 13px;
+  }
+
+  #formularioRegistro small {
+    font-size: 10px;
+  }
+
+  #miniatura-credencial {
+    max-height: 190px;
+  }
+}
