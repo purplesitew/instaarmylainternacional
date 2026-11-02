@@ -43,7 +43,111 @@
 </section>
 
 <section id="creador-credencial" class="oculta">
-  <!-- Aquí construiremos después el creador de credenciales -->
+
+  <div class="formulario-contenedor">
+
+    <div class="formulario-datos">
+
+      <h2>CREA TU CREDENCIAL 💜</h2>
+
+      <form id="formularioRegistro">
+
+        <label for="nombreArmy">Nombre</label>
+        <input
+          type="text"
+          id="nombreArmy"
+          required
+          placeholder="Escribe tu nombre"
+        >
+
+        <label for="paisArmy">País</label>
+        <input
+          type="text"
+          id="paisArmy"
+          required
+          placeholder="Escribe tu país"
+        >
+
+        <label for="biasArmy">Bias</label>
+        <input
+          type="text"
+          id="biasArmy"
+          required
+          placeholder="Escribe tu Bias"
+        >
+
+        <label for="whatsappArmy">WhatsApp (obligatorio)</label>
+        <input
+          type="tel"
+          id="whatsappArmy"
+          required
+          placeholder="Ingresa tu número de WhatsApp"
+        >
+
+        <small>
+          Tu número de WhatsApp será utilizado para contactarte
+          en caso de que resultes ganadora de alguno de nuestros
+          sorteos de Insta Army. Es importante que ingreses un
+          número activo para que podamos darte aviso y puedas
+          reclamar tu premio. 💜
+        </small>
+
+        <h3>¿Ya tienes una credencial de Insta Army?</h3>
+
+        <label>
+          <input
+            type="radio"
+            name="credencialAnterior"
+            value="si"
+            required
+          >
+          Sí, ya tengo una credencial.
+        </label>
+
+        <label>
+          <input
+            type="radio"
+            name="credencialAnterior"
+            value="no"
+            required
+          >
+          No, quiero obtener mi primera credencial.
+        </label>
+
+        <div id="campoCodigoAnterior" class="oculta">
+
+          <label for="codigoAnterior">Inserta tu código</label>
+
+          <input
+            type="text"
+            id="codigoAnterior"
+            placeholder="Ejemplo: A125"
+          >
+
+        </div>
+
+        <button type="submit">
+          CONTINUAR
+        </button>
+
+      </form>
+
+    </div>
+
+    <div class="formulario-vista-credencial">
+
+      <h3>Tu plantilla elegida</h3>
+
+      <img
+        id="miniatura-credencial"
+        src=""
+        alt="Plantilla de credencial seleccionada"
+      >
+
+    </div>
+
+  </div>
+
 </section>
 
 <div id="vista-previa" class="modal-vista-previa oculta">
