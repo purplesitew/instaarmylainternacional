@@ -110,13 +110,51 @@ imagen.addEventListener("click", () => {
       plantillaSeleccionada = null;
     });
 
-    btnCrearCredencial.addEventListener("click", () => {
-      if (!plantillaSeleccionada) {
-        alert("Primero selecciona una plantilla.");
-        return;
-      }
+  btnCrearCredencial.addEventListener("click", () => {
+  if (!plantillaSeleccionada) {
+    alert("Primero selecciona una plantilla.");
+    return;
+  }
 
-      alert("Plantilla seleccionada: " + plantillaSeleccionada);
-    });
+  // Mostrar la plantilla elegida en pequeño
+  const miniatura = document.getElementById("miniatura-credencial");
+  miniatura.src = `./${plantillaSeleccionada}`;
+
+  // Ocultar el menú y la vista previa
+  document.getElementById("menu-credenciales").classList.add("oculta");
+  vistaPrevia.classList.add("oculta");
+
+  // Mostrar el formulario
+  document.getElementById("creador-credencial").classList.remove("oculta");
+});
+
+// Mostrar u ocultar el campo del código anterior
+const opcionesCredencial = document.querySelectorAll(
+  'input[name="credencialAnterior"]'
+);
+
+opcionesCredencial.forEach((opcion) => {
+  opcion.addEventListener("change", () => {
+    const campoCodigo = document.getElementById("campoCodigoAnterior");
+    const codigoAnterior = document.getElementById("codigoAnterior");
+
+    if (opcion.value === "si" && opcion.checked) {
+      campoCodigo.classList.remove("oculta");
+      codigoAnterior.required = true;
+    }
+
+    if (opcion.value === "no" && opcion.checked) {
+      campoCodigo.classList.add("oculta");
+      codigoAnterior.required = false;
+      codigoAnterior.value = "";
+    }
+  });
+});
+
+// Evitar que el formulario se envíe antes de conectarlo con Firebase
+document.getElementById("formularioRegistro").addEventListener("submit", (evento) => {
+  evento.preventDefault();
+  alert("¡Formulario preparado! Próximamente conectaremos el registro.");
+});
   }
 });
