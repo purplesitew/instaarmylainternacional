@@ -191,10 +191,60 @@ opcionesCredencial.forEach((opcion) => {
   });
 });
 
-// Evitar que el formulario se envíe antes de conectarlo con Firebase
-document.getElementById("formularioRegistro").addEventListener("submit", (evento) => {
-  evento.preventDefault();
-  alert("¡Formulario preparado! Próximamente conectaremos el registro.");
-});
+// ==========================================
+// REGISTRO DE PARTICIPANTES EN FIREBASE
+// ==========================================
+
+const formularioRegistro = document.getElementById("formularioRegistro");
+
+if (formularioRegistro) {
+  formularioRegistro.addEventListener("submit", async (evento) => {
+    evento.preventDefault();
+
+    const nombre = document.getElementById("nombreArmy").value.trim();
+    const pais = document.getElementById("paisArmy").value.trim();
+    const bias = document.getElementById("biasArmy").value.trim();
+    const whatsapp = document.getElementById("whatsappArmy").value.trim();
+
+    const opcionCredencial = document.querySelector(
+      'input[name="credencialAnterior"]:checked'
+    );
+
+    if (!opcionCredencial) {
+      alert("Selecciona si ya tienes una credencial.");
+      return;
+    }
+
+    if (!nombre || !pais || !bias || !whatsapp) {
+      alert("Completa todos los campos.");
+      return;
+    }
+
+    if (!auth.currentUser) {
+      alert("Espera un momento mientras conectamos con Firebase.");
+      return;
+    }
+
+    if (opcionCredencial.value === "si") {
+      const codigoAnterior = document
+        .getElementById("codigoAnterior")
+        .value.trim().toUpperCase();
+
+      if (!codigoAnterior) {
+        alert("Escribe tu código de credencial.");
+        return;
+      }
+
+      alert(
+        "Tus datos están preparados. La validación del código anterior se activará en el siguiente paso."
+      );
+      return;
+    }
+
+    alert(
+      "Tus datos están preparados. La asignación segura de códigos se activará en el siguiente paso."
+    );
+  });
+}
   }
 });
