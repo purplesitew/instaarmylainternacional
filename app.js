@@ -1,3 +1,40 @@
+// ==========================================
+// CONEXIÓN CON FIREBASE
+// ==========================================
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
+
+import {
+  getFirestore
+} from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
+
+import {
+  getAuth,
+  signInAnonymously
+} from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD2TlTv2885-AGozRe-I4zXGd42Sy1hWoQ",
+  authDomain: "insta-army-credenciales.firebaseapp.com",
+  projectId: "insta-army-credenciales",
+  storageBucket: "insta-army-credenciales.firebasestorage.app",
+  messagingSenderId: "530395959869",
+  appId: "1:530395959869:web:6c32dc7f0838ad4e271054",
+  measurementId: "G-2LMH8Q5TJ0"
+};
+
+const firebaseApp = initializeApp(firebaseConfig);
+const db = getFirestore(firebaseApp);
+const auth = getAuth(firebaseApp);
+
+// Iniciar sesión anónima
+signInAnonymously(auth)
+  .then(() => {
+    console.log("Insta Army: conexión con Firebase establecida 💜");
+  })
+  .catch((error) => {
+    console.error("Error al conectar con Firebase:", error);
+  });
 document.addEventListener("DOMContentLoaded", () => {
   const pantallaInicio = document.getElementById("pantalla-inicio");
   const aplicacion = document.getElementById("aplicacion");
