@@ -31,12 +31,13 @@ const db = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
 
 // Iniciar sesión anónima
-signInAnonymously(auth)
+const authReady = signInAnonymously(auth)
   .then(() => {
     console.log("Insta Army: conexión con Firebase establecida 💜");
   })
   .catch((error) => {
     console.error("Error al conectar con Firebase:", error);
+    throw error;
   });
 document.addEventListener("DOMContentLoaded", () => {
   const pantallaInicio = document.getElementById("pantalla-inicio");
