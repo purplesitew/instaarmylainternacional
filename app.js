@@ -283,7 +283,9 @@ if (formularioRegistro) {
         );
       }
 
-     if (resultado.mensaje) {
+ if (resultado.registroExistente) {
+  alert(resultado.mensaje);
+} else if (resultado.mensaje) {
   alert(
     `${resultado.mensaje}\n\nSiguiente código disponible: ${resultado.siguienteCodigo}`
   );
