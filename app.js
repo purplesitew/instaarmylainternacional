@@ -283,9 +283,15 @@ if (formularioRegistro) {
         );
       }
 
-      alert(
-        `¡Tus datos se registraron correctamente! 💜\n\nTu código es: ${resultado.codigo}`
-      );
+     if (resultado.mensaje) {
+  alert(
+    `${resultado.mensaje}\n\nSiguiente código disponible: ${resultado.siguienteCodigo}`
+  );
+} else {
+  alert(
+    `¡Tus datos se registraron correctamente! 💜\n\nTu código es: ${resultado.codigo}`
+  );
+}
 
     } catch (error) {
       console.error("Error al registrar:", error);
