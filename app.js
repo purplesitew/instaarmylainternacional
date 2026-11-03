@@ -263,7 +263,8 @@ if (formularioRegistro) {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${idToken}`
           },
-          body: JSON.stringify({
+         body: JSON.stringify({
+               modo: "prueba",
             nombre,
             pais,
             bias,
