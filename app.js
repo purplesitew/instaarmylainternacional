@@ -263,15 +263,14 @@ if (formularioRegistro) {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${idToken}`
           },
-         body: JSON.stringify({
-               modo: "prueba",
-            nombre,
-            pais,
-            bias,
-            whatsapp,
-            tipo,
-            codigoAnterior
-          })
+       body: JSON.stringify({
+  nombre,
+  pais,
+  bias,
+  whatsapp,
+  tipo,
+  codigoAnterior
+})
         }
       );
 
