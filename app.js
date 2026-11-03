@@ -192,6 +192,7 @@ opcionesCredencial.forEach((opcion) => {
   });
 });
 
+
 // ==========================================
 // REGISTRO DE PARTICIPANTES EN FIREBASE
 // ==========================================
@@ -201,6 +202,10 @@ const formularioRegistro = document.getElementById("formularioRegistro");
 if (formularioRegistro) {
   formularioRegistro.addEventListener("submit", async (evento) => {
     evento.preventDefault();
+
+    const botonContinuar = formularioRegistro.querySelector(
+      'button[type="submit"]'
+    );
 
     const nombre = document.getElementById("nombreArmy").value.trim();
     const pais = document.getElementById("paisArmy").value.trim();
@@ -221,13 +226,12 @@ if (formularioRegistro) {
       return;
     }
 
-    if (!auth.currentUser) {
-      alert("Espera un momento mientras conectamos con Firebase.");
-      return;
-    }
+    let tipo = "nuevo";
+    let codigoAnterior = "";
 
     if (opcionCredencial.value === "si") {
-      const codigoAnterior = document
+      tipo = "anterior";
+      codigoAnterior = document
         .getElementById("codigoAnterior")
         .value.trim().toUpperCase();
 
@@ -235,17 +239,62 @@ if (formularioRegistro) {
         alert("Escribe tu código de credencial.");
         return;
       }
-
-      alert(
-        "Tus datos están preparados. La validación del código anterior se activará en el siguiente paso."
-      );
-      return;
     }
 
-    alert(
-      "Tus datos están preparados. La asignación segura de códigos se activará en el siguiente paso."
-    );
+    try {
+      botonContinuar.disabled = true;
+      botonContinuar.textContent = "ENVIANDO...";
+
+      await authReady;
+
+      const usuario = auth.currentUser;
+
+      if (!usuario) {
+        throw new Error("No se pudo iniciar tu sesión.");
+      }
+
+      const idToken = await usuario.getIdToken();
+
+      const respuesta = await fetch(
+        "https://instaarmy-registros.armyinsta80.workers.dev/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${idToken}`
+          },
+          body: JSON.stringify({
+            nombre,
+            pais,
+            bias,
+            whatsapp,
+            tipo,
+            codigoAnterior
+          })
+        }
+      );
+
+      const resultado = await respuesta.json();
+
+      if (!respuesta.ok || !resultado.ok) {
+        throw new Error(
+          resultado.error || "No se pudo completar el registro."
+        );
+      }
+
+      alert(
+        `¡Tus datos se registraron correctamente! 💜\n\nTu código es: ${resultado.codigo}`
+      );
+
+    } catch (error) {
+      console.error("Error al registrar:", error);
+      alert(error.message || "Ocurrió un error al enviar tus datos.");
+    } finally {
+      botonContinuar.disabled = false;
+      botonContinuar.textContent = "CONTINUAR";
+    }
   });
 }
+
   }
 });
