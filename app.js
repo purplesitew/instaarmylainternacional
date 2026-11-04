@@ -39,6 +39,91 @@ const authReady = signInAnonymously(auth)
     console.error("Error al conectar con Firebase:", error);
     throw error;
   });
+
+// ==========================================
+// GENERAR CREDENCIAL B1 CON LOS DATOS
+// ==========================================
+
+async function mostrarCredencialB1(datos) {
+    const editor = document.getElementById("editor-credencial");
+    const creador = document.getElementById("creador-credencial");
+    const canvas = document.getElementById("canvas-credencial");
+
+    if (!editor || !canvas) {
+        throw new Error("No se encontró el editor de la credencial.");
+    }
+
+    const contexto = canvas.getContext("2d");
+
+    // Cargar las tipografías
+    await document.fonts.load('36px "MilasianArmy"');
+    await document.fonts.load('32px "MoliendaArmy"');
+
+    // Cargar la plantilla original
+    const plantilla = new Image();
+    plantilla.src = "./B1.jpeg";
+
+    await new Promise((resolve, reject) => {
+        plantilla.onload = resolve;
+        plantilla.onerror = () => reject(
+            new Error("No se pudo cargar la plantilla B1.")
+        );
+    });
+
+    // Conservar las dimensiones originales
+    canvas.width = plantilla.naturalWidth;
+    canvas.height = plantilla.naturalHeight;
+
+    // Dibujar la plantilla sin modificarla
+    contexto.drawImage(
+        plantilla,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    // Estilo de los datos
+    contexto.textAlign = "center";
+    contexto.textBaseline = "middle";
+    contexto.fillStyle = "#ffffff";
+    contexto.strokeStyle = "#c58aff";
+    contexto.lineJoin = "round";
+    contexto.lineWidth = 2;
+
+    // NOMBRE
+    contexto.font = '36px "MilasianArmy"';
+    contexto.strokeText(datos.nombre, 605, 500, 430);
+    contexto.fillText(datos.nombre, 605, 500, 430);
+
+    // PAÍS
+    contexto.font = '36px "MilasianArmy"';
+    contexto.strokeText(datos.pais, 600, 770, 430);
+    contexto.fillText(datos.pais, 600, 770, 430);
+
+    // BIAS
+    contexto.font = '36px "MilasianArmy"';
+    contexto.strokeText(datos.bias, 600, 1008, 430);
+    contexto.fillText(datos.bias, 600, 1008, 430);
+
+    // CÓDIGO
+    contexto.font = '32px "MoliendaArmy"';
+    contexto.strokeText(datos.codigo, 160, 630, 270);
+    contexto.fillText(datos.codigo, 160, 630, 270);
+
+    // Mostrar el editor
+    if (creador) {
+        creador.classList.add("oculta");
+    }
+
+    editor.classList.remove("oculta");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   
 
