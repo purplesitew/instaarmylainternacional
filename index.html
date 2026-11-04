@@ -174,23 +174,30 @@
 
     <h2>PERSONALIZA TU CREDENCIAL 💜</h2>
 
-  <div id="zona-fotografia">
-    <label for="fotoArmy" id="instruccion-foto">
-        📸 SUBE TU FOTOGRAFÍA 💜
-    </label>
+    <div id="zona-fotografia">
 
-    <label for="fotoArmy" id="boton-foto">
-        SELECCIONAR FOTO
-    </label>
+        <label for="fotoArmy" id="instruccion-foto">
+            📸 SUBE TU FOTOGRAFÍA 💜
+        </label>
 
-    <input
-        type="file"
-        id="fotoArmy"
-        accept="image/*"
-    >
+        <label for="fotoArmy" id="boton-foto">
+            SELECCIONAR FOTO
+        </label>
 
-    <p id="nombre-foto">Ninguna fotografía seleccionada</p>
-</div>
+        <input
+            type="file"
+            id="fotoArmy"
+            accept="image/*"
+        >
+
+        <p id="nombre-foto">Ninguna fotografía seleccionada</p>
+
+    </div>
+
+    <!-- AQUÍ SE MUESTRA LA CREDENCIAL -->
+    <div id="contenedor-credencial">
+        <canvas id="canvas-credencial"></canvas>
+    </div>
 
 </section>
 
