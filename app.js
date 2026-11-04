@@ -141,10 +141,18 @@ escribirTextoAjustado(
 );
 
 
-    // CÓDIGO
-    contexto.font = '32px "MoliendaArmy"';
-    contexto.strokeText(datos.codigo, 160, 630, 270);
-    contexto.fillText(datos.codigo, 160, 630, 270);
+// CÓDIGO
+contexto.textBaseline = "middle";
+
+contexto.font = '32px "MoliendaArmy"';
+
+contexto.fillStyle = "#ffffff";      // Interior blanco
+contexto.strokeStyle = "#ff0000";    // Contorno rojo
+contexto.lineWidth = 3;
+contexto.lineJoin = "round";
+
+contexto.strokeText(datos.codigo, 160, 630, 270);
+contexto.fillText(datos.codigo, 160, 630, 270);
 
     // Mostrar el editor
     if (creador) {
