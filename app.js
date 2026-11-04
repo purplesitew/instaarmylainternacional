@@ -41,40 +41,6 @@ const authReady = signInAnonymously(auth)
   });
 document.addEventListener("DOMContentLoaded", () => {
   
-    // =====================================
-    // VISTA PREVIA DE LA FOTOGRAFÍA B1
-    // =====================================
-
-    const fotoArmy = document.getElementById("fotoArmy");
-    const vistaFotoArmy = document.getElementById("vista-foto-army");
-
-    if (fotoArmy && vistaFotoArmy) {
-        fotoArmy.addEventListener("change", () => {
-            const archivo = fotoArmy.files[0];
-
-            if (!archivo) return;
-
-            if (!archivo.type.startsWith("image/")) {
-                alert("Selecciona una imagen válida.");
-                fotoArmy.value = "";
-                return;
-            }
-
-            const lector = new FileReader();
-
-            lector.onload = (evento) => {
-                vistaFotoArmy.innerHTML = "";
-
-                const imagen = document.createElement("img");
-                imagen.src = evento.target.result;
-                imagen.alt = "Vista previa de tu fotografía";
-
-                vistaFotoArmy.appendChild(imagen);
-            };
-
-            lector.readAsDataURL(archivo);
-        });
-    }
 
   const pantallaInicio = document.getElementById("pantalla-inicio");
   const aplicacion = document.getElementById("aplicacion");
