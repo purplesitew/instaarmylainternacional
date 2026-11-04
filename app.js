@@ -169,7 +169,79 @@ contexto.fillText(datos.codigo, 160, 630, 270);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  
+
+  // ==========================================
+// COLOCAR FOTOGRAFÍA EN LA CREDENCIAL
+// ==========================================
+
+const fotoArmy = document.getElementById("fotoArmy");
+
+if (fotoArmy) {
+    fotoArmy.addEventListener("change", () => {
+
+        const archivo = fotoArmy.files[0];
+
+        if (!archivo) return;
+
+        if (!archivo.type.startsWith("image/")) {
+            alert("Selecciona una fotografía válida.");
+            return;
+        }
+
+        const imagen = new Image();
+        const urlFoto = URL.createObjectURL(archivo);
+
+        imagen.onload = () => {
+
+            const canvas = document.getElementById("canvas-credencial");
+            const contexto = canvas.getContext("2d");
+
+            // Espacio exacto de la fotografía
+            const x = 17;
+            const y = 201;
+            const ancho = 289;
+            const alto = 381;
+
+            // Ajustar la imagen sin deformarla
+            const escala = Math.max(
+                ancho / imagen.width,
+                alto / imagen.height
+            );
+
+            const anchoImagen = imagen.width * escala;
+            const altoImagen = imagen.height * escala;
+
+            const desplazamientoX = (ancho - anchoImagen) / 2;
+            const desplazamientoY = (alto - altoImagen) / 2;
+
+            // Recortar para que no salga del marco
+            contexto.save();
+
+            contexto.beginPath();
+            contexto.rect(x, y, ancho, alto);
+            contexto.clip();
+
+            contexto.drawImage(
+                imagen,
+                x + desplazamientoX,
+                y + desplazamientoY,
+                anchoImagen,
+                altoImagen
+            );
+
+            contexto.restore();
+
+            URL.revokeObjectURL(urlFoto);
+        };
+
+        imagen.onerror = () => {
+            alert("No se pudo cargar la fotografía.");
+            URL.revokeObjectURL(urlFoto);
+        };
+
+        imagen.src = urlFoto;
+    });
+}
     // =====================================
     // PRUEBA VISUAL B1 SIN REGISTRO
     // =====================================
