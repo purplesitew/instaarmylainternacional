@@ -83,28 +83,60 @@ async function mostrarCredencialB1(datos) {
         canvas.height
     );
 
-    // Estilo de los datos
-    contexto.textAlign = "center";
-    contexto.textBaseline = "middle";
-    contexto.fillStyle = "#ffffff";
-    contexto.strokeStyle = "#c58aff";
-    contexto.lineJoin = "round";
-    contexto.lineWidth = 2;
+  // ==========================================
+// ESTILO Y POSICIÓN DE LOS DATOS
+// ==========================================
 
-    // NOMBRE
-    contexto.font = '36px "MilasianArmy"';
-    contexto.strokeText(datos.nombre, 605, 500, 430);
-    contexto.fillText(datos.nombre, 605, 500, 430);
+contexto.textAlign = "center";
+contexto.textBaseline = "middle";
 
-    // PAÍS
-    contexto.font = '36px "MilasianArmy"';
-    contexto.strokeText(datos.pais, 600, 770, 430);
-    contexto.fillText(datos.pais, 600, 770, 430);
+contexto.fillStyle = "#ffffff";
+contexto.strokeStyle = "#c58aff";
+contexto.lineJoin = "round";
+contexto.lineWidth = 2.5;
 
-    // BIAS
-    contexto.font = '36px "MilasianArmy"';
-    contexto.strokeText(datos.bias, 600, 1008, 430);
-    contexto.fillText(datos.bias, 600, 1008, 430);
+// FUNCIÓN PARA AJUSTAR EL TAMAÑO DEL TEXTO
+function escribirTextoAjustado(texto, centroX, centroY, anchoMaximo) {
+
+    let tamaño = 48;
+
+    contexto.font = `${tamaño}px "MilasianArmy"`;
+
+    while (
+        contexto.measureText(texto).width > anchoMaximo &&
+        tamaño > 20
+    ) {
+        tamaño--;
+        contexto.font = `${tamaño}px "MilasianArmy"`;
+    }
+
+    contexto.strokeText(texto, centroX, centroY);
+    contexto.fillText(texto, centroX, centroY);
+}
+
+// NOMBRE
+escribirTextoAjustado(
+    datos.nombre,
+    603,
+    446,
+    536
+);
+
+// PAÍS
+escribirTextoAjustado(
+    datos.pais,
+    603,
+    709,
+    536
+);
+
+// BIAS / IDOL
+escribirTextoAjustado(
+    datos.bias,
+    603,
+    951,
+    536
+);
 
     // CÓDIGO
     contexto.font = '32px "MoliendaArmy"';
