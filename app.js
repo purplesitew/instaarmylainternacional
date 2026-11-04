@@ -146,9 +146,10 @@ contexto.textBaseline = "middle";
 
 contexto.font = '32px "MoliendaArmy"';
 
-contexto.fillStyle = "#ffffff";      // Interior blanco
-contexto.strokeStyle = "#ff0000";    // Contorno rojo
-contexto.lineWidth = 3;
+contexto.fillStyle = "#ffffff"; 
+contexto.strokeStyle = "#ff0000";
+
+contexto.lineWidth = 6;
 contexto.lineJoin = "round";
 
 contexto.strokeText(datos.codigo, 160, 630, 270);
