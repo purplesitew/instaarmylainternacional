@@ -180,6 +180,13 @@ if (fotoArmy) {
     fotoArmy.addEventListener("change", () => {
 
         const archivo = fotoArmy.files[0];
+      const nombreFoto = document.getElementById("nombre-foto");
+
+if (nombreFoto) {
+    nombreFoto.textContent = archivo
+        ? "Foto seleccionada: " + archivo.name
+        : "Ninguna fotografía seleccionada";
+}
 
         if (!archivo) return;
 
