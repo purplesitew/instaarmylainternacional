@@ -126,6 +126,29 @@ async function mostrarCredencialB1(datos) {
 
 document.addEventListener("DOMContentLoaded", () => {
   
+    // =====================================
+    // PRUEBA VISUAL B1 SIN REGISTRO
+    // =====================================
+
+    const btnProbarB1 = document.getElementById("btnProbarB1");
+
+    if (btnProbarB1) {
+        btnProbarB1.addEventListener("click", async () => {
+            try {
+                await mostrarCredencialB1({
+                    nombre: "ARMY",
+                    pais: "MÉXICO",
+                    bias: "JUNGKOOK",
+                    codigo: "PRUEBA-001"
+                });
+            } catch (error) {
+                console.error("Error en prueba B1:", error);
+                alert(error.message);
+            }
+        });
+    }
+
+  
 
   const pantallaInicio = document.getElementById("pantalla-inicio");
   const aplicacion = document.getElementById("aplicacion");
