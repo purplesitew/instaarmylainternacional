@@ -99,14 +99,14 @@ contexto.lineWidth = 3;
 // FUNCIÓN PARA ESCRIBIR TEXTOS GRANDES
 function escribirTextoAjustado(texto, centroX, parteInferior, anchoMaximo) {
 
-    let tamaño = 58;
+    let tamaño = 68;
 
     contexto.font = `${tamaño}px "MilasianArmy"`;
 
     // Reducir solamente si el texto es demasiado ancho
     while (
         contexto.measureText(texto).width > anchoMaximo &&
-        tamaño > 25
+        tamaño > 30
     ) {
         tamaño--;
         contexto.font = `${tamaño}px "MilasianArmy"`;
