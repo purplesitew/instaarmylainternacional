@@ -61,7 +61,7 @@ async function mostrarCredencialB1(datos) {
 
     // Cargar la plantilla original
     const plantilla = new Image();
-    plantilla.src = "./B1.jpeg";
+  plantilla.src = "./B1PLANTILLA.jpg";
 
     await new Promise((resolve, reject) => {
         plantilla.onload = resolve;
