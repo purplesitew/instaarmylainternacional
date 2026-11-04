@@ -421,4 +421,54 @@ transform: translate(-50%, -50%);
     height: auto;
     border-radius: 8px;
 }
+/* ===================================
+   BOTONES PARA SUBIR FOTOGRAFÍA
+=================================== */
 
+#zona-fotografia {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 10px;
+}
+
+#instruccion-foto {
+    display: block;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    text-shadow: 0 2px 5px #6a0dad;
+}
+
+#fotoArmy {
+    display: none;
+}
+
+#boton-foto {
+    display: inline-block;
+    padding: 13px 28px;
+    background: linear-gradient(135deg, #b66cff, #6a0dad);
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: bold;
+    border: 2px solid #e5c5ff;
+    border-radius: 30px;
+    box-shadow: 0 4px 12px rgba(106, 13, 173, 0.5);
+    cursor: pointer;
+    text-align: center;
+}
+
+#boton-foto:active {
+    transform: scale(0.96);
+}
+
+#nombre-foto {
+    color: #ffffff;
+    font-size: 12px;
+    text-align: center;
+    margin: 0;
+    overflow-wrap: anywhere;
+}
