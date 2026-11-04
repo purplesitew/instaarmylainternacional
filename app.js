@@ -369,17 +369,28 @@ if (formularioRegistro) {
         );
       }
 
- if (resultado.registroExistente) {
-  alert(resultado.mensaje);
+
+if (resultado.codigo) {
+
+    await mostrarCredencialB1({
+        nombre: nombre,
+        pais: pais,
+        bias: bias,
+        codigo: resultado.codigo
+    });
+
 } else if (resultado.mensaje) {
-  alert(
-    `${resultado.mensaje}\n\nSiguiente código disponible: ${resultado.siguienteCodigo}`
-  );
+
+    alert(
+        `${resultado.mensaje}\n\nSiguiente código disponible: ${resultado.siguienteCodigo}`
+    );
+
 } else {
-  alert(
-    `¡Tus datos se registraron correctamente! 💜\n\nTu código es: ${resultado.codigo}`
-  );
+
+    throw new Error("No se recibió un código para tu credencial.");
+
 }
+
 
     } catch (error) {
       console.error("Error al registrar:", error);
