@@ -132,6 +132,19 @@ const COORDENADAS_RM = [
     { id: 9, x: 55, y: 2944, width: 1527, height: 471 },
     { id: 10, x: 1918, y: 2181, width: 1200, height: 1201 }
 ];
+// Coordenadas individuales de Jimin - 3464 × 3464
+const COORDENADAS_JIMIN_3464 = [
+    { id: 1, x: 191, y: 101, width: 909, height: 1170 },
+    { id: 2, x: 1099, y: 152, width: 683, height: 1066 },
+    { id: 3, x: 1902, y: 103, width: 624, height: 1166 },
+    { id: 4, x: 2657, y: 103, width: 650, height: 1166 },
+    { id: 5, x: 295, y: 1417, width: 614, height: 630 },
+    { id: 6, x: 1381, y: 1358, width: 702, height: 748 },
+    { id: 7, x: 2552, y: 1356, width: 747, height: 744 },
+    { id: 8, x: 194, y: 2261, width: 1359, height: 439 },
+    { id: 9, x: 206, y: 2851, width: 1476, height: 461 },
+    { id: 10, x: 2198, y: 2271, width: 1030, height: 1035 }
+];
 // ==========================================
 // GENERAR CREDENCIAL B1 CON LOS DATOS
 // ==========================================
@@ -454,7 +467,8 @@ const usaCoordenadas3464 =
     imagen === imagenesStickers.jhope ||
     imagen === imagenesStickers.jin ||
     imagen === imagenesStickers.v ||
-    imagen === imagenesStickers.rm;
+    imagen === imagenesStickers.rm ||
+    imagen === imagenesStickers.jimin;
 
 const escalaX = imagen.naturalWidth /
     (usaCoordenadas3464 ? 3464 : TAMANO_COORDENADAS);
@@ -549,7 +563,7 @@ imagenesStickers[biasSeleccionado] = imagen;
 
             imagenStickersActiva = imagen;
 
- let coordenadasActuales;
+let coordenadasActuales;
 
 if (biasSeleccionado === "jhope") {
     coordenadasActuales = COORDENADAS_JHOPE.slice(0, 9);
@@ -557,6 +571,8 @@ if (biasSeleccionado === "jhope") {
     coordenadasActuales = COORDENADAS_JIN.slice(0, 9);
 } else if (biasSeleccionado === "v") {
     coordenadasActuales = COORDENADAS_V.slice(0, 9);
+} else if (biasSeleccionado === "jimin") {
+    coordenadasActuales = COORDENADAS_JIMIN_3464.slice(0, 9);
 } else if (biasSeleccionado === "rm") {
     coordenadasActuales = COORDENADAS_RM.slice(0, 9);
 } else if (biasSeleccionado === "jungkook") {
@@ -564,7 +580,6 @@ if (biasSeleccionado === "jhope") {
 } else {
     coordenadasActuales = COORDENADAS_STICKERS.slice(0, 9);
 }
-
 coordenadasActuales.forEach((sticker) => {
 
                 const opcion = document.createElement("button");
@@ -579,11 +594,12 @@ coordenadasActuales.forEach((sticker) => {
 
                 const contextoMiniatura = miniatura.getContext("2d");
 
-               const usaCoordenadas3464 =
+             const usaCoordenadas3464 =
     biasSeleccionado === "jhope" ||
     biasSeleccionado === "jin" ||
     biasSeleccionado === "v" ||
-    biasSeleccionado === "rm";
+    biasSeleccionado === "rm" ||
+    biasSeleccionado === "jimin";
 const escalaX = imagen.naturalWidth /
     (usaCoordenadas3464 ? 3464 : TAMANO_COORDENADAS);
 
