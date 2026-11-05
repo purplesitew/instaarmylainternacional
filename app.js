@@ -519,9 +519,17 @@ imagenesStickers[biasSeleccionado] = imagen;
 
             imagenStickersActiva = imagen;
 
-           const coordenadasActuales = biasSeleccionado === "jhope"
-    ? COORDENADAS_JHOPE.slice(0, 9)
-    : COORDENADAS_STICKERS.slice(0, 9);
+          let coordenadasActuales;
+
+if (biasSeleccionado === "jhope") {
+    coordenadasActuales = COORDENADAS_JHOPE.slice(0, 9);
+} else if (biasSeleccionado === "jin") {
+    coordenadasActuales = COORDENADAS_JIN.slice(0, 9);
+} else if (biasSeleccionado === "jungkook") {
+    coordenadasActuales = COORDENADAS_STICKERS.slice(0, 9);
+} else {
+    coordenadasActuales = COORDENADAS_STICKERS.slice(0, 9);
+}
 
 coordenadasActuales.forEach((sticker) => {
 
