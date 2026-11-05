@@ -484,6 +484,11 @@ if (selectorBiasStickers && listaStickers) {
                     );
 
                     imagen.src = ARCHIVOS_STICKERS[biasSeleccionado];
+                  alert(
+    "Tamaño real de J-Hope: " +
+    imagen.naturalWidth + " × " +
+    imagen.naturalHeight + " píxeles"
+);
 
                 });
 
