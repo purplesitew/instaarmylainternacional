@@ -334,11 +334,11 @@ if (nombreFoto) {
             const canvas = document.getElementById("canvas-credencial");
             const contexto = canvas.getContext("2d");
 
-            // Espacio exacto de la fotografía
-            const x = 17;
-            const y = 201;
-            const ancho = 289;
-            const alto = 381;
+            // Espacio de la fotografía dejando visible el marco gris
+const x = 25;
+const y = 209;
+const ancho = 273;
+const alto = 365;
 
             // Ajustar la imagen sin deformarla
             const escala = Math.max(
