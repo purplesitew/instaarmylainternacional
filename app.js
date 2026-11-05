@@ -39,7 +39,45 @@ const authReady = signInAnonymously(auth)
     console.error("Error al conectar con Firebase:", error);
     throw error;
   });
+// ==========================================
+// CONFIGURACIÓN DE STICKERS INSTA ARMY
+// ==========================================
 
+// Dimensiones originales de los PNG
+const TAMANO_STICKERS = 3464;
+
+// Sistema de coordenadas utilizado
+const TAMANO_COORDENADAS = 1024;
+
+// Convertir coordenadas automáticamente
+const FACTOR_STICKERS =
+    TAMANO_STICKERS / TAMANO_COORDENADAS;
+
+// Archivos de stickers según el Bias
+const ARCHIVOS_STICKERS = {
+    "jhope": "./stickers-jhope.png",
+    "jin": "./stickers-jin.png",
+    "v": "./stickers-v-taehyung.png",
+    "rm": "./stickers-rm.png",
+    "ot7": "./stickers-ot7.png",
+    "jungkook": "./stickers-jungkook.png",
+    "jimin": "./stickers-jimin.png",
+    "suga": "./stickers-suga.png"
+};
+
+// Coordenadas de los 10 stickers
+const COORDENADAS_STICKERS = [
+    { id: 1, x: 49, y: 39, width: 194, height: 334 },
+    { id: 2, x: 331, y: 47, width: 206, height: 325 },
+    { id: 3, x: 612, y: 72, width: 160, height: 275 },
+    { id: 4, x: 866, y: 54, width: 134, height: 310 },
+    { id: 5, x: 163, y: 402, width: 120, height: 261 },
+    { id: 6, x: 431, y: 409, width: 145, height: 206 },
+    { id: 7, x: 703, y: 397, width: 179, height: 231 },
+    { id: 8, x: 15, y: 690, width: 449, height: 153 },
+    { id: 9, x: 31, y: 861, width: 449, height: 137 },
+    { id: 10, x: 568, y: 643, width: 341, height: 340 }
+];
 // ==========================================
 // GENERAR CREDENCIAL B1 CON LOS DATOS
 // ==========================================
