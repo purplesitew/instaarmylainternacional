@@ -506,7 +506,11 @@ imagenesStickers[biasSeleccionado] = imagen;
 
             imagenStickersActiva = imagen;
 
-            COORDENADAS_STICKERS.slice(0, 9).forEach((sticker) => {
+           const coordenadasActuales = biasSeleccionado === "jhope"
+    ? COORDENADAS_JHOPE.slice(0, 9)
+    : COORDENADAS_STICKERS.slice(0, 9);
+
+coordenadasActuales.forEach((sticker) => {
 
                 const opcion = document.createElement("button");
 
