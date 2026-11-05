@@ -106,6 +106,19 @@ const COORDENADAS_JIN = [
     { id: 9, x: 179, y: 2909, width: 1535, height: 456 },
     { id: 10, x: 2115, y: 2208, width: 1141, height: 1143 }
 ];
+// Coordenadas individuales de V (Taehyung) - 3464 × 3464
+const COORDENADAS_V = [
+    { id: 1, x: 52, y: 137, width: 879, height: 1196 },
+    { id: 2, x: 930, y: 189, width: 889, height: 1144 },
+    { id: 3, x: 1885, y: 145, width: 822, height: 1204 },
+    { id: 4, x: 2706, y: 224, width: 758, height: 1109 },
+    { id: 5, x: 328, y: 1505, width: 503, height: 863 },
+    { id: 6, x: 1366, y: 1507, width: 744, height: 860 },
+    { id: 7, x: 2746, y: 1638, width: 379, height: 604 },
+    { id: 8, x: 143, y: 2367, width: 1471, height: 610 },
+    { id: 9, x: 143, y: 2976, width: 1471, height: 402 },
+    { id: 10, x: 2252, y: 2371, width: 1060, height: 1061 }
+];
 // ==========================================
 // GENERAR CREDENCIAL B1 CON LOS DATOS
 // ==========================================
@@ -521,12 +534,14 @@ imagenesStickers[biasSeleccionado] = imagen;
 
             imagenStickersActiva = imagen;
 
-          let coordenadasActuales;
+   let coordenadasActuales;
 
 if (biasSeleccionado === "jhope") {
     coordenadasActuales = COORDENADAS_JHOPE.slice(0, 9);
 } else if (biasSeleccionado === "jin") {
     coordenadasActuales = COORDENADAS_JIN.slice(0, 9);
+} else if (biasSeleccionado === "v") {
+    coordenadasActuales = COORDENADAS_V.slice(0, 9);
 } else if (biasSeleccionado === "jungkook") {
     coordenadasActuales = COORDENADAS_STICKERS.slice(0, 9);
 } else {
