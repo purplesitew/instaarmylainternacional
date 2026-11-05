@@ -558,9 +558,13 @@ const alto = sticker.height * escalaY;
 
                 opcion.appendChild(miniatura);
 
-               opcion.addEventListener("click", () => {
+     opcion.addEventListener("click", () => {
 
-    alert("¡Sticker seleccionado!");
+    alert(
+        "Tamaño real de la imagen: " +
+        imagen.naturalWidth + " × " +
+        imagen.naturalHeight
+    );
 
     colocarSticker(sticker, imagen);
 
