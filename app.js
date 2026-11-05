@@ -412,12 +412,18 @@ function buscarPosicionSticker(ancho, alto) {
 // Seleccionar un sticker de la galería
 function colocarSticker(sticker, imagen) {
 
-    const factor = TAMANO_STICKERS / TAMANO_COORDENADAS;
+const esJhope = imagen === imagenesStickers.jhope;
 
-    const origenX = sticker.x * factor;
-    const origenY = sticker.y * factor;
-    const origenAncho = sticker.width * factor;
-    const origenAlto = sticker.height * factor;
+const escalaX = imagen.naturalWidth /
+    (esJhope ? 3464 : TAMANO_COORDENADAS);
+
+const escalaY = imagen.naturalHeight /
+    (esJhope ? 3464 : TAMANO_COORDENADAS);
+
+const origenX = sticker.x * escalaX;
+const origenY = sticker.y * escalaY;
+const origenAncho = sticker.width * escalaX;
+const origenAlto = sticker.height * escalaY;
 
     // Tamaño inicial: máximo 100 píxeles
 const escala = Math.min(
@@ -517,10 +523,18 @@ imagenesStickers[biasSeleccionado] = imagen;
 
                 const factor = TAMANO_STICKERS / TAMANO_COORDENADAS;
 
-                const x = sticker.x * factor;
-                const y = sticker.y * factor;
-                const ancho = sticker.width * factor;
-                const alto = sticker.height * factor;
+                const esJhope = biasSeleccionado === "jhope";
+
+const escalaX = imagen.naturalWidth /
+    (esJhope ? 3464 : TAMANO_COORDENADAS);
+
+const escalaY = imagen.naturalHeight /
+    (esJhope ? 3464 : TAMANO_COORDENADAS);
+
+const x = sticker.x * escalaX;
+const y = sticker.y * escalaY;
+const ancho = sticker.width * escalaX;
+const alto = sticker.height * escalaY;
 
                 const escala = Math.min(
                     150 / ancho,
