@@ -288,109 +288,339 @@ if (nombreFoto) {
     });
 }
   
-  // ==========================================
-  // MOSTRAR LOS STICKERS DEL BIAS SELECCIONADO
-  // ==========================================
+ // ==========================================
+// MOSTRAR, COLOCAR Y MOVER STICKERS
+// ==========================================
 
-  const selectorBiasStickers = document.getElementById("bias-stickers");
-  const listaStickers = document.getElementById("lista-stickers");
+const selectorBiasStickers = document.getElementById("bias-stickers");
+const listaStickers = document.getElementById("lista-stickers");
 
-  const imagenesStickers = {};
+const imagenesStickers = {};
+const stickersColocados = [];
 
-  if (selectorBiasStickers && listaStickers) {
+const capaStickers = document.getElementById("capa-stickers");
 
-    selectorBiasStickers.addEventListener("change", async () => {
+let imagenStickersActiva = null;
+let stickerArrastrado = null;
+let desplazamientoStickerX = 0;
+let desplazamientoStickerY = 0;
 
-      const biasSeleccionado = selectorBiasStickers.value;
+// Preparar la capa transparente
+if (capaStickers) {
 
-      listaStickers.innerHTML = "";
+    capaStickers.width = 880;
+    capaStickers.height = 1204;
 
-      if (!biasSeleccionado) return;
+}
 
-      try {
+// Dibujar todos los stickers colocados
+function dibujarStickers() {
 
-        // Buscar o cargar el PNG correspondiente
-        let imagen = imagenesStickers[biasSeleccionado];
+    if (!capaStickers) return;
 
-        if (!imagen) {
+    const contexto = capaStickers.getContext("2d");
 
-          imagen = new Image();
+    contexto.clearRect(
+        0,
+        0,
+        capaStickers.width,
+        capaStickers.height
+    );
 
-          await new Promise((resolve, reject) => {
+    stickersColocados.forEach((sticker) => {
 
-            imagen.onload = resolve;
-
-            imagen.onerror = () => reject(
-              new Error("No se pudo cargar el archivo de stickers.")
-            );
-
-            imagen.src = ARCHIVOS_STICKERS[biasSeleccionado];
-
-          });
-
-          imagenesStickers[biasSeleccionado] = imagen;
-        }
-
-        // Mostrar los primeros nueve stickers
-        COORDENADAS_STICKERS.slice(0, 9).forEach((sticker) => {
-
-          const opcion = document.createElement("div");
-          opcion.className = "sticker-opcion";
-
-          const miniatura = document.createElement("canvas");
-          miniatura.width = 160;
-          miniatura.height = 85;
-
-          const contextoMiniatura = miniatura.getContext("2d");
-
-          const x = sticker.x * FACTOR_STICKERS;
-          const y = sticker.y * FACTOR_STICKERS;
-          const ancho = sticker.width * FACTOR_STICKERS;
-          const alto = sticker.height * FACTOR_STICKERS;
-
-          // Ajustar la miniatura sin deformarla
-          const escala = Math.min(
-            150 / ancho,
-            75 / alto
-          );
-
-          const anchoFinal = ancho * escala;
-          const altoFinal = alto * escala;
-
-          const posicionX = (160 - anchoFinal) / 2;
-          const posicionY = (85 - altoFinal) / 2;
-
-          contextoMiniatura.drawImage(
-            imagen,
-            x,
-            y,
-            ancho,
-            alto,
-            posicionX,
-            posicionY,
-            anchoFinal,
-            altoFinal
-          );
-
-          opcion.appendChild(miniatura);
-          listaStickers.appendChild(opcion);
-
-        });
-
-      } catch (error) {
-
-        console.error("Error al mostrar stickers:", error);
-
-        alert(
-          "No se pudieron cargar los stickers. Revisa que el archivo esté en GitHub."
+        contexto.drawImage(
+            sticker.imagen,
+            sticker.origenX,
+            sticker.origenY,
+            sticker.origenAncho,
+            sticker.origenAlto,
+            sticker.x,
+            sticker.y,
+            sticker.ancho,
+            sticker.alto
         );
-
-      }
 
     });
 
-  }
+}
 
+// Buscar un lugar inicial para cada sticker
+function buscarPosicionSticker(ancho, alto) {
+
+    const posiciones = [
+        { x: 320, y: 80 },
+        { x: 750, y: 80 },
+        { x: 320, y: 180 },
+        { x: 750, y: 180 },
+        { x: 320, y: 740 },
+        { x: 750, y: 740 },
+        { x: 320, y: 1050 },
+        { x: 750, y: 1050 }
+    ];
+
+    for (const posicion of posiciones) {
+
+        if (
+            posicion.x + ancho <= 880 &&
+            posicion.y + alto <= 1204
+        ) {
+
+            const choca = stickersColocados.some((otro) => {
+
+                return (
+                    posicion.x < otro.x + otro.ancho &&
+                    posicion.x + ancho > otro.x &&
+                    posicion.y < otro.y + otro.alto &&
+                    posicion.y + alto > otro.y
+                );
+
+            });
+
+            if (!choca) return posicion;
+
+        }
+
+    }
+
+    return null;
+
+}
+
+// Seleccionar un sticker de la galería
+function colocarSticker(sticker, imagen) {
+
+    const factor = TAMANO_STICKERS / TAMANO_COORDENADAS;
+
+    const origenX = sticker.x * factor;
+    const origenY = sticker.y * factor;
+    const origenAncho = sticker.width * factor;
+    const origenAlto = sticker.height * factor;
+
+    // Tamaño inicial: máximo 100 píxeles
+    const escala = Math.min(
+        100 / origenAncho,
+        100 / origenAlto
+    );
+
+    const ancho = origenAncho * escala;
+    const alto = origenAlto * escala;
+
+    const posicion = buscarPosicionSticker(ancho, alto);
+
+    if (!posicion) {
+
+        alert("Ya no hay espacio disponible para colocar otro sticker.");
+
+        return;
+
+    }
+
+    stickersColocados.push({
+
+        imagen,
+        origenX,
+        origenY,
+        origenAncho,
+        origenAlto,
+        x: posicion.x,
+        y: posicion.y,
+        ancho,
+        alto
+
+    });
+
+    dibujarStickers();
+
+}
+
+// Cargar los stickers del Bias seleccionado
+if (selectorBiasStickers && listaStickers) {
+
+    selectorBiasStickers.addEventListener("change", async () => {
+
+        const biasSeleccionado = selectorBiasStickers.value;
+
+        listaStickers.innerHTML = "";
+
+        if (!biasSeleccionado) return;
+
+        try {
+
+            let imagen = imagenesStickers[biasSeleccionado];
+
+            if (!imagen) {
+
+                imagen = new Image();
+
+                await new Promise((resolve, reject) => {
+
+                    imagen.onload = resolve;
+
+                    imagen.onerror = () => reject(
+                        new Error("No se pudo cargar el archivo de stickers.")
+                    );
+
+                    imagen.src = ARCHIVOS_STICKERS[biasSeleccionado];
+
+                });
+
+                imagenesStickers[biasSeleccionado] = imagen;
+
+            }
+
+            imagenStickersActiva = imagen;
+
+            COORDENADAS_STICKERS.slice(0, 9).forEach((sticker) => {
+
+                const opcion = document.createElement("button");
+
+                opcion.type = "button";
+                opcion.className = "sticker-opcion";
+
+                const miniatura = document.createElement("canvas");
+
+                miniatura.width = 160;
+                miniatura.height = 85;
+
+                const contextoMiniatura = miniatura.getContext("2d");
+
+                const factor = TAMANO_STICKERS / TAMANO_COORDENADAS;
+
+                const x = sticker.x * factor;
+                const y = sticker.y * factor;
+                const ancho = sticker.width * factor;
+                const alto = sticker.height * factor;
+
+                const escala = Math.min(
+                    150 / ancho,
+                    75 / alto
+                );
+
+                const anchoFinal = ancho * escala;
+                const altoFinal = alto * escala;
+
+                contextoMiniatura.drawImage(
+                    imagen,
+                    x,
+                    y,
+                    ancho,
+                    alto,
+                    (160 - anchoFinal) / 2,
+                    (85 - altoFinal) / 2,
+                    anchoFinal,
+                    altoFinal
+                );
+
+                opcion.appendChild(miniatura);
+
+                opcion.addEventListener("click", () => {
+
+                    colocarSticker(sticker, imagen);
+
+                });
+
+                listaStickers.appendChild(opcion);
+
+            });
+
+        } catch (error) {
+
+            console.error("Error al mostrar stickers:", error);
+
+            alert("No se pudieron cargar los stickers. Revisa los archivos de GitHub.");
+
+        }
+
+    });
+
+}
+
+// ==========================================
+// MOVER STICKERS CON EL DEDO O EL MOUSE
+// ==========================================
+
+if (capaStickers) {
+
+    capaStickers.addEventListener("pointerdown", (evento) => {
+
+        const rect = capaStickers.getBoundingClientRect();
+
+        const x = (evento.clientX - rect.left) *
+            capaStickers.width / rect.width;
+
+        const y = (evento.clientY - rect.top) *
+            capaStickers.height / rect.height;
+
+        // Buscar el sticker que está debajo del dedo
+        for (let i = stickersColocados.length - 1; i >= 0; i--) {
+
+            const sticker = stickersColocados[i];
+
+            if (
+                x >= sticker.x &&
+                x <= sticker.x + sticker.ancho &&
+                y >= sticker.y &&
+                y <= sticker.y + sticker.alto
+            ) {
+
+                stickerArrastrado = sticker;
+
+                desplazamientoStickerX = x - sticker.x;
+                desplazamientoStickerY = y - sticker.y;
+
+                capaStickers.setPointerCapture(evento.pointerId);
+
+                break;
+
+            }
+
+        }
+
+    });
+
+    capaStickers.addEventListener("pointermove", (evento) => {
+
+        if (!stickerArrastrado) return;
+
+        const rect = capaStickers.getBoundingClientRect();
+
+        const x = (evento.clientX - rect.left) *
+            capaStickers.width / rect.width;
+
+        const y = (evento.clientY - rect.top) *
+            capaStickers.height / rect.height;
+
+        stickerArrastrado.x = Math.max(
+            0,
+            Math.min(
+                capaStickers.width - stickerArrastrado.ancho,
+                x - desplazamientoStickerX
+            )
+        );
+
+        stickerArrastrado.y = Math.max(
+            0,
+            Math.min(
+                capaStickers.height - stickerArrastrado.alto,
+                y - desplazamientoStickerY
+            )
+        );
+
+        dibujarStickers();
+
+    });
+
+    function terminarMovimientoSticker() {
+
+        stickerArrastrado = null;
+
+    }
+
+    capaStickers.addEventListener("pointerup", terminarMovimientoSticker);
+    capaStickers.addEventListener("pointercancel", terminarMovimientoSticker);
+
+}
     // =====================================
     // PRUEBA VISUAL B1 SIN REGISTRO
     // =====================================
