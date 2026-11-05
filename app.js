@@ -93,6 +93,19 @@ const COORDENADAS_JHOPE = [
     { id: 8, x: 160, y: 2369, width: 1376, height: 451 },
     { id: 9, x: 177, y: 2907, width: 1368, height: 444 }
 ];
+// Coordenadas individuales de Jin (3464 × 3464)
+const COORDENADAS_JIN = [
+    { id: 1, x: 158, y: 137, width: 688, height: 1053 },
+    { id: 2, x: 845, y: 208, width: 722, height: 897 },
+    { id: 3, x: 1825, y: 162, width: 713, height: 1002 },
+    { id: 4, x: 2537, y: 137, width: 927, height: 1053 },
+    { id: 5, x: 446, y: 1371, width: 532, height: 725 },
+    { id: 6, x: 1403, y: 1353, width: 658, height: 758 },
+    { id: 7, x: 2450, y: 1383, width: 776, height: 689 },
+    { id: 8, x: 179, y: 2269, width: 1535, height: 641 },
+    { id: 9, x: 179, y: 2909, width: 1535, height: 456 },
+    { id: 10, x: 2115, y: 2208, width: 1141, height: 1143 }
+];
 // ==========================================
 // GENERAR CREDENCIAL B1 CON LOS DATOS
 // ==========================================
