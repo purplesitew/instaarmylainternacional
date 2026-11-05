@@ -405,8 +405,8 @@ function colocarSticker(sticker, imagen) {
 
     // Tamaño inicial: máximo 100 píxeles
 const escala = Math.min(
-    230 / origenAncho,
-    230 / origenAlto
+    225 / origenAncho,
+    225 / origenAlto
 );
 
     const ancho = origenAncho * escala;
