@@ -79,6 +79,22 @@ const COORDENADAS_STICKERS = [
     { id: 10, x: 568, y: 643, width: 341, height: 340 }
 ];
 // ==========================================
+// COORDENADAS INDIVIDUALES DE J-HOPE
+// ==========================================
+
+const COORDENADAS_JHOPE = [
+    { id: 1, x: 65, y: 115, width: 785, height: 1195 },
+    { id: 2, x: 950, y: 165, width: 815, height: 1075 },
+    { id: 3, x: 1755, y: 200, width: 965, height: 1045 },
+    { id: 4, x: 2595, y: 165, width: 810, height: 1075 },
+    { id: 5, x: 375, y: 1325, width: 460, height: 780 },
+    { id: 6, x: 1435, y: 1405, width: 585, height: 665 },
+    { id: 7, x: 2435, y: 1345, width: 755, height: 745 },
+    { id: 8, x: 190, y: 2470, width: 1315, height: 315 },
+    { id: 9, x: 170, y: 2905, width: 1385, height: 465 },
+    { id: 10, x: 2085, y: 2275, width: 1130, height: 1115 }
+];
+// ==========================================
 // GENERAR CREDENCIAL B1 CON LOS DATOS
 // ==========================================
 
