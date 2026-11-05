@@ -439,7 +439,8 @@ function colocarSticker(sticker, imagen) {
 
 const usaCoordenadas3464 =
     imagen === imagenesStickers.jhope ||
-    imagen === imagenesStickers.jin;
+    imagen === imagenesStickers.jin ||
+    imagen === imagenesStickers.v;
 
 const escalaX = imagen.naturalWidth /
     (usaCoordenadas3464 ? 3464 : TAMANO_COORDENADAS);
@@ -564,10 +565,10 @@ coordenadasActuales.forEach((sticker) => {
 
                 const factor = TAMANO_STICKERS / TAMANO_COORDENADAS;
 
-                const usaCoordenadas3464 =
+               const usaCoordenadas3464 =
     biasSeleccionado === "jhope" ||
-    biasSeleccionado === "jin";
-
+    biasSeleccionado === "jin" ||
+    biasSeleccionado === "v";
 const escalaX = imagen.naturalWidth /
     (usaCoordenadas3464 ? 3464 : TAMANO_COORDENADAS);
 
