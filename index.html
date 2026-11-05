@@ -166,6 +166,7 @@
   </div>
 </div>
 
+
 <!-- =====================================
      EDITOR DE CREDENCIAL B1
 ===================================== -->
@@ -194,12 +195,44 @@
 
     </div>
 
+    <!-- SELECCIÓN DE BIAS PARA LOS STICKERS -->
+
+    <div id="zona-seleccion-stickers">
+
+        <h3>ELIGE TUS STICKERS 💜</h3>
+
+        <label for="bias-stickers">Selecciona tu Bias:</label>
+
+        <select id="bias-stickers">
+            <option value="">Selecciona un Bias</option>
+            <option value="jhope">J-Hope</option>
+            <option value="jin">Jin</option>
+            <option value="v">V (Taehyung)</option>
+            <option value="rm">RM</option>
+            <option value="ot7">OT7</option>
+            <option value="jungkook">Jungkook</option>
+            <option value="jimin">Jimin</option>
+            <option value="suga">Suga</option>
+        </select>
+
+        <p>Toca un sticker para agregarlo a tu credencial.</p>
+
+        <div id="lista-stickers"></div>
+
+        <button type="button" id="btn-marco-foto">
+            COLOCAR MARCO EN MI FOTO 💜
+        </button>
+
+    </div>
+
     <!-- AQUÍ SE MUESTRA LA CREDENCIAL -->
+
     <div id="contenedor-credencial">
         <canvas id="canvas-credencial"></canvas>
     </div>
 
 </section>
+
 
   </main>
 
