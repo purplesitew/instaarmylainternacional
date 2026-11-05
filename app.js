@@ -483,18 +483,21 @@ if (selectorBiasStickers && listaStickers) {
                         new Error("No se pudo cargar el archivo de stickers.")
                     );
 
-                    imagen.src = ARCHIVOS_STICKERS[biasSeleccionado];
-                  alert(
-    "Tamaño real de J-Hope: " +
-    imagen.naturalWidth + " × " +
-    imagen.naturalHeight + " píxeles"
-);
+         imagen.src = ARCHIVOS_STICKERS[biasSeleccionado];
 
-                });
+});
 
-                imagenesStickers[biasSeleccionado] = imagen;
+if (biasSeleccionado === "jhope") {
+    alert(
+        "Tamaño real de J-Hope: " +
+        imagen.naturalWidth + " × " +
+        imagen.naturalHeight + " píxeles"
+    );
+}
 
-            }
+imagenesStickers[biasSeleccionado] = imagen;
+
+}
 
             imagenStickersActiva = imagen;
 
