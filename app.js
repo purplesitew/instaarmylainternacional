@@ -119,6 +119,19 @@ const COORDENADAS_V = [
     { id: 9, x: 143, y: 2976, width: 1471, height: 402 },
     { id: 10, x: 2252, y: 2371, width: 1060, height: 1061 }
 ];
+// Coordenadas individuales de RM (Namjoon) - 3464 × 3464
+const COORDENADAS_RM = [
+    { id: 1, x: 23, y: 128, width: 642, height: 1170 },
+    { id: 2, x: 739, y: 221, width: 877, height: 1077 },
+    { id: 3, x: 1728, y: 138, width: 865, height: 1160 },
+    { id: 4, x: 2647, y: 150, width: 723, height: 1136 },
+    { id: 5, x: 201, y: 1371, width: 956, height: 722 },
+    { id: 6, x: 1436, y: 1417, width: 592, height: 630 },
+    { id: 7, x: 2302, y: 1331, width: 647, height: 758 },
+    { id: 8, x: 158, y: 2305, width: 1314, height: 485 },
+    { id: 9, x: 55, y: 2944, width: 1527, height: 471 },
+    { id: 10, x: 1918, y: 2181, width: 1200, height: 1201 }
+];
 // ==========================================
 // GENERAR CREDENCIAL B1 CON LOS DATOS
 // ==========================================
@@ -440,7 +453,8 @@ function colocarSticker(sticker, imagen) {
 const usaCoordenadas3464 =
     imagen === imagenesStickers.jhope ||
     imagen === imagenesStickers.jin ||
-    imagen === imagenesStickers.v;
+    imagen === imagenesStickers.v ||
+    imagen === imagenesStickers.rm;
 
 const escalaX = imagen.naturalWidth /
     (usaCoordenadas3464 ? 3464 : TAMANO_COORDENADAS);
@@ -535,7 +549,7 @@ imagenesStickers[biasSeleccionado] = imagen;
 
             imagenStickersActiva = imagen;
 
-   let coordenadasActuales;
+ let coordenadasActuales;
 
 if (biasSeleccionado === "jhope") {
     coordenadasActuales = COORDENADAS_JHOPE.slice(0, 9);
@@ -543,6 +557,8 @@ if (biasSeleccionado === "jhope") {
     coordenadasActuales = COORDENADAS_JIN.slice(0, 9);
 } else if (biasSeleccionado === "v") {
     coordenadasActuales = COORDENADAS_V.slice(0, 9);
+} else if (biasSeleccionado === "rm") {
+    coordenadasActuales = COORDENADAS_RM.slice(0, 9);
 } else if (biasSeleccionado === "jungkook") {
     coordenadasActuales = COORDENADAS_STICKERS.slice(0, 9);
 } else {
@@ -566,9 +582,11 @@ coordenadasActuales.forEach((sticker) => {
                 const factor = TAMANO_STICKERS / TAMANO_COORDENADAS;
 
                const usaCoordenadas3464 =
+  const usaCoordenadas3464 =
     biasSeleccionado === "jhope" ||
     biasSeleccionado === "jin" ||
-    biasSeleccionado === "v";
+    biasSeleccionado === "v" ||
+    biasSeleccionado === "rm";
 const escalaX = imagen.naturalWidth /
     (usaCoordenadas3464 ? 3464 : TAMANO_COORDENADAS);
 
