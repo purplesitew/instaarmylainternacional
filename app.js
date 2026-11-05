@@ -579,10 +579,7 @@ coordenadasActuales.forEach((sticker) => {
 
                 const contextoMiniatura = miniatura.getContext("2d");
 
-                const factor = TAMANO_STICKERS / TAMANO_COORDENADAS;
-
                const usaCoordenadas3464 =
-  const usaCoordenadas3464 =
     biasSeleccionado === "jhope" ||
     biasSeleccionado === "jin" ||
     biasSeleccionado === "v" ||
