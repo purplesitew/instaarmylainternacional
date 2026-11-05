@@ -424,13 +424,15 @@ function buscarPosicionSticker(ancho, alto) {
 // Seleccionar un sticker de la galería
 function colocarSticker(sticker, imagen) {
 
-const esJhope = imagen === imagenesStickers.jhope;
+const usaCoordenadas3464 =
+    imagen === imagenesStickers.jhope ||
+    imagen === imagenesStickers.jin;
 
 const escalaX = imagen.naturalWidth /
-    (esJhope ? 3464 : TAMANO_COORDENADAS);
+    (usaCoordenadas3464 ? 3464 : TAMANO_COORDENADAS);
 
 const escalaY = imagen.naturalHeight /
-    (esJhope ? 3464 : TAMANO_COORDENADAS);
+    (usaCoordenadas3464 ? 3464 : TAMANO_COORDENADAS);
 
 const origenX = sticker.x * escalaX;
 const origenY = sticker.y * escalaY;
