@@ -549,13 +549,15 @@ coordenadasActuales.forEach((sticker) => {
 
                 const factor = TAMANO_STICKERS / TAMANO_COORDENADAS;
 
-                const esJhope = biasSeleccionado === "jhope";
+                const usaCoordenadas3464 =
+    biasSeleccionado === "jhope" ||
+    biasSeleccionado === "jin";
 
 const escalaX = imagen.naturalWidth /
-    (esJhope ? 3464 : TAMANO_COORDENADAS);
+    (usaCoordenadas3464 ? 3464 : TAMANO_COORDENADAS);
 
 const escalaY = imagen.naturalHeight /
-    (esJhope ? 3464 : TAMANO_COORDENADAS);
+    (usaCoordenadas3464 ? 3464 : TAMANO_COORDENADAS);
 
 const x = sticker.x * escalaX;
 const y = sticker.y * escalaY;
