@@ -145,6 +145,19 @@ const COORDENADAS_JIMIN_3464 = [
     { id: 9, x: 206, y: 2851, width: 1476, height: 461 },
     { id: 10, x: 2198, y: 2271, width: 1030, height: 1035 }
 ];
+// Coordenadas individuales de SUGA - 3464 × 3464
+const COORDENADAS_SUGA_3464 = [
+    { id: 1, x: 262, y: 263, width: 496, height: 923 },
+    { id: 2, x: 1031, y: 262, width: 659, height: 919 },
+    { id: 3, x: 2029, y: 263, width: 515, height: 911 },
+    { id: 4, x: 2699, y: 263, width: 694, height: 913 },
+    { id: 5, x: 125, y: 1527, width: 1144, height: 525 },
+    { id: 6, x: 1268, y: 1606, width: 771, height: 627 },
+    { id: 7, x: 2621, y: 1310, width: 514, height: 844 },
+    { id: 8, x: 162, y: 2232, width: 1669, height: 654 },
+    { id: 9, x: 174, y: 2924, width: 1476, height: 463 },
+    { id: 10, x: 1945, y: 2114, width: 1230, height: 1237 }
+];
 // ==========================================
 // GENERAR CREDENCIAL B1 CON LOS DATOS
 // ==========================================
@@ -468,7 +481,8 @@ const usaCoordenadas3464 =
     imagen === imagenesStickers.jin ||
     imagen === imagenesStickers.v ||
     imagen === imagenesStickers.rm ||
-    imagen === imagenesStickers.jimin;
+    imagen === imagenesStickers.jimin ||
+    imagen === imagenesStickers.suga;
 
 const escalaX = imagen.naturalWidth /
     (usaCoordenadas3464 ? 3464 : TAMANO_COORDENADAS);
@@ -573,6 +587,8 @@ if (biasSeleccionado === "jhope") {
     coordenadasActuales = COORDENADAS_V.slice(0, 9);
 } else if (biasSeleccionado === "jimin") {
     coordenadasActuales = COORDENADAS_JIMIN_3464.slice(0, 9);
+} else if (biasSeleccionado === "suga") {
+    coordenadasActuales = COORDENADAS_SUGA_3464.slice(0, 9);
 } else if (biasSeleccionado === "rm") {
     coordenadasActuales = COORDENADAS_RM.slice(0, 9);
 } else if (biasSeleccionado === "jungkook") {
@@ -594,12 +610,13 @@ coordenadasActuales.forEach((sticker) => {
 
                 const contextoMiniatura = miniatura.getContext("2d");
 
-             const usaCoordenadas3464 =
+            const usaCoordenadas3464 =
     biasSeleccionado === "jhope" ||
     biasSeleccionado === "jin" ||
     biasSeleccionado === "v" ||
     biasSeleccionado === "rm" ||
-    biasSeleccionado === "jimin";
+    biasSeleccionado === "jimin" ||
+    biasSeleccionado === "suga";
 const escalaX = imagen.naturalWidth /
     (usaCoordenadas3464 ? 3464 : TAMANO_COORDENADAS);
 
