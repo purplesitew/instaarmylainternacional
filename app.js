@@ -305,12 +305,18 @@ let stickerArrastrado = null;
 let desplazamientoStickerX = 0;
 let desplazamientoStickerY = 0;
 
-// Preparar la capa transparente
 if (capaStickers) {
-
     capaStickers.width = 880;
     capaStickers.height = 1204;
 
+    const contextoPrueba = capaStickers.getContext("2d");
+
+    contextoPrueba.fillStyle = "red";
+    contextoPrueba.fillRect(100, 100, 200, 200);
+
+    alert("La capa de stickers sí está funcionando.");
+} else {
+    alert("ERROR: No se encontró la capa de stickers.");
 }
 
 // Dibujar todos los stickers colocados
