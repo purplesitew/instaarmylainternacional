@@ -514,11 +514,13 @@ if (selectorBiasStickers && listaStickers) {
 
                 opcion.appendChild(miniatura);
 
-                opcion.addEventListener("click", () => {
+               opcion.addEventListener("click", () => {
 
-                    colocarSticker(sticker, imagen);
+    alert("¡Sticker seleccionado!");
 
-                });
+    colocarSticker(sticker, imagen);
+
+});
 
                 listaStickers.appendChild(opcion);
 
