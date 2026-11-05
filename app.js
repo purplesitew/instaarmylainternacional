@@ -287,6 +287,110 @@ if (nombreFoto) {
         imagen.src = urlFoto;
     });
 }
+  
+  // ==========================================
+  // MOSTRAR LOS STICKERS DEL BIAS SELECCIONADO
+  // ==========================================
+
+  const selectorBiasStickers = document.getElementById("bias-stickers");
+  const listaStickers = document.getElementById("lista-stickers");
+
+  const imagenesStickers = {};
+
+  if (selectorBiasStickers && listaStickers) {
+
+    selectorBiasStickers.addEventListener("change", async () => {
+
+      const biasSeleccionado = selectorBiasStickers.value;
+
+      listaStickers.innerHTML = "";
+
+      if (!biasSeleccionado) return;
+
+      try {
+
+        // Buscar o cargar el PNG correspondiente
+        let imagen = imagenesStickers[biasSeleccionado];
+
+        if (!imagen) {
+
+          imagen = new Image();
+
+          await new Promise((resolve, reject) => {
+
+            imagen.onload = resolve;
+
+            imagen.onerror = () => reject(
+              new Error("No se pudo cargar el archivo de stickers.")
+            );
+
+            imagen.src = ARCHIVOS_STICKERS[biasSeleccionado];
+
+          });
+
+          imagenesStickers[biasSeleccionado] = imagen;
+        }
+
+        // Mostrar los primeros nueve stickers
+        COORDENADAS_STICKERS.slice(0, 9).forEach((sticker) => {
+
+          const opcion = document.createElement("div");
+          opcion.className = "sticker-opcion";
+
+          const miniatura = document.createElement("canvas");
+          miniatura.width = 160;
+          miniatura.height = 85;
+
+          const contextoMiniatura = miniatura.getContext("2d");
+
+          const x = sticker.x * FACTOR_STICKERS;
+          const y = sticker.y * FACTOR_STICKERS;
+          const ancho = sticker.width * FACTOR_STICKERS;
+          const alto = sticker.height * FACTOR_STICKERS;
+
+          // Ajustar la miniatura sin deformarla
+          const escala = Math.min(
+            150 / ancho,
+            75 / alto
+          );
+
+          const anchoFinal = ancho * escala;
+          const altoFinal = alto * escala;
+
+          const posicionX = (160 - anchoFinal) / 2;
+          const posicionY = (85 - altoFinal) / 2;
+
+          contextoMiniatura.drawImage(
+            imagen,
+            x,
+            y,
+            ancho,
+            alto,
+            posicionX,
+            posicionY,
+            anchoFinal,
+            altoFinal
+          );
+
+          opcion.appendChild(miniatura);
+          listaStickers.appendChild(opcion);
+
+        });
+
+      } catch (error) {
+
+        console.error("Error al mostrar stickers:", error);
+
+        alert(
+          "No se pudieron cargar los stickers. Revisa que el archivo esté en GitHub."
+        );
+
+      }
+
+    });
+
+  }
+
     // =====================================
     // PRUEBA VISUAL B1 SIN REGISTRO
     // =====================================
