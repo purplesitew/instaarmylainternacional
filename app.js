@@ -83,16 +83,15 @@ const COORDENADAS_STICKERS = [
 // ==========================================
 
 const COORDENADAS_JHOPE = [
-    { id: 1, x: 65, y: 115, width: 785, height: 1195 },
-    { id: 2, x: 900, y: 150, width: 880, height: 1100 },
-    { id: 3, x: 1715, y: 185, width: 1020, height: 1075 },
-    { id: 4, x: 2550, y: 150, width: 870, height: 1100 },
-    { id: 5, x: 340, y: 1310, width: 510, height: 810 },
-    { id: 6, x: 1435, y: 1405, width: 585, height: 665 },
-    { id: 7, x: 2435, y: 1345, width: 755, height: 745 },
-    { id: 8, x: 190, y: 2470, width: 1315, height: 315 },
-    { id: 9, x: 170, y: 2905, width: 1385, height: 465 },
-    { id: 10, x: 2085, y: 2275, width: 1130, height: 1115 }
+    { id: 1, x: 81, y: 115, width: 747, height: 1186 },
+    { id: 2, x: 959, y: 170, width: 802, height: 1065 },
+    { id: 3, x: 1760, y: 209, width: 955, height: 1026 },
+    { id: 4, x: 2603, y: 180, width: 797, height: 1050 },
+    { id: 5, x: 387, y: 1351, width: 375, height: 764 },
+    { id: 6, x: 1441, y: 1414, width: 579, height: 636 },
+    { id: 7, x: 2513, y: 1358, width: 664, height: 728 },
+    { id: 8, x: 160, y: 2369, width: 1376, height: 451 },
+    { id: 9, x: 177, y: 2907, width: 1368, height: 444 }
 ];
 // ==========================================
 // GENERAR CREDENCIAL B1 CON LOS DATOS
