@@ -186,6 +186,35 @@ const COORDENADAS_MARCOS = {
     ot7: { x: 2175, y: 2329, width: 965, height: 965 },
     jungkook: { x: 568, y: 643, width: 341, height: 340 }
 };
+// CONFIGURACIÓN DE LAS CREDENCIALES B5 Y B10
+const CONFIGURACION_B5_B10 = {
+    imagen: {
+        width: 960,
+        height: 1280
+    },
+
+    nombre: {
+        centerX: 475,
+        baselineY: 733,
+        maxWidth: 737
+    },
+
+    bias: {
+        centerX: 475,
+        baselineY: 911,
+        maxWidth: 737
+    },
+
+    codigoPersonal: {
+        x: 20,
+        y: 1090,
+        width: 270,
+        height: 170,
+        centerX: 155,
+        centerY: 1175,
+        maxWidth: 270
+    }
+};
 // ==========================================
 // GENERAR CREDENCIAL B1 CON LOS DATOS
 // ==========================================
