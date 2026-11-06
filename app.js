@@ -849,7 +849,7 @@ if (btnMarcoFoto && listaMarcos) {
                         origenAncho: marco.width * escalaCoordenadas,
                         origenAlto: marco.height * escalaCoordenadas,
                        ...(nombre === "suga" ? {
-    x: -45,
+    x: -65,
     y: 135,
     ancho: 326,
     alto: 445
