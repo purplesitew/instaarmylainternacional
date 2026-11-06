@@ -558,7 +558,7 @@ function colocarSticker(sticker, imagen) {
     const escala = Math.min(
         225 / origenAncho,
         225 / origenAlto,
-        (zona.radio * 0.9) / mitadDiagonal
+        (zona.radio * 1.0) / mitadDiagonal
     );
 
     const ancho = origenAncho * escala;
@@ -852,10 +852,10 @@ if (capaStickers) {
             const escalaMaxima =
                 diagonalMaxima / diagonalInicial;
 
-            const escalaFinal = Math.max(
-                0.25,
-                Math.min(escalaSolicitada, escalaMaxima)
-            );
+           const escalaFinal = Math.min(
+    escalaMaxima,
+    Math.max(0.25, escalaSolicitada)
+);
 
             stickerEnPinza.ancho =
                 tamanoInicialPinza * escalaFinal;
