@@ -439,15 +439,8 @@ let stickerSeleccionado = null;
 if (capaStickers) {
     capaStickers.width = 880;
     capaStickers.height = 1204;
-
-    const contextoPrueba = capaStickers.getContext("2d");
-
-    contextoPrueba.fillStyle = "red";
-    contextoPrueba.fillRect(100, 100, 200, 200);
-
-    alert("La capa de stickers sí está funcionando.");
 } else {
-    alert("ERROR: No se encontró la capa de stickers.");
+    console.error("No se encontró la capa de stickers.");
 }
 
 // Dibujar todos los stickers colocados
@@ -948,6 +941,60 @@ if (capaStickers) {
     capaStickers.addEventListener("pointercancel", terminarMovimientoSticker);
 
 }
+  // ==========================================
+// BOTÓN PARA QUITAR STICKERS
+// ==========================================
+
+const btnQuitarSticker = document.createElement("button");
+
+btnQuitarSticker.type = "button";
+btnQuitarSticker.textContent = "QUITAR STICKER";
+btnQuitarSticker.disabled = true;
+
+btnQuitarSticker.style.display = "block";
+btnQuitarSticker.style.margin = "12px auto";
+btnQuitarSticker.style.padding = "12px 25px";
+btnQuitarSticker.style.borderRadius = "20px";
+btnQuitarSticker.style.border = "none";
+btnQuitarSticker.style.background = "#6a0dad";
+btnQuitarSticker.style.color = "white";
+btnQuitarSticker.style.fontWeight = "bold";
+btnQuitarSticker.style.cursor = "pointer";
+
+document.getElementById("contenedor-credencial")
+    .after(btnQuitarSticker);
+  // Activar el botón cuando se seleccione un sticker
+capaStickers.addEventListener("pointerdown", () => {
+
+    setTimeout(() => {
+        btnQuitarSticker.disabled = !stickerSeleccionado;
+
+    }, 0);
+
+});
+
+// Eliminar el sticker seleccionado
+btnQuitarSticker.addEventListener("click", () => {
+
+    if (!stickerSeleccionado) return;
+
+    const indice = stickersColocados.indexOf(stickerSeleccionado);
+
+    if (indice !== -1) {
+
+        stickersColocados.splice(indice, 1);
+
+        stickerSeleccionado = null;
+        stickerArrastrado = null;
+
+        dibujarStickers();
+
+        btnQuitarSticker.disabled = true;
+    }
+
+});
+
+ 
     // =====================================
     // PRUEBA VISUAL B1 SIN REGISTRO
     // =====================================
