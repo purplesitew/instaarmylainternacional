@@ -593,3 +593,88 @@ transform: translate(-50%, -50%);
     touch-action: none;
     cursor: grab;
 }
+/* =====================================
+   SALUDO DE RM
+===================================== */
+
+#pantalla-saludo {
+    position: fixed;
+    inset: 0;
+    z-index: 15000;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    background: #180b24;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+
+    animation: saludoEntra 2s ease-out both;
+}
+
+/* Imagen de RM */
+
+#imagen-saludo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
+/* Botón CONTINUAR */
+
+#btnContinuarSaludo {
+    position: absolute;
+    bottom: max(30px, env(safe-area-inset-bottom));
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+
+    padding: 14px 38px;
+    border: 2px solid #e9d5ff;
+    border-radius: 30px;
+    background: linear-gradient(135deg, #b66cff, #6a0dad);
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(192, 132, 252, 0.6);
+}
+
+/* Audio oculto */
+
+#sonidoSaludo {
+    display: none;
+}
+
+/* Animación de entrada desde abajo */
+
+@keyframes saludoEntra {
+    from {
+        transform: translateY(100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+/* Animación de salida hacia arriba */
+
+#pantalla-saludo.saliendo {
+    animation: saludoSale 1s ease-in forwards;
+    pointer-events: none;
+}
+
+@keyframes saludoSale {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-100%);
+    }
+}
