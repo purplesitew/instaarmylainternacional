@@ -839,20 +839,26 @@ if (capaStickers) {
                 Math.pow(centroY - zona.centroY, 2)
             );
 
-            const diagonalInicial = Math.sqrt(
-                Math.pow(stickerEnPinza.ancho, 2) +
-                Math.pow(stickerEnPinza.alto, 2)
-            );
-
-            const diagonalMaxima = Math.max(
+         const diagonalMaxima = Math.max(
     1,
     2 * (zona.radio * 0.98 - distanciaCentro)
 );
 
-            const escalaMaxima =
-                diagonalMaxima / diagonalInicial;
+const proporcionAlto =
+    stickerEnPinza.origenAlto /
+    stickerEnPinza.origenAncho;
 
-           const escalaFinal = Math.min(
+const diagonalPorUnidad = Math.sqrt(
+    1 + Math.pow(proporcionAlto, 2)
+);
+
+const anchoMaximo =
+    diagonalMaxima / diagonalPorUnidad;
+
+const escalaMaxima =
+    anchoMaximo / tamanoInicialPinza;
+
+const escalaFinal = Math.min(
     escalaMaxima,
     Math.max(0.25, escalaSolicitada)
 );
