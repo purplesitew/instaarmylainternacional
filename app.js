@@ -856,8 +856,8 @@ if (btnMarcoFoto && listaMarcos) {
 } : {
     x: 25,
     y: 209,
-    ancho: 273,
-    alto: 365
+    ancho: 276,
+    alto: 375
 })
 };
                     dibujarStickers();
