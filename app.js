@@ -390,6 +390,37 @@ const listaStickers = document.getElementById("lista-stickers");
 
 const imagenesStickers = {};
 const stickersColocados = [];
+  // Cada zona solo puede tener un sticker
+function buscarZonaLibre() {
+    return ZONAS_STICKERS.find(zona =>
+        !stickersColocados.some(sticker => sticker.zonaId === zona.id)
+    );
+}
+  // ==========================================
+// TRES ZONAS PERMITIDAS PARA LOS STICKERS
+// ==========================================
+
+const ZONAS_STICKERS = [
+    {
+        id: 1,
+        centroX: 361,
+        centroY: 320,
+        radio: 55
+    },
+    {
+        id: 2,
+        centroX: 748,
+        centroY: 623,
+        radio: 68
+    },
+    {
+        id: 3,
+        centroX: 356,
+        centroY: 860,
+        radio: 50
+    }
+];
+  
 
 const capaStickers = document.getElementById("capa-stickers");
 
@@ -397,6 +428,13 @@ let imagenStickersActiva = null;
 let stickerArrastrado = null;
 let desplazamientoStickerX = 0;
 let desplazamientoStickerY = 0;
+  // Control para cambiar el tamaño con dos dedos
+let puntosToque = new Map();
+let distanciaInicialPinza = 0;
+let tamanoInicialPinza = 0;
+let stickerEnPinza = null;
+  // Sticker seleccionado para poder eliminarlo
+let stickerSeleccionado = null;
 
 if (capaStickers) {
     capaStickers.width = 880;
@@ -489,61 +527,68 @@ function buscarPosicionSticker(ancho, alto) {
 // Seleccionar un sticker de la galería
 function colocarSticker(sticker, imagen) {
 
-const usaCoordenadas3464 =
-    imagen === imagenesStickers.jhope ||
-    imagen === imagenesStickers.jin ||
-    imagen === imagenesStickers.v ||
-    imagen === imagenesStickers.rm ||
-    imagen === imagenesStickers.jimin ||
-    imagen === imagenesStickers.suga ||
-    imagen === imagenesStickers.ot7;
+    // Buscar el primer círculo disponible
+    const zona = buscarZonaLibre();
 
-const escalaX = imagen.naturalWidth /
-    (usaCoordenadas3464 ? 3464 : TAMANO_COORDENADAS);
+    if (!zona) {
+        alert("Ya colocaste tus 3 stickers. Elimina uno para elegir otro. 💜");
+        return;
+    }
 
-const escalaY = imagen.naturalHeight /
-    (usaCoordenadas3464 ? 3464 : TAMANO_COORDENADAS);
+    // Reconocer el tamaño de coordenadas de cada imagen
+    const usaCoordenadas3464 =
+        imagen === imagenesStickers.jhope ||
+        imagen === imagenesStickers.jin ||
+        imagen === imagenesStickers.v ||
+        imagen === imagenesStickers.rm ||
+        imagen === imagenesStickers.jimin ||
+        imagen === imagenesStickers.suga ||
+        imagen === imagenesStickers.ot7;
 
-const origenX = sticker.x * escalaX;
-const origenY = sticker.y * escalaY;
-const origenAncho = sticker.width * escalaX;
-const origenAlto = sticker.height * escalaY;
+    const escalaX = imagen.naturalWidth /
+        (usaCoordenadas3464 ? 3464 : TAMANO_COORDENADAS);
 
-    // Tamaño inicial: máximo 100 píxeles
-const escala = Math.min(
-    225 / origenAncho,
-    225 / origenAlto
-);
+    const escalaY = imagen.naturalHeight /
+        (usaCoordenadas3464 ? 3464 : TAMANO_COORDENADAS);
+
+    const origenX = sticker.x * escalaX;
+    const origenY = sticker.y * escalaY;
+    const origenAncho = sticker.width * escalaX;
+    const origenAlto = sticker.height * escalaY;
+
+    // Mantener proporciones y ajustar al círculo
+    const mitadDiagonal = Math.sqrt(
+        Math.pow(origenAncho / 2, 2) +
+        Math.pow(origenAlto / 2, 2)
+    );
+
+    const escala = Math.min(
+        225 / origenAncho,
+        225 / origenAlto,
+        (zona.radio * 0.9) / mitadDiagonal
+    );
 
     const ancho = origenAncho * escala;
     const alto = origenAlto * escala;
 
-    const posicion = buscarPosicionSticker(ancho, alto);
-
-    if (!posicion) {
-
-        alert("Ya no hay espacio disponible para colocar otro sticker.");
-
-        return;
-
-    }
+    // Colocar en el centro del círculo
+    const x = zona.centroX - ancho / 2;
+    const y = zona.centroY - alto / 2;
 
     stickersColocados.push({
-
         imagen,
         origenX,
         origenY,
         origenAncho,
         origenAlto,
-        x: posicion.x,
-        y: posicion.y,
+        x,
+        y,
         ancho,
-        alto
-
+        alto,
+        zonaId: zona.id
     });
 
     dibujarStickers();
-
 }
 
 // Cargar los stickers del Bias seleccionado
@@ -694,11 +739,6 @@ const alto = sticker.height * escalaY;
     });
 
 }
-
-// ==========================================
-// MOVER STICKERS CON EL DEDO O EL MOUSE
-// ==========================================
-
 if (capaStickers) {
 
     capaStickers.addEventListener("pointerdown", (evento) => {
@@ -711,36 +751,58 @@ if (capaStickers) {
         const y = (evento.clientY - rect.top) *
             capaStickers.height / rect.height;
 
-        // Buscar el sticker que está debajo del dedo
-        for (let i = stickersColocados.length - 1; i >= 0; i--) {
+        puntosToque.set(evento.pointerId, { x, y });
 
-            const sticker = stickersColocados[i];
+        // Primer dedo: seleccionar el sticker
+        if (puntosToque.size === 1) {
 
-            if (
-                x >= sticker.x &&
-                x <= sticker.x + sticker.ancho &&
-                y >= sticker.y &&
-                y <= sticker.y + sticker.alto
-            ) {
+            stickerArrastrado = null;
+          stickerSeleccionado = null;
 
-                stickerArrastrado = sticker;
+            for (let i = stickersColocados.length - 1; i >= 0; i--) {
 
-                desplazamientoStickerX = x - sticker.x;
-                desplazamientoStickerY = y - sticker.y;
+                const sticker = stickersColocados[i];
 
-                capaStickers.setPointerCapture(evento.pointerId);
+                if (
+                    x >= sticker.x &&
+                    x <= sticker.x + sticker.ancho &&
+                    y >= sticker.y &&
+                    y <= sticker.y + sticker.alto
+                ) {
 
-                break;
+                    stickerArrastrado = sticker;
+                  stickerSeleccionado = sticker;
 
+                    desplazamientoStickerX = x - sticker.x;
+                    desplazamientoStickerY = y - sticker.y;
+
+                    break;
+                }
             }
-
         }
+
+        // Segundo dedo: comenzar a cambiar el tamaño
+        if (puntosToque.size === 2 && stickerArrastrado) {
+
+            const puntos = Array.from(puntosToque.values());
+
+            const dx = puntos[1].x - puntos[0].x;
+            const dy = puntos[1].y - puntos[0].y;
+
+            distanciaInicialPinza = Math.sqrt(dx * dx + dy * dy);
+
+            tamanoInicialPinza = stickerArrastrado.ancho;
+
+            stickerEnPinza = stickerArrastrado;
+        }
+
+        capaStickers.setPointerCapture(evento.pointerId);
 
     });
 
     capaStickers.addEventListener("pointermove", (evento) => {
 
-        if (!stickerArrastrado) return;
+        if (!puntosToque.has(evento.pointerId)) return;
 
         const rect = capaStickers.getBoundingClientRect();
 
@@ -750,29 +812,135 @@ if (capaStickers) {
         const y = (evento.clientY - rect.top) *
             capaStickers.height / rect.height;
 
-        stickerArrastrado.x = Math.max(
-            0,
-            Math.min(
-                capaStickers.width - stickerArrastrado.ancho,
-                x - desplazamientoStickerX
-            )
-        );
+        puntosToque.set(evento.pointerId, { x, y });
 
-        stickerArrastrado.y = Math.max(
-            0,
-            Math.min(
-                capaStickers.height - stickerArrastrado.alto,
-                y - desplazamientoStickerY
-            )
-        );
+        // CAMBIAR TAMAÑO CON DOS DEDOS
+        if (puntosToque.size === 2 && stickerEnPinza) {
 
-        dibujarStickers();
+            const puntos = Array.from(puntosToque.values());
+
+            const dx = puntos[1].x - puntos[0].x;
+            const dy = puntos[1].y - puntos[0].y;
+
+            const distanciaActual = Math.sqrt(dx * dx + dy * dy);
+
+            if (distanciaInicialPinza <= 0) return;
+
+            const zona = ZONAS_STICKERS.find(
+                zona => zona.id === stickerEnPinza.zonaId
+            );
+
+            if (!zona) return;
+
+            const escalaSolicitada =
+                distanciaActual / distanciaInicialPinza;
+
+            const centroX = stickerEnPinza.x +
+                stickerEnPinza.ancho / 2;
+
+            const centroY = stickerEnPinza.y +
+                stickerEnPinza.alto / 2;
+
+            const distanciaCentro = Math.sqrt(
+                Math.pow(centroX - zona.centroX, 2) +
+                Math.pow(centroY - zona.centroY, 2)
+            );
+
+            const diagonalInicial = Math.sqrt(
+                Math.pow(stickerEnPinza.ancho, 2) +
+                Math.pow(stickerEnPinza.alto, 2)
+            );
+
+            const diagonalMaxima = Math.max(
+                1,
+                2 * (zona.radio - distanciaCentro)
+            );
+
+            const escalaMaxima =
+                diagonalMaxima / diagonalInicial;
+
+            const escalaFinal = Math.max(
+                0.25,
+                Math.min(escalaSolicitada, escalaMaxima)
+            );
+
+            stickerEnPinza.ancho =
+                tamanoInicialPinza * escalaFinal;
+
+            stickerEnPinza.alto =
+                (stickerEnPinza.origenAlto /
+                stickerEnPinza.origenAncho) *
+                stickerEnPinza.ancho;
+
+            stickerEnPinza.x =
+                centroX - stickerEnPinza.ancho / 2;
+
+            stickerEnPinza.y =
+                centroY - stickerEnPinza.alto / 2;
+
+            dibujarStickers();
+
+            return;
+        }
+
+        // MOVER CON UN SOLO DEDO
+        if (puntosToque.size === 1 && stickerArrastrado) {
+
+            const zona = ZONAS_STICKERS.find(
+                zona => zona.id === stickerArrastrado.zonaId
+            );
+
+            if (!zona) return;
+
+            const mitadDiagonal = Math.sqrt(
+                Math.pow(stickerArrastrado.ancho / 2, 2) +
+                Math.pow(stickerArrastrado.alto / 2, 2)
+            );
+
+            const radioMovimiento = zona.radio - mitadDiagonal;
+
+            let centroX = x - desplazamientoStickerX +
+                stickerArrastrado.ancho / 2;
+
+            let centroY = y - desplazamientoStickerY +
+                stickerArrastrado.alto / 2;
+
+            const diferenciaX = centroX - zona.centroX;
+            const diferenciaY = centroY - zona.centroY;
+
+            const distancia = Math.sqrt(
+                diferenciaX * diferenciaX +
+                diferenciaY * diferenciaY
+            );
+
+            if (distancia > radioMovimiento) {
+
+                const factor = radioMovimiento / distancia;
+
+                centroX = zona.centroX + diferenciaX * factor;
+                centroY = zona.centroY + diferenciaY * factor;
+            }
+
+            stickerArrastrado.x =
+                centroX - stickerArrastrado.ancho / 2;
+
+            stickerArrastrado.y =
+                centroY - stickerArrastrado.alto / 2;
+
+            dibujarStickers();
+        }
 
     });
 
-    function terminarMovimientoSticker() {
+    function terminarMovimientoSticker(evento) {
 
+        puntosToque.delete(evento.pointerId);
+
+        stickerEnPinza = null;
         stickerArrastrado = null;
+
+        distanciaInicialPinza = 0;
+        tamanoInicialPinza = 0;
 
     }
 
