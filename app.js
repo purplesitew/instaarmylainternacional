@@ -1025,18 +1025,79 @@ btnQuitarSticker.addEventListener("click", () => {
 
   
 
-  const pantallaInicio = document.getElementById("pantalla-inicio");
-  const aplicacion = document.getElementById("aplicacion");
+ // =====================================
+// SECUENCIA DE INICIO Y SALUDO DE RM
+// =====================================
 
-  setTimeout(() => {
+const pantallaInicio = document.getElementById("pantalla-inicio");
+const pantallaSaludo = document.getElementById("pantalla-saludo");
+const aplicacion = document.getElementById("aplicacion");
+const btnContinuarSaludo = document.getElementById("btnContinuarSaludo");
+const sonidoSaludo = document.getElementById("sonidoSaludo");
+
+let sonidoSaludoIniciado = false;
+
+// Primero aparece la imagen de inicio durante 5 segundos
+setTimeout(() => {
+
+    // Ocultar la imagen de inicio
     if (pantallaInicio) {
-      pantallaInicio.style.display = "none";
+        pantallaInicio.style.display = "none";
     }
 
-    if (aplicacion) {
-      aplicacion.classList.remove("oculta");
+    // Mostrar el saludo de RM
+    if (pantallaSaludo) {
+        pantallaSaludo.classList.remove("oculta");
     }
-  }, 5000);
+
+    // Intentar reproducir el sonido automáticamente
+    if (sonidoSaludo) {
+        sonidoSaludo.play()
+            .then(() => {
+                sonidoSaludoIniciado = true;
+            })
+            .catch(() => {
+                sonidoSaludoIniciado = false;
+            });
+    }
+
+}, 5000);
+
+
+// Al pulsar CONTINUAR
+if (btnContinuarSaludo) {
+
+    btnContinuarSaludo.addEventListener("click", () => {
+
+        // Si el sonido no pudo reproducirse automáticamente,
+        // intentar reproducirlo al tocar el botón
+        if (!sonidoSaludoIniciado && sonidoSaludo) {
+            sonidoSaludo.play()
+                .then(() => {
+                    sonidoSaludoIniciado = true;
+                })
+                .catch(() => {
+                    console.log("No se pudo reproducir el sonido.");
+                });
+        }
+
+        // Iniciar la animación de salida de RM
+        pantallaSaludo.classList.add("saliendo");
+
+        // Esperar a que termine la animación
+        setTimeout(() => {
+
+            pantallaSaludo.classList.add("oculta");
+            pantallaSaludo.classList.remove("saliendo");
+
+            // Mostrar el menú de credenciales
+            aplicacion.classList.remove("oculta");
+
+        }, 1000);
+
+    });
+
+}
 
   // Botón de instalación
   const botonInstalar = document.getElementById("btnInstalar");
