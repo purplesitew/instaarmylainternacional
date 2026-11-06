@@ -405,19 +405,19 @@ const ZONAS_STICKERS = [
         id: 1,
         centroX: 361,
         centroY: 320,
-        radio: 85
+        radio: 100
     },
     {
        id: 2,
 centroX: 790,
 centroY: 623,
-radio: 85
+radio: 100
     },
     {
         id: 3,
         centroX: 356,
         centroY: 860,
-        radio: 85
+        radio: 100
     }
 ];
   
