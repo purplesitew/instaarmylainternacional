@@ -173,6 +173,20 @@ const COORDENADAS_OT7_3464 = [
     { id: 10, x: 2175, y: 2329, width: 965, height: 965 }
 ];
 // ==========================================
+// COORDENADAS DE LOS MARCOS DE FOTOGRAFÍA
+// ==========================================
+
+const COORDENADAS_MARCOS = {
+    jhope: { x: 1249, y: 1355, width: 637, height: 638 },
+    jin: { x: 2115, y: 2208, width: 1141, height: 1143 },
+    v: { x: 2252, y: 2371, width: 1060, height: 1061 },
+    rm: { x: 1918, y: 2181, width: 1200, height: 1201 },
+    jimin: { x: 2198, y: 2271, width: 1030, height: 1035 },
+    suga: { x: 1945, y: 2114, width: 1230, height: 1237 },
+    ot7: { x: 2175, y: 2329, width: 965, height: 965 },
+    jungkook: { x: 568, y: 643, width: 341, height: 340 }
+};
+// ==========================================
 // GENERAR CREDENCIAL B1 CON LOS DATOS
 // ==========================================
 
@@ -303,6 +317,26 @@ contexto.fillText(datos.codigo, 160, 630, 270);
 document.addEventListener("DOMContentLoaded", () => {
 
   // ==========================================
+// DIBUJAR MARCO SOBRE LA FOTOGRAFÍA
+// ==========================================
+
+function dibujarMarcoFoto(contexto) {
+
+    if (!marcoSeleccionado) return;
+
+    contexto.drawImage(
+        marcoSeleccionado.imagen,
+        marcoSeleccionado.origenX,
+        marcoSeleccionado.origenY,
+        marcoSeleccionado.origenAncho,
+        marcoSeleccionado.origenAlto,
+        marcoSeleccionado.x,
+        marcoSeleccionado.y,
+        marcoSeleccionado.ancho,
+        marcoSeleccionado.alto
+    );
+}
+  // ==========================================
 // COLOCAR FOTOGRAFÍA EN LA CREDENCIAL
 // ==========================================
 
@@ -388,6 +422,10 @@ const alto = 365;
 
 const selectorBiasStickers = document.getElementById("bias-stickers");
 const listaStickers = document.getElementById("lista-stickers");
+  const btnMarcoFoto = document.getElementById("btn-marco-foto");
+const listaMarcos = document.getElementById("lista-marcos");
+
+let marcoSeleccionado = null;
 
 const imagenesStickers = {};
 const stickersColocados = [];
@@ -473,7 +511,7 @@ function dibujarStickers() {
         );
 
     });
-
+dibujarMarcoFoto(contexto);
 }
 
 // Buscar un lugar inicial para cada sticker
@@ -732,6 +770,104 @@ const alto = sticker.height * escalaY;
 
     });
 
+}
+  // ==========================================
+// GALERÍA DE MARCOS PARA FOTOGRAFÍAS
+// ==========================================
+
+if (btnMarcoFoto && listaMarcos) {
+
+    btnMarcoFoto.addEventListener("click", async () => {
+
+        // Mostrar u ocultar la galería
+        if (listaMarcos.children.length > 0) {
+            listaMarcos.style.display =
+                listaMarcos.style.display === "none" ? "flex" : "none";
+            return;
+        }
+
+        listaMarcos.innerHTML = "Cargando marcos...";
+
+        const nombresMarcos = [
+            "jhope", "jin", "v", "rm",
+            "jimin", "suga", "ot7", "jungkook"
+        ];
+
+        listaMarcos.innerHTML = "";
+
+        for (const nombre of nombresMarcos) {
+
+            try {
+
+                let imagen = imagenesStickers[nombre];
+
+                if (!imagen) {
+                    imagen = new Image();
+
+                    await new Promise((resolve, reject) => {
+                        imagen.onload = resolve;
+                        imagen.onerror = reject;
+                        imagen.src = ARCHIVOS_STICKERS[nombre];
+                    });
+
+                    imagenesStickers[nombre] = imagen;
+                }
+
+                const marco = COORDENADAS_MARCOS[nombre];
+
+                const escalaCoordenadas =
+                    imagen.naturalWidth /
+                    (nombre === "jungkook" ? 1024 : 3464);
+
+                const opcion = document.createElement("button");
+                opcion.type = "button";
+                opcion.className = "sticker-opcion";
+
+                const miniatura = document.createElement("canvas");
+                miniatura.width = 120;
+                miniatura.height = 120;
+
+                const contextoMiniatura = miniatura.getContext("2d");
+
+                contextoMiniatura.drawImage(
+                    imagen,
+                    marco.x * escalaCoordenadas,
+                    marco.y * escalaCoordenadas,
+                    marco.width * escalaCoordenadas,
+                    marco.height * escalaCoordenadas,
+                    5, 5, 110, 110
+                );
+
+                opcion.appendChild(miniatura);
+
+                opcion.addEventListener("click", () => {
+
+                    marcoSeleccionado = {
+                        imagen: imagen,
+                        origenX: marco.x * escalaCoordenadas,
+                        origenY: marco.y * escalaCoordenadas,
+                        origenAncho: marco.width * escalaCoordenadas,
+                        origenAlto: marco.height * escalaCoordenadas,
+                        x: 25,
+                        y: 209,
+                        ancho: 273,
+                        alto: 365
+                    };
+
+                    dibujarStickers();
+
+                    listaMarcos.style.display = "none";
+                });
+
+                listaMarcos.appendChild(opcion);
+
+            } catch (error) {
+                console.error("Error al cargar el marco:", nombre, error);
+            }
+        }
+
+        listaMarcos.style.display = "flex";
+    });
 }
 if (capaStickers) {
 
