@@ -258,6 +258,128 @@ async function mostrarCredencialB1(datos) {
         canvas.height
     );
 
+  // =====================================
+// GENERAR CREDENCIALES B5 Y B10
+// =====================================
+
+async function mostrarCredencialB5B10(datos, archivoPlantilla) {
+
+    if (
+        archivoPlantilla !== "B5PLANTILLA.jpeg" &&
+        archivoPlantilla !== "B10PLANTILLA.jpeg"
+    ) {
+        throw new Error("Plantilla B5 o B10 no válida.");
+    }
+
+    const editor = document.getElementById("editor-credencial");
+    const creador = document.getElementById("creador-credencial");
+    const canvas = document.getElementById("canvas-credencial");
+
+    if (!editor || !canvas) {
+        throw new Error("No se encontró el editor de la credencial.");
+    }
+
+    const contexto = canvas.getContext("2d");
+
+    await document.fonts.load('68px "MilasianArmy"');
+    await document.fonts.load('32px "MoliendaArmy"');
+
+    const plantilla = new Image();
+    plantilla.src = "./" + archivoPlantilla;
+
+    await new Promise((resolve, reject) => {
+        plantilla.onload = resolve;
+        plantilla.onerror = () => reject(
+            new Error("No se pudo cargar " + archivoPlantilla)
+        );
+    });
+
+    canvas.width = 960;
+    canvas.height = 1280;
+
+    contexto.drawImage(
+        plantilla,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    // ESTILO DE LOS TEXTOS
+    contexto.textAlign = "center";
+    contexto.textBaseline = "alphabetic";
+    contexto.fillStyle = "#ffffff";
+    contexto.strokeStyle = "#c58aff";
+    contexto.lineJoin = "round";
+    contexto.lineWidth = 3;
+
+    function escribirTextoAjustado(texto, centroX, baselineY, anchoMaximo) {
+
+        let tamaño = 68;
+
+        contexto.font = `${tamaño}px "MilasianArmy"`;
+
+        while (
+            contexto.measureText(texto).width > anchoMaximo &&
+            tamaño > 30
+        ) {
+            tamaño--;
+            contexto.font = `${tamaño}px "MilasianArmy"`;
+        }
+
+        contexto.strokeText(texto, centroX, baselineY);
+        contexto.fillText(texto, centroX, baselineY);
+    }
+
+    // NOMBRE
+    escribirTextoAjustado(
+        datos.nombre,
+        CONFIGURACION_B5_B10.nombre.centerX,
+        CONFIGURACION_B5_B10.nombre.baselineY,
+        CONFIGURACION_B5_B10.nombre.maxWidth
+    );
+
+    // BIAS
+    escribirTextoAjustado(
+        datos.bias,
+        CONFIGURACION_B5_B10.bias.centerX,
+        CONFIGURACION_B5_B10.bias.baselineY,
+        CONFIGURACION_B5_B10.bias.maxWidth
+    );
+
+    // CÓDIGO PERSONAL DE REGISTRO
+    const zonaCodigo = CONFIGURACION_B5_B10.codigoPersonal;
+
+    contexto.textAlign = "center";
+    contexto.textBaseline = "middle";
+    contexto.font = '32px "MoliendaArmy"';
+    contexto.fillStyle = "#ffffff";
+    contexto.strokeStyle = "#c58aff";
+    contexto.lineWidth = 3;
+
+    contexto.strokeText(
+        datos.codigo,
+        zonaCodigo.centerX,
+        zonaCodigo.centerY,
+        zonaCodigo.maxWidth
+    );
+
+    contexto.fillText(
+        datos.codigo,
+        zonaCodigo.centerX,
+        zonaCodigo.centerY,
+        zonaCodigo.maxWidth
+    );
+
+    if (creador) creador.classList.add("oculta");
+
+    editor.classList.remove("oculta");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
 
 // ==========================================
 // ESTILO Y POSICIÓN DE LOS DATOS
@@ -1503,12 +1625,34 @@ if (formularioRegistro) {
 
 if (resultado.codigo) {
 
-    await mostrarCredencialB1({
+    const datosCredencial = {
         nombre: nombre,
         pais: pais,
         bias: bias,
         codigo: resultado.codigo
-    });
+    };
+
+    if (plantillaSeleccionada === "B5.jpeg") {
+
+        await mostrarCredencialB5B10(
+            datosCredencial,
+            "B5PLANTILLA.jpeg"
+        );
+
+    } else if (plantillaSeleccionada === "B10.jpeg") {
+
+        await mostrarCredencialB5B10(
+            datosCredencial,
+            "B10PLANTILLA.jpeg"
+        );
+
+    } else {
+
+        await mostrarCredencialB1(datosCredencial);
+
+    }
+
+}
 
 } else if (resultado.mensaje) {
 
