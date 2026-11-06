@@ -408,10 +408,10 @@ const ZONAS_STICKERS = [
         radio: 55
     },
     {
-        id: 2,
-        centroX: 748,
-        centroY: 623,
-        radio: 68
+       id: 2,
+centroX: 790,
+centroY: 623,
+radio: 85
     },
     {
         id: 3,
