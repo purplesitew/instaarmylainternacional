@@ -849,8 +849,8 @@ if (btnMarcoFoto && listaMarcos) {
                         origenAncho: marco.width * escalaCoordenadas,
                         origenAlto: marco.height * escalaCoordenadas,
                         ...(nombre === "suga" ? {
-    x: 4.5,
-    y: 181.5,
+    x: -15,
+    y: 155,
     ancho: 314,
     alto: 420
 } : {
@@ -859,8 +859,7 @@ if (btnMarcoFoto && listaMarcos) {
     ancho: 273,
     alto: 365
 })
-                    };
-
+};
                     dibujarStickers();
 
                     listaMarcos.style.display = "none";
