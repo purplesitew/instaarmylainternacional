@@ -177,7 +177,7 @@ const COORDENADAS_OT7_3464 = [
 // ==========================================
 
 const COORDENADAS_MARCOS = {
-    jhope: { x: 1249, y: 1355, width: 637, height: 638 },
+    jhope: { x: 2112, y: 2291, width: 1078, height: 1080 },
     jin: { x: 2115, y: 2208, width: 1141, height: 1143 },
     v: { x: 2252, y: 2371, width: 1060, height: 1061 },
     rm: { x: 1918, y: 2181, width: 1200, height: 1201 },
