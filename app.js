@@ -845,9 +845,9 @@ if (capaStickers) {
             );
 
             const diagonalMaxima = Math.max(
-                1,
-                2 * (zona.radio - distanciaCentro)
-            );
+    1,
+    2 * (zona.radio * 0.98 - distanciaCentro)
+);
 
             const escalaMaxima =
                 diagonalMaxima / diagonalInicial;
