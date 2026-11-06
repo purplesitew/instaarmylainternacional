@@ -91,7 +91,8 @@ const COORDENADAS_JHOPE = [
     { id: 6, x: 1441, y: 1414, width: 579, height: 636 },
     { id: 7, x: 2513, y: 1358, width: 664, height: 728 },
     { id: 8, x: 160, y: 2369, width: 1376, height: 451 },
-    { id: 9, x: 177, y: 2907, width: 1368, height: 444 }
+    { id: 9, x: 177, y: 2907, width: 1368, height: 444 },
+    { id: 10, x: 1249, y: 1355, width: 637, height: 638 }
 ];
 // Coordenadas individuales de Jin (3464 × 3464)
 const COORDENADAS_JIN = [
