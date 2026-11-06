@@ -841,7 +841,7 @@ if (capaStickers) {
 
        const diagonalMaxima = Math.max(
     1,
-    2 * (zona.radio * 1.15 - distanciaCentro)
+   2 * (zona.radio * 1.30 - distanciaCentro)
 );
 
 const proporcionAlto =
