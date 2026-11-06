@@ -841,7 +841,7 @@ if (capaStickers) {
 
        const diagonalMaxima = Math.max(
     1,
-   2 * (zona.radio * 1.30 - distanciaCentro)
+   2 * (zona.radio * 1.50 - distanciaCentro)
 );
 
 const proporcionAlto =
@@ -896,7 +896,7 @@ const escalaFinal = Math.min(
                 Math.pow(stickerArrastrado.alto / 2, 2)
             );
 
-            const radioMovimiento = zona.radio - mitadDiagonal;
+            const radioMovimiento = (zona.radio * 1.5) - mitadDiagonal;
 
             let centroX = x - desplazamientoStickerX +
                 stickerArrastrado.ancho / 2;
