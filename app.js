@@ -262,7 +262,7 @@ async function mostrarCredencialB1(datos) {
 // GENERAR CREDENCIALES B5 Y B10
 // =====================================
 
-async function mostrarCredencialB5B10(datos, archivoPlantilla) {
+window.mostrarCredencialB5B10 = async function(datos, archivoPlantilla) };
 
     if (
         archivoPlantilla !== "B5PLANTILLA.jpeg" &&
