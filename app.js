@@ -544,8 +544,8 @@ const esB5B10 =
     );
 
 // COORDENADAS DE LA FOTOGRAFÍA
-const x = esB5B10 ? 360 : 25;
-const y = esB5B10 ? 250 : 209;
+const x = esB5B10 ? 260 : 25;
+const y = esB5B10 ? 350 : 209;
 const ancho = esB5B10 ? 240 : 273;
 const alto = esB5B10 ? 330 : 365;
           
