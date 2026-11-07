@@ -1075,24 +1075,39 @@ if (btnMarcoFoto && listaMarcos) {
                         origenY: marco.y * escalaCoordenadas,
                         origenAncho: marco.width * escalaCoordenadas,
                         origenAlto: marco.height * escalaCoordenadas,
-          ...(plantillaSeleccionada === "B5.jpeg" ||
+         ...(plantillaSeleccionada === "B5.jpeg" ||
    plantillaSeleccionada === "B10.jpeg" ? {
-     
-   x: 358 * (capaStickers.width / 960),
-y: 156 * (capaStickers.height / 1280),
-ancho: 240 * (capaStickers.width / 960),
-alto: 330 * (capaStickers.height / 1280)
-     
-} : nombre === "suga" ? {
-    x: -65,
-    y: 135,
-    ancho: 326,
-    alto: 445
-} : {
+
+    // MARCOS B5 Y B10
+    x: 358 * (capaStickers.width / 960),
+    y: 156 * (capaStickers.height / 1280),
+    ancho: 240 * (capaStickers.width / 960),
+    alto: 330 * (capaStickers.height / 1280)
+
+} : plantillaSeleccionada === "B1.jpeg" ? {
+
+    // MARCO EXCLUSIVO B1
     x: 25 * (capaStickers.width / 960),
     y: 209 * (capaStickers.height / 1280),
     ancho: 276 * (capaStickers.width / 960),
     alto: 377 * (capaStickers.height / 1280)
+
+} : nombre === "suga" ? {
+
+    // MARCO ESPECIAL SUGA
+    x: -65,
+    y: 135,
+    ancho: 326,
+    alto: 445
+
+} : {
+
+    // RESTO DE CREDENCIALES: SIN CAMBIOS
+    x: 25,
+    y: 209,
+    ancho: 276,
+    alto: 377
+
 })
 };
                     dibujarStickers();
