@@ -204,7 +204,14 @@ const CONFIGURACION_B5_B10 = {
         baselineY: 911,
         maxWidth: 737
     },
-
+    fotografia: {
+        x: 358,
+        y: 156,
+        width: 240,
+        height: 330,
+        centerX: 478,
+        centerY: 321
+    },
     codigoPersonal: {
         x: 20,
         y: 1090,
@@ -343,9 +350,11 @@ contexto.fillText(datos.codigo, 160, 630, 270);
         behavior: "smooth"
     });
 }
- // =====================================
+
+// =====================================
 // GENERAR CREDENCIALES B5 Y B10
 // =====================================
+
 async function mostrarCredencialB5B10(datos, archivoPlantilla) {
 
     if (
@@ -365,9 +374,11 @@ async function mostrarCredencialB5B10(datos, archivoPlantilla) {
 
     const contexto = canvas.getContext("2d");
 
-    await document.fonts.load('68px "MilasianArmy"');
-    await document.fonts.load('32px "MoliendaArmy"');
+    // CARGAR FUENTE PIEDRA
+    await document.fonts.load('68px "PiedraArmy"');
+    await document.fonts.load('32px "PiedraArmy"');
 
+    // CARGAR PLANTILLA
     const plantilla = new Image();
     plantilla.src = "./" + archivoPlantilla;
 
@@ -378,8 +389,8 @@ async function mostrarCredencialB5B10(datos, archivoPlantilla) {
         );
     });
 
-    canvas.width = 960;
-    canvas.height = 1280;
+    canvas.width = CONFIGURACION_B5_B10.imagen.width;
+    canvas.height = CONFIGURACION_B5_B10.imagen.height;
 
     contexto.drawImage(
         plantilla,
@@ -389,29 +400,28 @@ async function mostrarCredencialB5B10(datos, archivoPlantilla) {
         canvas.height
     );
 
-    // ESTILO DE LOS TEXTOS
+    // ESTILO GENERAL DE LOS DATOS
     contexto.textAlign = "center";
     contexto.textBaseline = "alphabetic";
     contexto.fillStyle = "#ffffff";
-    contexto.strokeStyle = "#c58aff";
-    contexto.lineJoin = "round";
-    contexto.lineWidth = 3;
+    contexto.strokeStyle = "transparent";
+    contexto.lineWidth = 0;
 
+    // FUNCIÓN PARA AJUSTAR EL TAMAÑO DEL TEXTO
     function escribirTextoAjustado(texto, centroX, baselineY, anchoMaximo) {
 
         let tamaño = 68;
 
-        contexto.font = `${tamaño}px "MilasianArmy"`;
+        contexto.font = `${tamaño}px "PiedraArmy"`;
 
         while (
             contexto.measureText(texto).width > anchoMaximo &&
             tamaño > 30
         ) {
             tamaño--;
-            contexto.font = `${tamaño}px "MilasianArmy"`;
+            contexto.font = `${tamaño}px "PiedraArmy"`;
         }
 
-        contexto.strokeText(texto, centroX, baselineY);
         contexto.fillText(texto, centroX, baselineY);
     }
 
@@ -431,15 +441,16 @@ async function mostrarCredencialB5B10(datos, archivoPlantilla) {
         CONFIGURACION_B5_B10.bias.maxWidth
     );
 
-    // CÓDIGO PERSONAL DE REGISTRO
+    // CÓDIGO PERSONAL: BLANCO CON BORDE ROJO
     const zonaCodigo = CONFIGURACION_B5_B10.codigoPersonal;
 
     contexto.textAlign = "center";
     contexto.textBaseline = "middle";
-    contexto.font = '32px "MoliendaArmy"';
+    contexto.font = '32px "PiedraArmy"';
     contexto.fillStyle = "#ffffff";
-    contexto.strokeStyle = "#c58aff";
-    contexto.lineWidth = 3;
+    contexto.strokeStyle = "#ff0000";
+    contexto.lineWidth = 5;
+    contexto.lineJoin = "round";
 
     contexto.strokeText(
         datos.codigo,
@@ -455,7 +466,10 @@ async function mostrarCredencialB5B10(datos, archivoPlantilla) {
         zonaCodigo.maxWidth
     );
 
-    if (creador) creador.classList.add("oculta");
+    // MOSTRAR EDITOR
+    if (creador) {
+        creador.classList.add("oculta");
+    }
 
     editor.classList.remove("oculta");
 
