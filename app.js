@@ -544,8 +544,8 @@ const esB5B10 =
     );
 
 // COORDENADAS DE LA FOTOGRAFÍA
-const x = esB5B10 ? 440 : 25;
-const y = esB5B10 ? 250 : 209;
+const x = esB5B10 ? 358 : 25;
+const y = esB5B10 ? 156 : 209;
 const ancho = esB5B10 ? 240 : 273;
 const alto = esB5B10 ? 330 : 365;
 
@@ -1029,10 +1029,12 @@ if (btnMarcoFoto && listaMarcos) {
                         origenAlto: marco.height * escalaCoordenadas,
           ...(plantillaSeleccionada === "B5.jpeg" ||
    plantillaSeleccionada === "B10.jpeg" ? {
-    x: (440 / 960) * capaStickers.width,
-    y: (250 / 1280) * capaStickers.height,
-    ancho: (240 / 960) * capaStickers.width,
-    alto: (330 / 1280) * capaStickers.height
+     
+   x: 358 * (capaStickers.width / 960),
+y: 156 * (capaStickers.height / 1280),
+ancho: 240 * (capaStickers.width / 960),
+alto: 330 * (capaStickers.height / 1280)
+     
 } : nombre === "suga" ? {
     x: -65,
     y: 135,
