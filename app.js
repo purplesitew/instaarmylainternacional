@@ -1700,8 +1700,6 @@ if (resultado.codigo) {
 
     }
 
-}
-
 } else if (resultado.mensaje) {
 
     alert(
@@ -1713,11 +1711,6 @@ if (resultado.codigo) {
     throw new Error("No se recibió un código para tu credencial.");
 
 }
-
-
-    } catch (error) {
-      console.error("Error al registrar:", error);
-      alert(error.message || "Ocurrió un error al enviar tus datos.");
     } finally {
       botonContinuar.disabled = false;
       botonContinuar.textContent = "CONTINUAR";
