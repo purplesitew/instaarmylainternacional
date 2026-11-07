@@ -353,6 +353,9 @@ contexto.fillText(datos.codigo, 160, 630, 270);
 // CONTROL INDEPENDIENTE DE B5 Y B10
 let credencialB5B10Activa = false;
 
+// COPIA LIMPIA DE LA CREDENCIAL, SIN FOTOGRAFÍA
+let baseCredencialSinFoto = null;
+
 // =====================================
 // GENERAR CREDENCIALES B5 Y B10
 // =====================================
@@ -1615,6 +1618,8 @@ if (btnContinuarSaludo) {
      
 imagen.addEventListener("click", () => {
 
+  baseCredencialSinFoto = null;
+  
   // Desactivar la función exclusiva de B5 y B10
   credencialB5B10Activa = false;
 
