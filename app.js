@@ -526,23 +526,21 @@ if (nombreFoto) {
             alert("Selecciona una fotografía válida.");
             return;
         }
+    // IDENTIFICAR SI ES B5 O B10
+const esB5B10 =
+    plantillaSeleccionada === "B5.jpeg" ||
+    plantillaSeleccionada === "B10.jpeg";
 
-        const imagen = new Image();
-        const urlFoto = URL.createObjectURL(archivo);
+console.log("PLANTILLA DETECTADA:", plantillaSeleccionada, "¿ES B5/B10?", esB5B10);
 
-        imagen.onload = () => {
+const imagen = new Image();
+const urlFoto = URL.createObjectURL(archivo);
+
+imagen.onload = () => {
 
             const canvas = document.getElementById("canvas-credencial");
             const contexto = canvas.getContext("2d");
 
-  // IDENTIFICAR SI ES B5 O B10
-const esB5B10 =
-  console.log("PLANTILLA DETECTADA:", plantillaSeleccionada, "¿ES B5/B10?", esB5B10);
-    typeof plantillaSeleccionada !== "undefined" &&
-    (
-        plantillaSeleccionada === "B5.jpeg" ||
-        plantillaSeleccionada === "B10.jpeg"
-    );
 
 // COORDENADAS DE LA FOTOGRAFÍA
 const x = esB5B10 ? 358 : 25;
