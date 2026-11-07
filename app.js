@@ -258,7 +258,92 @@ async function mostrarCredencialB1(datos) {
         canvas.height
     );
 
-  // =====================================
+ 
+
+// ==========================================
+// ESTILO Y POSICIÓN DE LOS DATOS
+// ==========================================
+
+contexto.textAlign = "center";
+contexto.textBaseline = "bottom";
+
+contexto.fillStyle = "#ffffff";
+contexto.strokeStyle = "#c58aff";
+contexto.lineJoin = "round";
+contexto.lineWidth = 3;
+
+// FUNCIÓN PARA ESCRIBIR TEXTOS GRANDES
+function escribirTextoAjustado(texto, centroX, parteInferior, anchoMaximo) {
+
+    let tamaño = 68;
+
+    contexto.font = `${tamaño}px "MilasianArmy"`;
+
+    // Reducir solamente si el texto es demasiado ancho
+    while (
+        contexto.measureText(texto).width > anchoMaximo &&
+        tamaño > 30
+    ) {
+        tamaño--;
+        contexto.font = `${tamaño}px "MilasianArmy"`;
+    }
+
+    contexto.strokeText(texto, centroX, parteInferior);
+    contexto.fillText(texto, centroX, parteInferior);
+}
+
+// NOMBRE
+escribirTextoAjustado(
+    datos.nombre,
+    603,
+    430,
+    536
+);
+
+// PAÍS
+escribirTextoAjustado(
+    datos.pais,
+    603,
+    692,
+    536
+);
+
+// BIAS
+escribirTextoAjustado(
+    datos.bias,
+    603,
+    933,
+    536
+);
+
+
+// CÓDIGO
+contexto.textBaseline = "middle";
+
+contexto.font = '32px "MoliendaArmy"';
+
+contexto.fillStyle = "#ffffff"; 
+contexto.strokeStyle = "#ff0000";
+
+contexto.lineWidth = 6;
+contexto.lineJoin = "round";
+
+contexto.strokeText(datos.codigo, 160, 630, 270);
+contexto.fillText(datos.codigo, 160, 630, 270);
+
+    // Mostrar el editor
+    if (creador) {
+        creador.classList.add("oculta");
+    }
+
+    editor.classList.remove("oculta");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+ // =====================================
 // GENERAR CREDENCIALES B5 Y B10
 // =====================================
 
@@ -372,90 +457,6 @@ window.mostrarCredencialB5B10 = async function(datos, archivoPlantilla) {
     );
 
     if (creador) creador.classList.add("oculta");
-
-    editor.classList.remove("oculta");
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-}
-
-// ==========================================
-// ESTILO Y POSICIÓN DE LOS DATOS
-// ==========================================
-
-contexto.textAlign = "center";
-contexto.textBaseline = "bottom";
-
-contexto.fillStyle = "#ffffff";
-contexto.strokeStyle = "#c58aff";
-contexto.lineJoin = "round";
-contexto.lineWidth = 3;
-
-// FUNCIÓN PARA ESCRIBIR TEXTOS GRANDES
-function escribirTextoAjustado(texto, centroX, parteInferior, anchoMaximo) {
-
-    let tamaño = 68;
-
-    contexto.font = `${tamaño}px "MilasianArmy"`;
-
-    // Reducir solamente si el texto es demasiado ancho
-    while (
-        contexto.measureText(texto).width > anchoMaximo &&
-        tamaño > 30
-    ) {
-        tamaño--;
-        contexto.font = `${tamaño}px "MilasianArmy"`;
-    }
-
-    contexto.strokeText(texto, centroX, parteInferior);
-    contexto.fillText(texto, centroX, parteInferior);
-}
-
-// NOMBRE
-escribirTextoAjustado(
-    datos.nombre,
-    603,
-    430,
-    536
-);
-
-// PAÍS
-escribirTextoAjustado(
-    datos.pais,
-    603,
-    692,
-    536
-);
-
-// BIAS
-escribirTextoAjustado(
-    datos.bias,
-    603,
-    933,
-    536
-);
-
-
-// CÓDIGO
-contexto.textBaseline = "middle";
-
-contexto.font = '32px "MoliendaArmy"';
-
-contexto.fillStyle = "#ffffff"; 
-contexto.strokeStyle = "#ff0000";
-
-contexto.lineWidth = 6;
-contexto.lineJoin = "round";
-
-contexto.strokeText(datos.codigo, 160, 630, 270);
-contexto.fillText(datos.codigo, 160, 630, 270);
-
-    // Mostrar el editor
-    if (creador) {
-        creador.classList.add("oculta");
-    }
 
     editor.classList.remove("oculta");
 
