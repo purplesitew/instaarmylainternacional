@@ -1316,7 +1316,55 @@ btnQuitarSticker.addEventListener("click", () => {
             }
         });
     }
+  
+     // =====================================
+// PRUEBA VISUAL B5 SIN REGISTRO
+// =====================================
 
+const btnProbarB5 = document.getElementById("btnProbarB5");
+
+if (btnProbarB5) {
+    btnProbarB5.addEventListener("click", async () => {
+        try {
+            await mostrarCredencialB5B10(
+                {
+                    nombre: "ARMY",
+                    bias: "JUNGKOOK",
+                    codigo: "PRUEBA-B5"
+                },
+                "B5PLANTILLA.jpeg"
+            );
+        } catch (error) {
+            console.error("Error en prueba B5:", error);
+            alert(error.message);
+        }
+    });
+}
+
+
+// =====================================
+// PRUEBA VISUAL B10 SIN REGISTRO
+// =====================================
+
+const btnProbarB10 = document.getElementById("btnProbarB10");
+
+if (btnProbarB10) {
+    btnProbarB10.addEventListener("click", async () => {
+        try {
+            await mostrarCredencialB5B10(
+                {
+                    nombre: "ARMY",
+                    bias: "JUNGKOOK",
+                    codigo: "PRUEBA-B10"
+                },
+                "B10PLANTILLA.jpeg"
+            );
+        } catch (error) {
+            console.error("Error en prueba B10:", error);
+            alert(error.message);
+        }
+    });
+}
   
 
  // =====================================
