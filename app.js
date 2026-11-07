@@ -346,8 +346,7 @@ contexto.fillText(datos.codigo, 160, 630, 270);
  // =====================================
 // GENERAR CREDENCIALES B5 Y B10
 // =====================================
-
-window.mostrarCredencialB5B10 = async function(datos, archivoPlantilla) {
+async function mostrarCredencialB5B10(datos, archivoPlantilla) {
 
     if (
         archivoPlantilla !== "B5PLANTILLA.jpeg" &&
@@ -465,6 +464,7 @@ window.mostrarCredencialB5B10 = async function(datos, archivoPlantilla) {
         behavior: "smooth"
     });
 }
+window.mostrarCredencialB5B10 = mostrarCredencialB5B10;
 
 document.addEventListener("DOMContentLoaded", () => {
 
