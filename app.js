@@ -535,17 +535,30 @@ if (nombreFoto) {
             const canvas = document.getElementById("canvas-credencial");
             const contexto = canvas.getContext("2d");
 
-            // Espacio de la fotografía dejando visible el marco gris
-const x = 25;
-const y = 209;
-const ancho = 273;
-const alto = 365;
+         // IDENTIFICAR SI ES B5 O B10
+const esB5B10 =
+    typeof plantillaSeleccionada !== "undefined" &&
+    (
+        plantillaSeleccionada === "B5.jpeg" ||
+        plantillaSeleccionada === "B10.jpeg"
+    );
 
-            // Ajustar la imagen sin deformarla
-            const escala = Math.max(
-                ancho / imagen.width,
-                alto / imagen.height
-            );
+// COORDENADAS DE LA FOTOGRAFÍA
+const x = esB5B10 ? 358 : 25;
+const y = esB5B10 ? 156 : 209;
+const ancho = esB5B10 ? 240 : 273;
+const alto = esB5B10 ? 330 : 365;
+
+// AJUSTAR LA FOTOGRAFÍA SIN DEFORMARLA
+const escala = esB5B10
+    ? Math.min(
+        ancho / imagen.width,
+        alto / imagen.height
+    )
+    : Math.max(
+        ancho / imagen.width,
+        alto / imagen.height
+    );
 
             const anchoImagen = imagen.width * escala;
             const altoImagen = imagen.height * escala;
