@@ -1029,10 +1029,10 @@ if (btnMarcoFoto && listaMarcos) {
                         origenAlto: marco.height * escalaCoordenadas,
                        ...(plantillaSeleccionada === "B5.jpeg" ||
    plantillaSeleccionada === "B10.jpeg" ? {
-   x: 383,
-y: 215,
-    ancho: 220,
-    alto: 310
+            x: 393,
+          y: 225,
+         ancho: 220,
+         alto: 310
 } : nombre === "suga" ? {
     x: -65,
     y: 135,
