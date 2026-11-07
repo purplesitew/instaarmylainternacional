@@ -1027,12 +1027,12 @@ if (btnMarcoFoto && listaMarcos) {
                         origenY: marco.y * escalaCoordenadas,
                         origenAncho: marco.width * escalaCoordenadas,
                         origenAlto: marco.height * escalaCoordenadas,
-                       ...(plantillaSeleccionada === "B5.jpeg" ||
+           ...(plantillaSeleccionada === "B5.jpeg" ||
    plantillaSeleccionada === "B10.jpeg" ? {
-          x: 440,
-       y: 250,
-       ancho: 240,
-      alto: 330
+    x: 440 * (capaStickers.width / 960),
+    y: 250 * (capaStickers.height / 1280),
+    ancho: 240 * (capaStickers.width / 960),
+    alto: 330 * (capaStickers.height / 1280)
 } : nombre === "suga" ? {
     x: -65,
     y: 135,
