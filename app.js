@@ -596,8 +596,8 @@ function dibujarFotografiaB1(imagen) {
     contexto.restore();
 }
   
-  // ==========================================
-// COLOCAR FOTOGRAFÍA EN LA CREDENCIAL
+// ==========================================
+// COLOCAR Y REEMPLAZAR FOTOGRAFÍA
 // ==========================================
 
 const fotoArmy = document.getElementById("fotoArmy");
@@ -627,6 +627,31 @@ if (fotoArmy) {
 
         imagen.onload = () => {
 
+            const canvas = document.getElementById("canvas-credencial");
+            const contexto = canvas.getContext("2d");
+
+            // GUARDAR LA CREDENCIAL LIMPIA LA PRIMERA VEZ
+            if (!baseCredencialSinFoto) {
+
+                baseCredencialSinFoto = contexto.getImageData(
+                    0,
+                    0,
+                    canvas.width,
+                    canvas.height
+                );
+
+            } else {
+
+                // RESTAURAR LA CREDENCIAL SIN LA FOTO ANTERIOR
+                contexto.putImageData(
+                    baseCredencialSinFoto,
+                    0,
+                    0
+                );
+
+            }
+
+            // COLOCAR LA NUEVA FOTOGRAFÍA
             if (credencialB5B10Activa) {
                 dibujarFotografiaB5B10(imagen);
             } else {
