@@ -535,7 +535,7 @@ if (nombreFoto) {
             const canvas = document.getElementById("canvas-credencial");
             const contexto = canvas.getContext("2d");
 
-         // IDENTIFICAR SI ES B5 O B10
+  // IDENTIFICAR SI ES B5 O B10
 const esB5B10 =
     typeof plantillaSeleccionada !== "undefined" &&
     (
@@ -544,11 +544,10 @@ const esB5B10 =
     );
 
 // COORDENADAS DE LA FOTOGRAFÍA
-const x = esB5B10 ? 320 : 25;
-const y = esB5B10 ? 290 : 209;
+const x = esB5B10 ? 358 : 25;
+const y = esB5B10 ? 156 : 209;
 const ancho = esB5B10 ? 240 : 273;
 const alto = esB5B10 ? 330 : 365;
-          
 
 // AJUSTAR LA FOTOGRAFÍA SIN DEFORMARLA
 const escala = esB5B10
