@@ -1089,10 +1089,10 @@ alto: 330 * (capaStickers.height / 1280)
     ancho: 326,
     alto: 445
 } : {
-    x: 25,
-    y: 209,
-    ancho: 276,
-    alto: 377
+    x: 25 * (capaStickers.width / 960),
+    y: 209 * (capaStickers.height / 1280),
+    ancho: 276 * (capaStickers.width / 960),
+    alto: 377 * (capaStickers.height / 1280)
 })
 };
                     dibujarStickers();
