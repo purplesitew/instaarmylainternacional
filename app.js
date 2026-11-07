@@ -537,6 +537,7 @@ if (nombreFoto) {
 
   // IDENTIFICAR SI ES B5 O B10
 const esB5B10 =
+  console.log("PLANTILLA DETECTADA:", plantillaSeleccionada, "¿ES B5/B10?", esB5B10);
     typeof plantillaSeleccionada !== "undefined" &&
     (
         plantillaSeleccionada === "B5.jpeg" ||
