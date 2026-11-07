@@ -350,12 +350,16 @@ contexto.fillText(datos.codigo, 160, 630, 270);
         behavior: "smooth"
     });
 }
+// CONTROL INDEPENDIENTE DE B5 Y B10
+let credencialB5B10Activa = false;
 
 // =====================================
 // GENERAR CREDENCIALES B5 Y B10
 // =====================================
 
 async function mostrarCredencialB5B10(datos, archivoPlantilla) {
+  
+      credencialB5B10Activa = true;
 
     if (
         archivoPlantilla !== "B5PLANTILLA.jpeg" &&
@@ -502,6 +506,93 @@ function dibujarMarcoFoto(contexto) {
         marcoSeleccionado.alto
     );
 }
+
+  // ==========================================
+// FOTOGRAFÍA EXCLUSIVA B5 Y B10
+// ==========================================
+
+function dibujarFotografiaB5B10(imagen) {
+
+    const canvas = document.getElementById("canvas-credencial");
+    const contexto = canvas.getContext("2d");
+
+    const x = 358;
+    const y = 156;
+    const ancho = 240;
+    const alto = 330;
+
+    // Ajustar sin deformar y sin sobresalir
+    const escala = Math.min(
+        ancho / imagen.width,
+        alto / imagen.height
+    );
+
+    const anchoImagen = imagen.width * escala;
+    const altoImagen = imagen.height * escala;
+
+    const desplazamientoX = (ancho - anchoImagen) / 2;
+    const desplazamientoY = (alto - altoImagen) / 2;
+
+    contexto.save();
+
+    contexto.beginPath();
+    contexto.rect(x, y, ancho, alto);
+    contexto.clip();
+
+    contexto.drawImage(
+        imagen,
+        x + desplazamientoX,
+        y + desplazamientoY,
+        anchoImagen,
+        altoImagen
+    );
+
+    contexto.restore();
+}
+
+
+// ==========================================
+// FOTOGRAFÍA EXCLUSIVA B1
+// ==========================================
+
+function dibujarFotografiaB1(imagen) {
+
+    const canvas = document.getElementById("canvas-credencial");
+    const contexto = canvas.getContext("2d");
+
+    const x = 25;
+    const y = 209;
+    const ancho = 273;
+    const alto = 365;
+
+    const escala = Math.max(
+        ancho / imagen.width,
+        alto / imagen.height
+    );
+
+    const anchoImagen = imagen.width * escala;
+    const altoImagen = imagen.height * escala;
+
+    const desplazamientoX = (ancho - anchoImagen) / 2;
+    const desplazamientoY = (alto - altoImagen) / 2;
+
+    contexto.save();
+
+    contexto.beginPath();
+    contexto.rect(x, y, ancho, alto);
+    contexto.clip();
+
+    contexto.drawImage(
+        imagen,
+        x + desplazamientoX,
+        y + desplazamientoY,
+        anchoImagen,
+        altoImagen
+    );
+
+    contexto.restore();
+}
+  
   // ==========================================
 // COLOCAR FOTOGRAFÍA EN LA CREDENCIAL
 // ==========================================
@@ -509,16 +600,17 @@ function dibujarMarcoFoto(contexto) {
 const fotoArmy = document.getElementById("fotoArmy");
 
 if (fotoArmy) {
+
     fotoArmy.addEventListener("change", () => {
 
         const archivo = fotoArmy.files[0];
-      const nombreFoto = document.getElementById("nombre-foto");
+        const nombreFoto = document.getElementById("nombre-foto");
 
-if (nombreFoto) {
-    nombreFoto.textContent = archivo
-        ? "Foto seleccionada: " + archivo.name
-        : "Ninguna fotografía seleccionada";
-}
+        if (nombreFoto) {
+            nombreFoto.textContent = archivo
+                ? "Foto seleccionada: " + archivo.name
+                : "Ninguna fotografía seleccionada";
+        }
 
         if (!archivo) return;
 
@@ -526,74 +618,31 @@ if (nombreFoto) {
             alert("Selecciona una fotografía válida.");
             return;
         }
-    // IDENTIFICAR SI ES B5 O B10
-const esB5B10 =
-    plantillaSeleccionada === "B5.jpeg" ||
-    plantillaSeleccionada === "B10.jpeg";
 
-console.log("PLANTILLA DETECTADA:", plantillaSeleccionada, "¿ES B5/B10?", esB5B10);
+        const imagen = new Image();
+        const urlFoto = URL.createObjectURL(archivo);
 
-const imagen = new Image();
-const urlFoto = URL.createObjectURL(archivo);
+        imagen.onload = () => {
 
-imagen.onload = () => {
-
-            const canvas = document.getElementById("canvas-credencial");
-            const contexto = canvas.getContext("2d");
-
-
-// COORDENADAS DE LA FOTOGRAFÍA
-const x = esB5B10 ? 358 : 25;
-const y = esB5B10 ? 156 : 209;
-const ancho = esB5B10 ? 240 : 273;
-const alto = esB5B10 ? 330 : 365;
-
-// AJUSTAR LA FOTOGRAFÍA SIN DEFORMARLA
-const escala = esB5B10
-    ? Math.min(
-        ancho / imagen.width,
-        alto / imagen.height
-    )
-    : Math.max(
-        ancho / imagen.width,
-        alto / imagen.height
-    );
-
-            const anchoImagen = imagen.width * escala;
-            const altoImagen = imagen.height * escala;
-
-            const desplazamientoX = (ancho - anchoImagen) / 2;
-            const desplazamientoY = (alto - altoImagen) / 2;
-
-            // Recortar para que no salga del marco
-            contexto.save();
-
-            contexto.beginPath();
-            contexto.rect(x, y, ancho, alto);
-            contexto.clip();
-
-            contexto.drawImage(
-                imagen,
-                x + desplazamientoX,
-                y + desplazamientoY,
-                anchoImagen,
-                altoImagen
-            );
-
-            contexto.restore();
+            if (credencialB5B10Activa) {
+                dibujarFotografiaB5B10(imagen);
+            } else {
+                dibujarFotografiaB1(imagen);
+            }
 
             URL.revokeObjectURL(urlFoto);
         };
 
         imagen.onerror = () => {
-            alert("No se pudo cargar la fotografía.");
             URL.revokeObjectURL(urlFoto);
+            alert("No se pudo cargar la fotografía.");
         };
 
         imagen.src = urlFoto;
+
     });
+
 }
-  
  // ==========================================
 // MOSTRAR, COLOCAR Y MOVER STICKERS
 // ==========================================
@@ -1550,6 +1599,11 @@ if (btnContinuarSaludo) {
 
      
 imagen.addEventListener("click", () => {
+
+  // Desactivar la función exclusiva de B5 y B10
+  credencialB5B10Activa = false;
+
+  // Guardar la plantilla seleccionada
   plantillaSeleccionada = `B${i}.jpeg`;
 
   // Registrar que esta credencial ya fue vista
