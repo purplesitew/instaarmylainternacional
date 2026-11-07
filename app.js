@@ -1027,7 +1027,13 @@ if (btnMarcoFoto && listaMarcos) {
                         origenY: marco.y * escalaCoordenadas,
                         origenAncho: marco.width * escalaCoordenadas,
                         origenAlto: marco.height * escalaCoordenadas,
-                       ...(nombre === "suga" ? {
+                       ...(plantillaSeleccionada === "B5.jpeg" ||
+   plantillaSeleccionada === "B10.jpeg" ? {
+    x: 403,
+    y: 235,
+    ancho: 220,
+    alto: 310
+} : nombre === "suga" ? {
     x: -65,
     y: 135,
     ancho: 326,
