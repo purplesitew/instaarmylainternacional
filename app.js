@@ -1421,79 +1421,65 @@ btnQuitarSticker.addEventListener("click", () => {
 
 });
 
- 
-    // =====================================
-    // PRUEBA VISUAL B1 SIN REGISTRO
-    // =====================================
+ // =====================================
+// EDITAR CREDENCIAL SIN REGISTRO
+// =====================================
 
-    const btnProbarB1 = document.getElementById("btnProbarB1");
+const btnEditarCredencial = document.getElementById("btnEditarCredencial");
 
-    if (btnProbarB1) {
-        btnProbarB1.addEventListener("click", async () => {
-            try {
-                await mostrarCredencialB1({
-                    nombre: "ARMY",
-                    pais: "MÉXICO",
-                    bias: "JUNGKOOK",
-                    codigo: "PRUEBA-001"
-                });
-            } catch (error) {
-                console.error("Error en prueba B1:", error);
-                alert(error.message);
+if (btnEditarCredencial) {
+    btnEditarCredencial.addEventListener("click", async () => {
+
+        const opcion = prompt(
+            "¿Qué credencial deseas probar?\n\n" +
+            "Escribe el número:\n\n" +
+            "1 - B1\n" +
+            "2 - B5\n" +
+            "3 - B10"
+        );
+
+        if (opcion === null) return;
+
+        try {
+
+            const datosPrueba = {
+                nombre: "ARMY",
+                pais: "MÉXICO",
+                bias: "JUNGKOOK",
+                codigo: "PRUEBA-" + opcion
+            };
+
+            if (opcion === "1") {
+
+                await mostrarCredencialB1(datosPrueba);
+
+            } else if (opcion === "2") {
+
+                await mostrarCredencialB5B10(
+                    datosPrueba,
+                    "B5PLANTILLA.jpeg"
+                );
+
+            } else if (opcion === "3") {
+
+                await mostrarCredencialB5B10(
+                    datosPrueba,
+                    "B10PLANTILLA.jpeg"
+                );
+
+            } else {
+
+                alert("Opción no válida. Inténtalo de nuevo.");
+
             }
-        });
-    }
-  
-     // =====================================
-// PRUEBA VISUAL B5 SIN REGISTRO
-// =====================================
 
-const btnProbarB5 = document.getElementById("btnProbarB5");
-
-if (btnProbarB5) {
-    btnProbarB5.addEventListener("click", async () => {
-        try {
-            await mostrarCredencialB5B10(
-                {
-                    nombre: "ARMY",
-                    bias: "JUNGKOOK",
-                    codigo: "PRUEBA-B5"
-                },
-                "B5PLANTILLA.jpeg"
-            );
         } catch (error) {
-            console.error("Error en prueba B5:", error);
+            console.error("Error al probar la credencial:", error);
             alert(error.message);
         }
+
     });
 }
-
-
-// =====================================
-// PRUEBA VISUAL B10 SIN REGISTRO
-// =====================================
-
-const btnProbarB10 = document.getElementById("btnProbarB10");
-
-if (btnProbarB10) {
-    btnProbarB10.addEventListener("click", async () => {
-        try {
-            await mostrarCredencialB5B10(
-                {
-                    nombre: "ARMY",
-                    bias: "JUNGKOOK",
-                    codigo: "PRUEBA-B10"
-                },
-                "B10PLANTILLA.jpeg"
-            );
-        } catch (error) {
-            console.error("Error en prueba B10:", error);
-            alert(error.message);
-        }
-    });
-}
-  
-
  // =====================================
 // SECUENCIA DE INICIO Y SALUDO DE RM
 // =====================================
