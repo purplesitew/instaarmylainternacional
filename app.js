@@ -1644,7 +1644,9 @@ if (btnEditarCredencial) {
             "Escribe el número:\n\n" +
             "1 - B1\n" +
             "2 - B5\n" +
-            "3 - B10"
+            "3 - B10\n" +
+            "4 - B7\n" +
+            "5 - B9"
         );
 
         if (opcion === null) return;
@@ -1674,6 +1676,20 @@ if (btnEditarCredencial) {
                 await mostrarCredencialB5B10(
                     datosPrueba,
                     "B10PLANTILLA.jpeg"
+                );
+
+            } else if (opcion === "4") {
+
+                await mostrarCredencialB7B9(
+                    datosPrueba,
+                    "B7PLANTILLA.jpeg"
+                );
+
+            } else if (opcion === "5") {
+
+                await mostrarCredencialB7B9(
+                    datosPrueba,
+                    "B9PLANTILLA.jpg"
                 );
 
             } else {
