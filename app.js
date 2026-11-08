@@ -356,6 +356,215 @@ let credencialB5B10Activa = false;
 // COPIA LIMPIA DE LA CREDENCIAL, SIN FOTOGRAFÍA
 let baseCredencialSinFoto = null;
 
+// ==========================================
+// CONFIGURACIÓN EXCLUSIVA B7 Y B9
+// NO MODIFICAR OTRAS CREDENCIALES
+// ==========================================
+
+const CONFIGURACION_B7_B9 = {
+
+    width: 720,
+    height: 963,
+
+    fuente: "PiedraArmy",
+
+    codigo: {
+        centerX: 571,
+        baselineY: 278,
+        maxWidth: 118,
+        fontSize: 24,
+        color: "#ffffff",
+        outline: "#ff0000"
+    },
+
+    pais: {
+        centerX: 562,
+        baselineY: 418,
+        maxWidth: 137,
+        fontSize: 24,
+        color: "#ffffff",
+        outline: "#ff00a8"
+    },
+
+    nombre: {
+        centerX: 425,
+        baselineY: 633,
+        maxWidth: 340,
+        fontSize: 30,
+        color: "#ffffff",
+        outline: "#ff00a8"
+    },
+
+    bias: {
+        centerX: 358,
+        baselineY: 775,
+        maxWidth: 173,
+        fontSize: 20,
+        color: "#ffffff",
+        outline: "#ff00a8"
+    },
+
+    fotografia: {
+        x: 95,
+        y: 184,
+        width: 160,
+        height: 220
+    }
+
+};
+// ==========================================
+// CONTROL EXCLUSIVO DE B7 Y B9
+// ==========================================
+
+let credencialB7B9Activa = false;
+
+
+// ==========================================
+// MOSTRAR CREDENCIAL B7 / B9
+// ==========================================
+
+async function mostrarCredencialB7B9(datos, archivoPlantilla) {
+
+    try {
+
+        if (
+            archivoPlantilla !== "B7PLANTILLA.jpeg" &&
+            archivoPlantilla !== "B9PLANTILLA.jpg"
+        ) {
+            throw new Error("Plantilla B7/B9 no válida.");
+        }
+
+        const editor = document.getElementById("editor-credencial");
+        const creador = document.getElementById("creador-credencial");
+        const canvas = document.getElementById("canvas-credencial");
+
+        if (!editor || !creador || !canvas) {
+            throw new Error("No se encontró el área de la credencial.");
+        }
+
+        const contexto = canvas.getContext("2d");
+
+        // CARGAR TIPOGRAFÍA
+        await document.fonts.load('68px "PiedraArmy"');
+        await document.fonts.load('32px "PiedraArmy"');
+
+        // DIMENSIONES DEL CANVAS
+        canvas.width = 960;
+        canvas.height = 1280;
+
+        const escalaX = canvas.width / CONFIGURACION_B7_B9.width;
+        const escalaY = canvas.height / CONFIGURACION_B7_B9.height;
+
+        // CARGAR PLANTILLA
+        const plantilla = new Image();
+
+        await new Promise((resolve, reject) => {
+
+            plantilla.onload = resolve;
+            plantilla.onerror = () => reject(
+                new Error("No se pudo cargar la plantilla B7/B9.")
+            );
+
+            plantilla.src = "./" + archivoPlantilla;
+
+        });
+
+        // DIBUJAR PLANTILLA
+        contexto.clearRect(0, 0, canvas.width, canvas.height);
+
+        contexto.drawImage(
+            plantilla,
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
+
+        // ==================================
+        // FUNCIÓN PARA ESCRIBIR LOS DATOS
+        // ==================================
+
+        function escribirDato(texto, configuracion, esCodigo = false) {
+
+            if (!texto) return;
+
+            const x = configuracion.centerX * escalaX;
+            const y = configuracion.baselineY * escalaY;
+            const anchoMaximo = configuracion.maxWidth * escalaX;
+
+            let tamano = configuracion.fontSize;
+
+            contexto.save();
+
+            contexto.textAlign = "center";
+            contexto.textBaseline = "alphabetic";
+            contexto.font = `${tamano}px "PiedraArmy"`;
+
+            while (
+                contexto.measureText(texto).width > anchoMaximo &&
+                tamano > 12
+            ) {
+                tamano--;
+
+                contexto.font = `${tamano}px "PiedraArmy"`;
+            }
+
+            contexto.fillStyle = configuracion.color;
+            contexto.strokeStyle = configuracion.outline;
+            contexto.lineWidth = esCodigo ? 5 : 4;
+            contexto.lineJoin = "round";
+
+            contexto.strokeText(texto, x, y);
+            contexto.fillText(texto, x, y);
+
+            contexto.restore();
+        }
+
+        // ==================================
+        // DIBUJAR LOS CUATRO CAMPOS
+        // ==================================
+
+        escribirDato(
+            datos.codigo,
+            CONFIGURACION_B7_B9.codigo,
+            true
+        );
+
+        escribirDato(
+            datos.pais,
+            CONFIGURACION_B7_B9.pais
+        );
+
+        escribirDato(
+            datos.nombre,
+            CONFIGURACION_B7_B9.nombre
+        );
+
+        escribirDato(
+            datos.bias,
+            CONFIGURACION_B7_B9.bias
+        );
+
+        // ACTIVAR CONTROL B7/B9
+        credencialB7B9Activa = true;
+
+        // MOSTRAR EDITOR
+        creador.classList.add("oculta");
+        editor.classList.remove("oculta");
+
+        editor.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+    } catch (error) {
+
+        console.error("Error al mostrar B7/B9:", error);
+        alert(error.message);
+
+    }
+
+}
 // =====================================
 // GENERAR CREDENCIALES B5 Y B10
 // =====================================
