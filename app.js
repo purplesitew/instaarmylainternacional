@@ -428,7 +428,7 @@ async function mostrarCredencialB7B9(datos, archivoPlantilla) {
     try {
 
         if (
-            archivoPlantilla !== "B7PLANTILLA.jpeg" &&
+            archivoPlantilla !== "B7PLANTILLA.jpg" &&
             archivoPlantilla !== "B9PLANTILLA.jpg"
         ) {
             throw new Error("Plantilla B7/B9 no válida.");
@@ -1682,7 +1682,7 @@ if (btnEditarCredencial) {
 
                 await mostrarCredencialB7B9(
                     datosPrueba,
-                    "B7PLANTILLA.jpeg"
+                    "B7PLANTILLA.jpg"
                 );
 
             } else if (opcion === "5") {
