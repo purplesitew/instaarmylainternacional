@@ -367,8 +367,8 @@ const CONFIGURACION_B7_B9 = {
 
     fuente: "PiedraArmy",
 
-   codigo: {
-    centerX: 511,
+codigo: {
+    centerX: 451,
     baselineY: 250,
     maxWidth: 150,
     fontSize: 60,
@@ -377,7 +377,7 @@ const CONFIGURACION_B7_B9 = {
 },
 
 pais: {
-    centerX: 502,
+    centerX: 442,
     baselineY: 390,
     maxWidth: 165,
     fontSize: 60,
@@ -386,7 +386,7 @@ pais: {
 },
 
 nombre: {
-    centerX: 365,
+    centerX: 305,
     baselineY: 605,
     maxWidth: 380,
     fontSize: 68,
@@ -402,7 +402,6 @@ bias: {
     color: "#ffffff",
     outline: "#ff00a8"
 },
-
     fotografia: {
         x: 95,
         y: 184,
