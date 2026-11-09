@@ -404,9 +404,9 @@ bias: {
 },
   
 fotografia: {
-    x: 155,
-    y: 184,
-    width: 100,
+    x: 96,
+    y: 186,
+    width: 158,
     height: 220
 }
 
