@@ -1392,9 +1392,9 @@ if (btnMarcoFoto && listaMarcos) {
     plantillaSeleccionada === "B9.jpeg"
 ) ? {
 
- // MARCOS EXCLUSIVOS B7 Y B9
-x: 156 * (capaStickers.width / 720),
-y: 186 * (capaStickers.height / 963),
+// MARCOS EXCLUSIVOS B7 Y B9
+x: 136 * (capaStickers.width / 720),
+y: 210 * (capaStickers.height / 963),
 ancho: 158 * (capaStickers.width / 720),
 alto: 220 * (capaStickers.height / 963)
 
