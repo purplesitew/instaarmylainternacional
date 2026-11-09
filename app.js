@@ -369,7 +369,7 @@ const CONFIGURACION_B7_B9 = {
 
     codigo: {
         centerX: 571,
-        baselineY: 278,
+        baselineY: 250,
         maxWidth: 150,
         fontSize: 60,
         color: "#ffffff",
@@ -378,7 +378,7 @@ const CONFIGURACION_B7_B9 = {
 
     pais: {
         centerX: 562,
-        baselineY: 418,
+        baselineY: 390,
         maxWidth: 165,
         fontSize: 60,
         color: "#ffffff",
@@ -387,7 +387,7 @@ const CONFIGURACION_B7_B9 = {
 
     nombre: {
         centerX: 425,
-        baselineY: 633,
+        baselineY: 605,
         maxWidth: 380,
         fontSize: 68,
         color: "#ffffff",
@@ -396,7 +396,7 @@ const CONFIGURACION_B7_B9 = {
 
     bias: {
         centerX: 358,
-        baselineY: 775,
+        baselineY: 747,
         maxWidth: 200,
         fontSize: 54,
         color: "#ffffff",
