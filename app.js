@@ -372,7 +372,7 @@ const CONFIGURACION_B7_B9 = {
         centerX: 571,
         baselineY: 278,
         maxWidth: 118,
-        fontSize: 34,
+        fontSize: 46,
         color: "#ffffff",
         outline: "#ff0000"
     },
@@ -381,7 +381,7 @@ const CONFIGURACION_B7_B9 = {
         centerX: 562,
         baselineY: 418,
         maxWidth: 137,
-        fontSize: 34,
+        fontSize: 46,
         color: "#ffffff",
         outline: "#ff00a8"
     },
@@ -390,7 +390,7 @@ const CONFIGURACION_B7_B9 = {
         centerX: 425,
         baselineY: 633,
         maxWidth: 340,
-        fontSize: 42,
+        fontSize: 54,
         color: "#ffffff",
         outline: "#ff00a8"
     },
@@ -399,7 +399,7 @@ const CONFIGURACION_B7_B9 = {
         centerX: 358,
         baselineY: 775,
         maxWidth: 173,
-        fontSize: 30,
+        fontSize: 42,
         color: "#ffffff",
         outline: "#ff00a8"
     },
