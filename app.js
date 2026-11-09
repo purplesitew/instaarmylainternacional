@@ -367,41 +367,41 @@ const CONFIGURACION_B7_B9 = {
 
     fuente: "PiedraArmy",
 
-    codigo: {
-        centerX: 571,
-        baselineY: 250,
-        maxWidth: 150,
-        fontSize: 60,
-        color: "#ffffff",
-        outline: "#ff0000"
-    },
+   codigo: {
+    centerX: 511,
+    baselineY: 250,
+    maxWidth: 150,
+    fontSize: 60,
+    color: "#ffffff",
+    outline: "#ff0000"
+},
 
-    pais: {
-        centerX: 562,
-        baselineY: 390,
-        maxWidth: 165,
-        fontSize: 60,
-        color: "#ffffff",
-        outline: "#ff00a8"
-    },
+pais: {
+    centerX: 502,
+    baselineY: 390,
+    maxWidth: 165,
+    fontSize: 60,
+    color: "#ffffff",
+    outline: "#ff00a8"
+},
 
-    nombre: {
-        centerX: 425,
-        baselineY: 605,
-        maxWidth: 380,
-        fontSize: 68,
-        color: "#ffffff",
-        outline: "#ff00a8"
-    },
+nombre: {
+    centerX: 365,
+    baselineY: 605,
+    maxWidth: 380,
+    fontSize: 68,
+    color: "#ffffff",
+    outline: "#ff00a8"
+},
 
-    bias: {
-        centerX: 358,
-        baselineY: 747,
-        maxWidth: 200,
-        fontSize: 54,
-        color: "#ffffff",
-        outline: "#ff00a8"
-    },
+bias: {
+    centerX: 298,
+    baselineY: 747,
+    maxWidth: 200,
+    fontSize: 54,
+    color: "#ffffff",
+    outline: "#ff00a8"
+},
 
     fotografia: {
         x: 95,
