@@ -1393,7 +1393,7 @@ if (btnMarcoFoto && listaMarcos) {
 ) ? {
 
 // MARCOS EXCLUSIVOS B7 Y B9
-(() => {
+...(() => {
 
     const canvasFoto = document.getElementById("canvas-credencial");
 
