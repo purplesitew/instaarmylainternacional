@@ -402,12 +402,12 @@ bias: {
     color: "#ffffff",
     outline: "#ff00a8"
 },
-    fotografia: {
-        x: 95,
-        y: 184,
-        width: 160,
-        height: 220
-    }
+  fotografia: {
+    x: 155,
+    y: 184,
+    width: 100,
+    height: 160
+}
 
 };
 // ==========================================
