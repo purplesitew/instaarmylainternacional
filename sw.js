@@ -1,5 +1,5 @@
 
-const CACHE_NAME = "insta-army-internacional-v43";
+const CACHE_NAME = "insta-army-internacional-v44";
 
 const ARCHIVOS_INICIALES = [
     "./",
@@ -14,18 +14,20 @@ const ARCHIVOS_INICIALES = [
     "./icono.png",
     "./icono-192.png",
     "./icono-512.png",
-    "./B1.jpeg",
-    "./B2.jpeg",
-    "./B3.jpeg",
-    "./B4.jpeg",
-    "./B5.jpeg",
-    "./B6.jpeg",
-    "./B7.jpeg",
-    "./B8.jpeg",
-    "./B9.jpeg",
-    "./B10.jpeg",
-    "./B5PLANTILLA.jpeg",
-    "./B10PLANTILLA.jpeg"
+   "./B1.jpeg",
+"./B2.jpeg",
+"./B3.jpeg",
+"./B4.jpeg",
+"./B5.jpeg",
+"./B6.jpeg",
+"./B7.jpeg",
+"./B8.jpeg",
+"./B9.jpeg",
+"./B10.jpeg",
+"./B5PLANTILLA.jpeg",
+"./B10PLANTILLA.jpeg",
+"./B7PLANTILLA.jpg",
+"./B9PLANTILLA.jpg"
 ];
 
 // INSTALAR LA APLICACIÓN
