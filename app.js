@@ -1393,10 +1393,47 @@ if (btnMarcoFoto && listaMarcos) {
 ) ? {
 
 // MARCOS EXCLUSIVOS B7 Y B9
-x: 136 * (capaStickers.width / 720),
-y: 210 * (capaStickers.height / 963),
-ancho: 158 * (capaStickers.width / 720),
-alto: 220 * (capaStickers.height / 963)
+(() => {
+
+    const canvasFoto = document.getElementById("canvas-credencial");
+
+    const rectFoto = canvasFoto.getBoundingClientRect();
+    const rectCapa = capaStickers.getBoundingClientRect();
+
+    const foto = CONFIGURACION_B7_B9.fotografia;
+
+    const escalaX = canvasFoto.width / CONFIGURACION_B7_B9.width;
+    const escalaY = canvasFoto.height / CONFIGURACION_B7_B9.height;
+
+    const xFoto = foto.x * escalaX;
+    const yFoto = foto.y * escalaY;
+
+    const anchoFoto = foto.width * escalaX;
+    const altoFoto = foto.height * escalaY;
+
+    return {
+
+        x: (
+            rectFoto.left - rectCapa.left +
+            xFoto * rectFoto.width / canvasFoto.width
+        ) * capaStickers.width / rectCapa.width,
+
+        y: (
+            rectFoto.top - rectCapa.top +
+            yFoto * rectFoto.height / canvasFoto.height
+        ) * capaStickers.height / rectCapa.height,
+
+        ancho: anchoFoto *
+            rectFoto.width / canvasFoto.width *
+            capaStickers.width / rectCapa.width,
+
+        alto: altoFoto *
+            rectFoto.height / canvasFoto.height *
+            capaStickers.height / rectCapa.height
+
+    };
+
+})()
 
 } : nombre === "suga" ? {
 
