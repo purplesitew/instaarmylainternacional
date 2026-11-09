@@ -1387,6 +1387,17 @@ if (btnMarcoFoto && listaMarcos) {
     ancho: 276 * (capaStickers.width / 960),
     alto: 377 * (capaStickers.height / 1280)
 
+} : (
+    plantillaSeleccionada === "B7.jpeg" ||
+    plantillaSeleccionada === "B9.jpeg"
+) ? {
+
+    // MARCOS EXCLUSIVOS B7 Y B9
+    x: 96 * (capaStickers.width / 720),
+    y: 186 * (capaStickers.height / 963),
+    ancho: 158 * (capaStickers.width / 720),
+    alto: 220 * (capaStickers.height / 963)
+
 } : nombre === "suga" ? {
 
     // MARCO ESPECIAL SUGA
