@@ -1414,9 +1414,10 @@ if (btnMarcoFoto && listaMarcos) {
     return {
 
         x: (
-            rectFoto.left - rectCapa.left +
-            xFoto * rectFoto.width / canvasFoto.width
-        ) * capaStickers.width / rectCapa.width,
+    rectFoto.left - rectCapa.left +
+    xFoto * rectFoto.width / canvasFoto.width
+) * capaStickers.width / rectCapa.width
+  + (76 * capaStickers.width / rectCapa.width),
 
         y: (
             rectFoto.top - rectCapa.top +
