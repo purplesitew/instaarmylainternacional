@@ -402,6 +402,7 @@ bias: {
     color: "#ffffff",
     outline: "#ff00a8"
 },
+  
 fotografia: {
     x: 215,
     y: 184,
