@@ -544,8 +544,12 @@ async function mostrarCredencialB7B9(datos, archivoPlantilla) {
             CONFIGURACION_B7_B9.bias
         );
 
-        // ACTIVAR CONTROL B7/B9
-        credencialB7B9Activa = true;
+     // ACTIVAR CONTROL B7/B9
+credencialB7B9Activa = true;
+credencialB5B10Activa = false;
+
+// PREPARAR UNA BASE LIMPIA PARA LA FOTOGRAFÍA
+baseCredencialSinFoto = null;
 
         // MOSTRAR EDITOR
         creador.classList.add("oculta");
@@ -760,7 +764,54 @@ function dibujarFotografiaB5B10(imagen) {
 
     contexto.restore();
 }
+// ==========================================
+// FOTOGRAFÍA EXCLUSIVA B7 Y B9
+// ==========================================
 
+function dibujarFotografiaB7B9(imagen) {
+
+    const canvas = document.getElementById("canvas-credencial");
+    const contexto = canvas.getContext("2d");
+
+    const foto = CONFIGURACION_B7_B9.fotografia;
+
+    const escalaX = canvas.width / CONFIGURACION_B7_B9.width;
+    const escalaY = canvas.height / CONFIGURACION_B7_B9.height;
+
+    const x = foto.x * escalaX;
+    const y = foto.y * escalaY;
+    const ancho = foto.width * escalaX;
+    const alto = foto.height * escalaY;
+
+    // AJUSTAR FOTOGRAFÍA SIN DEFORMAR
+    const escala = Math.max(
+        ancho / imagen.width,
+        alto / imagen.height
+    );
+
+    const anchoImagen = imagen.width * escala;
+    const altoImagen = imagen.height * escala;
+
+    const desplazamientoX = (ancho - anchoImagen) / 2;
+    const desplazamientoY = (alto - altoImagen) / 2;
+
+    contexto.save();
+
+    // RECORTAR EXACTAMENTE AL ÁREA INTERIOR DEL CUADRO ROSA
+    contexto.beginPath();
+    contexto.rect(x, y, ancho, alto);
+    contexto.clip();
+
+    contexto.drawImage(
+        imagen,
+        x + desplazamientoX,
+        y + desplazamientoY,
+        anchoImagen,
+        altoImagen
+    );
+
+    contexto.restore();
+}
 
 // ==========================================
 // FOTOGRAFÍA EXCLUSIVA B1
@@ -859,12 +910,20 @@ if (fotoArmy) {
 
             }
 
-            // COLOCAR LA NUEVA FOTOGRAFÍA
-            if (credencialB5B10Activa) {
-                dibujarFotografiaB5B10(imagen);
-            } else {
-                dibujarFotografiaB1(imagen);
-            }
+          // COLOCAR LA NUEVA FOTOGRAFÍA
+if (credencialB7B9Activa) {
+
+    dibujarFotografiaB7B9(imagen);
+
+} else if (credencialB5B10Activa) {
+
+    dibujarFotografiaB5B10(imagen);
+
+} else {
+
+    dibujarFotografiaB1(imagen);
+
+}
 
             URL.revokeObjectURL(urlFoto);
         };
