@@ -358,7 +358,6 @@ let baseCredencialSinFoto = null;
 
 // ==========================================
 // CONFIGURACIÓN EXCLUSIVA B7 Y B9
-// NO MODIFICAR OTRAS CREDENCIALES
 // ==========================================
 
 const CONFIGURACION_B7_B9 = {
@@ -371,8 +370,8 @@ const CONFIGURACION_B7_B9 = {
     codigo: {
         centerX: 571,
         baselineY: 278,
-        maxWidth: 118,
-        fontSize: 46,
+        maxWidth: 150,
+        fontSize: 60,
         color: "#ffffff",
         outline: "#ff0000"
     },
@@ -380,8 +379,8 @@ const CONFIGURACION_B7_B9 = {
     pais: {
         centerX: 562,
         baselineY: 418,
-        maxWidth: 137,
-        fontSize: 46,
+        maxWidth: 165,
+        fontSize: 60,
         color: "#ffffff",
         outline: "#ff00a8"
     },
@@ -389,8 +388,8 @@ const CONFIGURACION_B7_B9 = {
     nombre: {
         centerX: 425,
         baselineY: 633,
-        maxWidth: 340,
-        fontSize: 54,
+        maxWidth: 380,
+        fontSize: 68,
         color: "#ffffff",
         outline: "#ff00a8"
     },
@@ -398,8 +397,8 @@ const CONFIGURACION_B7_B9 = {
     bias: {
         centerX: 358,
         baselineY: 775,
-        maxWidth: 173,
-        fontSize: 42,
+        maxWidth: 200,
+        fontSize: 54,
         color: "#ffffff",
         outline: "#ff00a8"
     },
