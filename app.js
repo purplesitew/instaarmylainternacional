@@ -576,6 +576,74 @@ baseCredencialSinFoto = null;
     }
 
 }
+
+ // ==========================================
+ // MOSTRAR PLANTILLAS PENDIENTES B2 B3 B4 B6 B8
+ // ==========================================
+
+async function mostrarCredencialPendiente(datos, archivoPlantilla) {
+
+    const plantillasPermitidas = [
+        "B2PLANTILLA.jpg",
+        "B3PLANTILLA.jpg",
+        "B4PLANTILLA.jpg",
+        "B6PLANTILLA.jpg",
+        "B8PLANTILLA.jpg"
+    ];
+
+    if (!plantillasPermitidas.includes(archivoPlantilla)) {
+        throw new Error("Plantilla no válida: " + archivoPlantilla);
+    }
+
+    const editor = document.getElementById("editor-credencial");
+    const creador = document.getElementById("creador-credencial");
+    const canvas = document.getElementById("canvas-credencial");
+
+    if (!editor || !creador || !canvas) {
+        throw new Error("No se encontró el editor.");
+    }
+
+    const plantilla = new Image();
+
+    await new Promise((resolve, reject) => {
+        plantilla.onload = resolve;
+        plantilla.onerror = () => reject(
+            new Error("No se pudo cargar " + archivoPlantilla)
+        );
+        plantilla.src = "./" + archivoPlantilla;
+    });
+
+    // Evitar utilizar posiciones de fotografías anteriores
+    credencialB5B10Activa = false;
+    credencialB7B9Activa = false;
+    baseCredencialSinFoto = null;
+
+    // Utilizar las dimensiones de la plantilla original
+    canvas.width = plantilla.naturalWidth;
+    canvas.height = plantilla.naturalHeight;
+
+    const contexto = canvas.getContext("2d");
+
+    contexto.clearRect(0, 0, canvas.width, canvas.height);
+
+    contexto.drawImage(
+        plantilla,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    // Mostrar la plantilla elegida
+    creador.classList.add("oculta");
+    editor.classList.remove("oculta");
+
+    editor.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}
+
 // =====================================
 // GENERAR CREDENCIALES B5 Y B10
 // =====================================
@@ -2145,11 +2213,74 @@ if (resultado.codigo) {
         codigo: resultado.codigo
     };
 
-    if (plantillaSeleccionada === "B5.jpeg") {
+   
+    // ==========================================
+    // ABRIR LA CREDENCIAL ELEGIDA EN EL REGISTRO
+    // ==========================================
+
+    // Reiniciar controles de fotografías anteriores
+    credencialB5B10Activa = false;
+    credencialB7B9Activa = false;
+    baseCredencialSinFoto = null;
+
+    if (plantillaSeleccionada === "B1.jpeg") {
+
+        await mostrarCredencialB1(datosCredencial);
+
+    } else if (plantillaSeleccionada === "B2.jpeg") {
+
+        await mostrarCredencialPendiente(
+            datosCredencial,
+            "B2PLANTILLA.jpg"
+        );
+
+    } else if (plantillaSeleccionada === "B3.jpeg") {
+
+        await mostrarCredencialPendiente(
+            datosCredencial,
+            "B3PLANTILLA.jpg"
+        );
+
+    } else if (plantillaSeleccionada === "B4.jpeg") {
+
+        await mostrarCredencialPendiente(
+            datosCredencial,
+            "B4PLANTILLA.jpg"
+        );
+
+    } else if (plantillaSeleccionada === "B5.jpeg") {
 
         await mostrarCredencialB5B10(
             datosCredencial,
             "B5PLANTILLA.jpeg"
+        );
+
+    } else if (plantillaSeleccionada === "B6.jpeg") {
+
+        await mostrarCredencialPendiente(
+            datosCredencial,
+            "B6PLANTILLA.jpg"
+        );
+
+    } else if (plantillaSeleccionada === "B7.jpeg") {
+
+        await mostrarCredencialB7B9(
+            datosCredencial,
+            "B7PLANTILLA.jpg"
+        );
+
+    } else if (plantillaSeleccionada === "B8.jpeg") {
+
+        await mostrarCredencialPendiente(
+            datosCredencial,
+            "B8PLANTILLA.jpg"
+        );
+
+    } else if (plantillaSeleccionada === "B9.jpeg") {
+
+        await mostrarCredencialB7B9(
+            datosCredencial,
+            "B9PLANTILLA.jpg"
         );
 
     } else if (plantillaSeleccionada === "B10.jpeg") {
@@ -2161,9 +2292,10 @@ if (resultado.codigo) {
 
     } else {
 
-        await mostrarCredencialB1(datosCredencial);
+        throw new Error("No se reconoció la credencial seleccionada.");
 
     }
+
 
 } else if (resultado.mensaje) {
 
