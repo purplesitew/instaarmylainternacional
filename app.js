@@ -1808,11 +1808,10 @@ if (btnEditarCredencial) {
 
             }
 
-        } catch (error) {
+                } catch (error) {
             console.error("Error al probar la credencial:", error);
             alert(error.message);
         }
-        });
     });
 }
 
