@@ -534,15 +534,23 @@ async function mostrarCredencialB7B9(datos, archivoPlantilla) {
             CONFIGURACION_B7_B9.pais
         );
 
-        escribirDato(
-            datos.nombre,
-            CONFIGURACION_B7_B9.nombre
-        );
+       // NOMBRE B7 Y B9 - MOVER A LA IZQUIERDA
+escribirDato(
+    datos.nombre,
+    {
+        ...CONFIGURACION_B7_B9.nombre,
+        centerX: CONFIGURACION_B7_B9.nombre.centerX - 60
+    }
+);
 
-        escribirDato(
-            datos.bias,
-            CONFIGURACION_B7_B9.bias
-        );
+// BIAS B7 Y B9 - MOVER A LA IZQUIERDA
+escribirDato(
+    datos.bias,
+    {
+        ...CONFIGURACION_B7_B9.bias,
+        centerX: CONFIGURACION_B7_B9.bias.centerX - 60
+    }
+);
 
      // ACTIVAR CONTROL B7/B9
 credencialB7B9Activa = true;
