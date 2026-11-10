@@ -1409,9 +1409,10 @@ if (btnMarcoFoto && listaMarcos) {
 
     const anchoFoto = foto.width * escalaX;
     const altoFoto = foto.height * escalaY;
+    const margenMarco = 18;
 
     return {
-
+  
         x: (
             rectFoto.left - rectCapa.left +
             xFoto * rectFoto.width / canvasFoto.width
@@ -1422,13 +1423,13 @@ if (btnMarcoFoto && listaMarcos) {
             yFoto * rectFoto.height / canvasFoto.height
         ) * capaStickers.height / rectCapa.height,
 
-        ancho: anchoFoto *
-            rectFoto.width / canvasFoto.width *
-            capaStickers.width / rectCapa.width,
+       ancho: (anchoFoto + margenMarco * 2) *
+    rectFoto.width / canvasFoto.width *
+    capaStickers.width / rectCapa.width,
 
-        alto: altoFoto *
-            rectFoto.height / canvasFoto.height *
-            capaStickers.height / rectCapa.height
+alto: (altoFoto + margenMarco * 2) *
+    rectFoto.height / canvasFoto.height *
+    capaStickers.height / rectCapa.height
 
     };
 
