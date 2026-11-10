@@ -1994,22 +1994,24 @@ imagen.addEventListener("click", () => {
     });
 
   btnCrearCredencial.addEventListener("click", () => {
-  if (!plantillaSeleccionada) {
-    alert("Primero selecciona una plantilla.");
-    return;
-  }
+    if (!plantillaSeleccionada) {
+      alert("Primero selecciona una plantilla.");
+      return;
+    }
 
-  // Mostrar la plantilla elegida en pequeño
-  const miniatura = document.getElementById("miniatura-credencial");
-  miniatura.src = `./${plantillaSeleccionada}`;
+    // Mostrar la plantilla elegida en pequeño
+    const miniatura = document.getElementById("miniatura-credencial");
+    miniatura.src = `./${plantillaSeleccionada}`;
 
-  // Ocultar el menú y la vista previa
-  document.getElementById("menu-credenciales").classList.add("oculta");
-  vistaPrevia.classList.add("oculta");
+    // Ocultar el menú y la vista previa
+    document.getElementById("menu-credenciales").classList.add("oculta");
+    vistaPrevia.classList.add("oculta");
 
-  // Mostrar el formulario
-  document.getElementById("creador-credencial").classList.remove("oculta");
-});
+    // Mostrar el formulario
+    document.getElementById("creador-credencial").classList.remove("oculta");
+  });
+
+} // CIERRE DEL IF DE LAS PLANTILLAS
 
 // Mostrar u ocultar el campo del código anterior
 const opcionesCredencial = document.querySelectorAll(
