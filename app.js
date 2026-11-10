@@ -2170,9 +2170,7 @@ if (resultado.codigo) {
     } finally {
       botonContinuar.disabled = false;
       botonContinuar.textContent = "CONTINUAR";
-    }
-  });
-}
-
   }
-});
+
+    });
+}
