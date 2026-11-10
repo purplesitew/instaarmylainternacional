@@ -1737,7 +1737,7 @@ btnQuitarSticker.addEventListener("click", () => {
 
 });
 
- // =====================================
+// =====================================
 // EDITAR CREDENCIAL SIN REGISTRO
 // =====================================
 
@@ -1769,10 +1769,12 @@ if (btnEditarCredencial) {
 
             if (opcion === "1") {
 
+                plantillaSeleccionada = "B1.jpeg";
                 await mostrarCredencialB1(datosPrueba);
 
             } else if (opcion === "2") {
 
+                plantillaSeleccionada = "B5.jpeg";
                 await mostrarCredencialB5B10(
                     datosPrueba,
                     "B5PLANTILLA.jpeg"
@@ -1780,6 +1782,7 @@ if (btnEditarCredencial) {
 
             } else if (opcion === "3") {
 
+                plantillaSeleccionada = "B10.jpeg";
                 await mostrarCredencialB5B10(
                     datosPrueba,
                     "B10PLANTILLA.jpeg"
@@ -1787,6 +1790,7 @@ if (btnEditarCredencial) {
 
             } else if (opcion === "4") {
 
+                plantillaSeleccionada = "B7.jpeg";
                 await mostrarCredencialB7B9(
                     datosPrueba,
                     "B7PLANTILLA.jpg"
@@ -1794,6 +1798,7 @@ if (btnEditarCredencial) {
 
             } else if (opcion === "5") {
 
+                plantillaSeleccionada = "B9.jpeg";
                 await mostrarCredencialB7B9(
                     datosPrueba,
                     "B9PLANTILLA.jpg"
@@ -1811,6 +1816,7 @@ if (btnEditarCredencial) {
         }
 
     });
+} });
 }
  // =====================================
 // SECUENCIA DE INICIO Y SALUDO DE RM
