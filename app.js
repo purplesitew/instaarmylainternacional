@@ -733,7 +733,7 @@ async function mostrarCredencialB5B10(datos, archivoPlantilla) {
 
 escribirTextoAjustado(
     datos.nombre,
-    CONFIGURACION_B5_B10.nombre.centerX - 300,
+    CONFIGURACION_B5_B10.nombre.centerX - 270,
     CONFIGURACION_B5_B10.nombre.baselineY,
     CONFIGURACION_B5_B10.nombre.maxWidth
 );
