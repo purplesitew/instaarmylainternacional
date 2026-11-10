@@ -1815,7 +1815,7 @@ if (btnEditarCredencial) {
 
     });
 } });
-}
+
  // =====================================
 // SECUENCIA DE INICIO Y SALUDO DE RM
 // =====================================
