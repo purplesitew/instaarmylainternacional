@@ -1391,7 +1391,6 @@ if (btnMarcoFoto && listaMarcos) {
     plantillaSeleccionada === "B7.jpeg" ||
     plantillaSeleccionada === "B9.jpeg"
 ) ? {
-
 // MARCOS EXCLUSIVOS B7 Y B9
 ...(() => {
 
@@ -1413,10 +1412,10 @@ if (btnMarcoFoto && listaMarcos) {
 
     return {
 
-      x: (
-    rectFoto.left - rectCapa.left +
-    xFoto * rectFoto.width / canvasFoto.width
-) * capaStickers.width / rectCapa.width,,
+        x: (
+            rectFoto.left - rectCapa.left +
+            xFoto * rectFoto.width / canvasFoto.width
+        ) * capaStickers.width / rectCapa.width,
 
         y: (
             rectFoto.top - rectCapa.top +
