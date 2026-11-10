@@ -1,4 +1,13 @@
+/* ==========================================
+   FUENTE EXCLUSIVA CREDENCIAL B2
+   ========================================== */
 
+@font-face {
+    font-family: "TangoArmy";
+    src: url("./Tango Regular.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}
 /* =====================================
    TIPOGRAFÍAS DE LAS CREDENCIALES
 ===================================== */
