@@ -1812,9 +1812,9 @@ if (btnEditarCredencial) {
             console.error("Error al probar la credencial:", error);
             alert(error.message);
         }
-
+        });
     });
-} });
+}
 
  // =====================================
 // SECUENCIA DE INICIO Y SALUDO DE RM
