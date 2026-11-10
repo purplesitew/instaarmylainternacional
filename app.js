@@ -356,6 +356,61 @@ let credencialB5B10Activa = false;
 // COPIA LIMPIA DE LA CREDENCIAL, SIN FOTOGRAFÍA
 let baseCredencialSinFoto = null;
 
+
+// ==========================================
+// CONFIGURACIÓN EXCLUSIVA B2
+// ==========================================
+
+const CONFIGURACION_B2 = {
+    width: 880,
+    height: 1204,
+
+    fuente: "TangoArmy",
+
+    fotografia: {
+        x: 14,
+        y: 63,
+        width: 246,
+        height: 345
+    },
+
+    nombre: {
+        centerX: 522,
+        baselineY: 217,
+        maxWidth: 420,
+        fontSize: 72,
+        color: "#d4a017",
+        outline: "#8a8a8a"
+    },
+
+    pais: {
+        centerX: 522,
+        baselineY: 344,
+        maxWidth: 420,
+        fontSize: 72,
+        color: "#d4a017",
+        outline: "#8a8a8a"
+    },
+
+    bias: {
+        centerX: 617,
+        baselineY: 531,
+        maxWidth: 360,
+        fontSize: 62,
+        color: "#d9d9d9",
+        outline: "#2f2f2f"
+    },
+
+    codigo: {
+        centerX: 141,
+        baselineY: 535,
+        maxWidth: 220,
+        fontSize: 70,
+        color: "#ff0000",
+        outline: "#8a8a8a"
+    }
+};
+
 // ==========================================
 // CONFIGURACIÓN EXCLUSIVA B7 Y B9
 // ==========================================
@@ -650,6 +705,129 @@ async function mostrarCredencialPendiente(datos, archivoPlantilla) {
     });
 }
 
+
+// ==========================================
+// MOSTRAR CREDENCIAL B2
+// ==========================================
+
+async function mostrarCredencialB2(datos) {
+
+    const editor = document.getElementById("editor-credencial");
+    const creador = document.getElementById("creador-credencial");
+    const canvas = document.getElementById("canvas-credencial");
+
+    if (!editor || !creador || !canvas) {
+        throw new Error("No se encontró el área de la credencial.");
+    }
+
+    const contexto = canvas.getContext("2d");
+
+    // CARGAR FUENTE
+    await document.fonts.load('72px "TangoArmy"');
+
+    // CARGAR PLANTILLA
+    const plantilla = new Image();
+    plantilla.src = "./B2PLANTILLA.jpg";
+
+    await new Promise((resolve, reject) => {
+        plantilla.onload = resolve;
+        plantilla.onerror = () => reject(
+            new Error("No se pudo cargar la plantilla B2.")
+        );
+    });
+
+    canvas.width = CONFIGURACION_B2.width;
+    canvas.height = CONFIGURACION_B2.height;
+
+    contexto.clearRect(0, 0, canvas.width, canvas.height);
+
+    contexto.drawImage(
+        plantilla,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    function escribirDato(texto, configuracion, esCodigo = false) {
+
+        if (!texto) return;
+
+        let tamano = configuracion.fontSize;
+
+        contexto.save();
+
+        contexto.textAlign = "center";
+        contexto.textBaseline = "alphabetic";
+        contexto.font = `${tamano}px "TangoArmy"`;
+
+        while (
+            contexto.measureText(texto).width > configuracion.maxWidth &&
+            tamano > 20
+        ) {
+            tamano--;
+            contexto.font = `${tamano}px "TangoArmy"`;
+        }
+
+        contexto.fillStyle = configuracion.color;
+        contexto.strokeStyle = configuracion.outline;
+        contexto.lineWidth = esCodigo ? 6 : 5;
+        contexto.lineJoin = "round";
+
+        contexto.strokeText(
+            texto,
+            configuracion.centerX,
+            configuracion.baselineY
+        );
+
+        contexto.fillText(
+            texto,
+            configuracion.centerX,
+            configuracion.baselineY
+        );
+
+        contexto.restore();
+    }
+
+    // NOMBRE (PRIMERA LÍNEA)
+    escribirDato(
+        datos.nombre,
+        CONFIGURACION_B2.nombre
+    );
+
+    // PAÍS (SEGUNDA LÍNEA)
+    escribirDato(
+        datos.pais,
+        CONFIGURACION_B2.pais
+    );
+
+    // BIAS
+    escribirDato(
+        datos.bias,
+        CONFIGURACION_B2.bias
+    );
+
+    // CÓDIGO
+    escribirDato(
+        datos.codigo,
+        CONFIGURACION_B2.codigo,
+        true
+    );
+
+    // ACTIVAR CONTROLES
+    credencialB5B10Activa = false;
+    credencialB7B9Activa = false;
+    baseCredencialSinFoto = null;
+
+    creador.classList.add("oculta");
+    editor.classList.remove("oculta");
+
+    editor.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}
+
 // =====================================
 // GENERAR CREDENCIALES B5 Y B10
 // =====================================
@@ -811,7 +989,50 @@ function dibujarMarcoFoto(contexto) {
         marcoSeleccionado.alto
     );
 }
+// ==========================================
+// FOTOGRAFÍA EXCLUSIVA B2
+// ==========================================
 
+function dibujarFotografiaB2(imagen) {
+
+    const canvas = document.getElementById("canvas-credencial");
+    const contexto = canvas.getContext("2d");
+
+    const foto = CONFIGURACION_B2.fotografia;
+
+    const x = foto.x;
+    const y = foto.y;
+    const ancho = foto.width;
+    const alto = foto.height;
+
+    const escala = Math.max(
+        ancho / imagen.width,
+        alto / imagen.height
+    );
+
+    const anchoImagen = imagen.width * escala;
+    const altoImagen = imagen.height * escala;
+
+    const desplazamientoX = (ancho - anchoImagen) / 2;
+    const desplazamientoY = (alto - altoImagen) / 2;
+
+    contexto.save();
+
+    contexto.beginPath();
+    contexto.rect(x, y, ancho, alto);
+    contexto.clip();
+
+    contexto.drawImage(
+        imagen,
+        x + desplazamientoX,
+        y + desplazamientoY,
+        anchoImagen,
+        altoImagen
+    );
+
+    contexto.restore();
+}
+  
   // ==========================================
 // FOTOGRAFÍA EXCLUSIVA B5 Y B10
 // ==========================================
@@ -1000,8 +1221,11 @@ if (fotoArmy) {
 
             }
 
-          // COLOCAR LA NUEVA FOTOGRAFÍA
-if (credencialB7B9Activa) {
+ if (plantillaSeleccionada === "B2.jpeg") {
+
+    dibujarFotografiaB2(imagen);
+
+} else if (credencialB7B9Activa) {
 
     dibujarFotografiaB7B9(imagen);
 
@@ -1835,15 +2059,16 @@ const btnEditarCredencial = document.getElementById("btnEditarCredencial");
 if (btnEditarCredencial) {
     btnEditarCredencial.addEventListener("click", async () => {
 
-        const opcion = prompt(
-            "¿Qué credencial deseas probar?\n\n" +
-            "Escribe el número:\n\n" +
-            "1 - B1\n" +
-            "2 - B5\n" +
-            "3 - B10\n" +
-            "4 - B7\n" +
-            "5 - B9"
-        );
+       const opcion = prompt(
+    "¿Qué credencial deseas probar?\n\n" +
+    "Escribe el número:\n\n" +
+    "1 - B1\n" +
+    "2 - B2\n" +
+    "3 - B5\n" +
+    "4 - B10\n" +
+    "5 - B7\n" +
+    "6 - B9"
+);
 
         if (opcion === null) return;
 
@@ -1856,48 +2081,53 @@ if (btnEditarCredencial) {
                 codigo: "PRUEBA-" + opcion
             };
 
-            if (opcion === "1") {
+           if (opcion === "1") {
 
-                plantillaSeleccionada = "B1.jpeg";
-                await mostrarCredencialB1(datosPrueba);
+    plantillaSeleccionada = "B1.jpeg";
+    await mostrarCredencialB1(datosPrueba);
 
-            } else if (opcion === "2") {
+} else if (opcion === "2") {
 
-                plantillaSeleccionada = "B5.jpeg";
-                await mostrarCredencialB5B10(
-                    datosPrueba,
-                    "B5PLANTILLA.jpeg"
-                );
+    plantillaSeleccionada = "B2.jpeg";
+    await mostrarCredencialB2(datosPrueba);
 
-            } else if (opcion === "3") {
+} else if (opcion === "3") {
 
-                plantillaSeleccionada = "B10.jpeg";
-                await mostrarCredencialB5B10(
-                    datosPrueba,
-                    "B10PLANTILLA.jpeg"
-                );
+    plantillaSeleccionada = "B5.jpeg";
+    await mostrarCredencialB5B10(
+        datosPrueba,
+        "B5PLANTILLA.jpeg"
+    );
 
-            } else if (opcion === "4") {
+} else if (opcion === "4") {
 
-                plantillaSeleccionada = "B7.jpeg";
-                await mostrarCredencialB7B9(
-                    datosPrueba,
-                    "B7PLANTILLA.jpg"
-                );
+    plantillaSeleccionada = "B10.jpeg";
+    await mostrarCredencialB5B10(
+        datosPrueba,
+        "B10PLANTILLA.jpeg"
+    );
 
-            } else if (opcion === "5") {
+} else if (opcion === "5") {
 
-                plantillaSeleccionada = "B9.jpeg";
-                await mostrarCredencialB7B9(
-                    datosPrueba,
-                    "B9PLANTILLA.jpg"
-                );
+    plantillaSeleccionada = "B7.jpeg";
+    await mostrarCredencialB7B9(
+        datosPrueba,
+        "B7PLANTILLA.jpg"
+    );
 
-            } else {
+} else if (opcion === "6") {
 
-                alert("Opción no válida. Inténtalo de nuevo.");
+    plantillaSeleccionada = "B9.jpeg";
+    await mostrarCredencialB7B9(
+        datosPrueba,
+        "B9PLANTILLA.jpg"
+    );
 
-            }
+} else {
+
+    alert("Opción no válida. Inténtalo de nuevo.");
+
+}
 
                             } catch (error) {
             console.error("Error al probar la credencial:", error);
@@ -2239,14 +2469,11 @@ if (resultado.codigo) {
 
     if (plantillaSeleccionada === "B1.jpeg") {
 
-        await mostrarCredencialB1(datosCredencial);
+    await mostrarCredencialB1(datosCredencial);
 
-    } else if (plantillaSeleccionada === "B2.jpeg") {
+} else if (plantillaSeleccionada === "B2.jpeg") {
 
-        await mostrarCredencialPendiente(
-            datosCredencial,
-            "B2PLANTILLA.jpg"
-        );
+    await mostrarCredencialB2(datosCredencial);
 
     } else if (plantillaSeleccionada === "B3.jpeg") {
 
