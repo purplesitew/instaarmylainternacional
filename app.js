@@ -1438,11 +1438,10 @@ alto: (altoFoto + margenMarco * 2) *
 
 } : nombre === "suga" ? {
 
-    // MARCO ESPECIAL SUGA
-    x: -65,
-    y: 135,
-    ancho: 326,
-    alto: 445
+    x: -85,
+y: 115,
+ancho: 366,
+alto: 485
 
 } : {
 
