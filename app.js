@@ -534,21 +534,27 @@ async function mostrarCredencialB7B9(datos, archivoPlantilla) {
             CONFIGURACION_B7_B9.pais
         );
 
-       // NOMBRE B7 Y B9 - MOVER A LA IZQUIERDA
+   // ==========================================
+// NOMBRE B7 Y B9 - POSICIÓN HORIZONTAL
+// ==========================================
+
 escribirDato(
     datos.nombre,
     {
         ...CONFIGURACION_B7_B9.nombre,
-        centerX: CONFIGURACION_B7_B9.nombre.centerX - 60
+        centerX: 165
     }
 );
 
-// BIAS B7 Y B9 - MOVER A LA IZQUIERDA
+// ==========================================
+// BIAS B7 Y B9 - POSICIÓN HORIZONTAL
+// ==========================================
+
 escribirDato(
     datos.bias,
     {
         ...CONFIGURACION_B7_B9.bias,
-        centerX: CONFIGURACION_B7_B9.bias.centerX - 60
+        centerX: 158
     }
 );
 
