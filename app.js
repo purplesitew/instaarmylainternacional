@@ -655,7 +655,7 @@ async function mostrarCredencialB5B10(datos, archivoPlantilla) {
     // NOMBRE
     escribirTextoAjustado(
         datos.nombre,
-        CONFIGURACION_B5_B10.nombre.centerX,
+        CONFIGURACION_B5_B10.nombre.centerX - 100,
         CONFIGURACION_B5_B10.nombre.baselineY,
         CONFIGURACION_B5_B10.nombre.maxWidth
     );
@@ -663,7 +663,7 @@ async function mostrarCredencialB5B10(datos, archivoPlantilla) {
     // BIAS
     escribirTextoAjustado(
         datos.bias,
-        CONFIGURACION_B5_B10.bias.centerX,
+        CONFIGURACION_B5_B10.bias.centerX - 100,
         CONFIGURACION_B5_B10.bias.baselineY,
         CONFIGURACION_B5_B10.bias.maxWidth
     );
