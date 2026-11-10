@@ -386,7 +386,7 @@ pais: {
 },
 
 nombre: {
-    centerX: 298,
+    centerX: 275,
     baselineY: 605,
     maxWidth: 380,
     fontSize: 68,
@@ -395,7 +395,7 @@ nombre: {
 },
 
 bias: {
-    centerX: 198,
+    centerX: 268,
     baselineY: 747,
     maxWidth: 200,
     fontSize: 54,
