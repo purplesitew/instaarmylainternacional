@@ -1421,7 +1421,7 @@ if (btnMarcoFoto && listaMarcos) {
 
         y: (
             rectFoto.top - rectCapa.top +
-            yFoto * rectFoto.height / canvasFoto.height
+            (yFoto - 10 * escalaY) * rectFoto.height / canvasFoto.height
         ) * capaStickers.height / rectCapa.height,
 
        ancho: (anchoFoto + margenMarco * 2) *
