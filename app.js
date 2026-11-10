@@ -1438,10 +1438,10 @@ alto: (altoFoto + margenMarco * 2) *
 
 } : nombre === "suga" ? {
 
-    x: -85,
-y: 115,
-ancho: 366,
-alto: 485
+    x: -125,
+    y: 65,
+    ancho: 446,
+    alto: 585
 
 } : {
 
