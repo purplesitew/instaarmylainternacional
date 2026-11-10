@@ -988,10 +988,9 @@ const ZONAS_B5_B10 = [
 // B7 y B9 comparten posiciones
 const ZONAS_B7_B9 = [
     { id: 1, centroX: 790, centroY: 650, radio: 75 },
-    { id: 2, centroX: 790, centroY: 850, radio: 75 },
-    { id: 3, centroX: 790, centroY: 1050, radio: 75 }
+    { id: 2, centroX: 790, centroY: 850, radio: 75 }
 ];
-
+  
 let ZONAS_STICKERS = ZONAS_B1;
   
 const capaStickers = document.getElementById("capa-stickers");
