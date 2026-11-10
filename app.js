@@ -2165,10 +2165,14 @@ if (resultado.codigo) {
     throw new Error("No se recibió un código para tu credencial.");
 
 }
+   
     } finally {
       botonContinuar.disabled = false;
       botonContinuar.textContent = "CONTINUAR";
-  }
+    }
 
-    });
+  });
 }
+
+// CIERRE DEL EVENTO DOMCONTENTLOADED
+});
