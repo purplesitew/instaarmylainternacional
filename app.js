@@ -726,21 +726,29 @@ async function mostrarCredencialB5B10(datos, archivoPlantilla) {
         contexto.fillText(texto, centroX, baselineY);
     }
 
-    // NOMBRE
-    escribirTextoAjustado(
-        datos.nombre,
-        CONFIGURACION_B5_B10.nombre.centerX - 100,
-        CONFIGURACION_B5_B10.nombre.baselineY,
-        CONFIGURACION_B5_B10.nombre.maxWidth
-    );
+    
+ // ==========================================
+ // NOMBRE B5 Y B10 - HACIA LA IZQUIERDA
+ // ==========================================
 
-    // BIAS
-    escribirTextoAjustado(
-        datos.bias,
-        CONFIGURACION_B5_B10.bias.centerX - 100,
-        CONFIGURACION_B5_B10.bias.baselineY,
-        CONFIGURACION_B5_B10.bias.maxWidth
-    );
+escribirTextoAjustado(
+    datos.nombre,
+    CONFIGURACION_B5_B10.nombre.centerX - 150,
+    CONFIGURACION_B5_B10.nombre.baselineY,
+    CONFIGURACION_B5_B10.nombre.maxWidth
+);
+
+// ==========================================
+ // BIAS B5 Y B10 - HACIA LA IZQUIERDA
+ // ==========================================
+
+escribirTextoAjustado(
+    datos.bias,
+    CONFIGURACION_B5_B10.bias.centerX - 150,
+    CONFIGURACION_B5_B10.bias.baselineY,
+    CONFIGURACION_B5_B10.bias.maxWidth
+);
+
 
     // CÓDIGO PERSONAL: BLANCO CON BORDE ROJO
     const zonaCodigo = CONFIGURACION_B5_B10.codigoPersonal;
