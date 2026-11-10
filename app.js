@@ -953,6 +953,17 @@ const imagenesStickers = {};
 const stickersColocados = [];
   // Cada zona solo puede tener un sticker
 function buscarZonaLibre() {
+
+    const plantilla = plantillaSeleccionada || "";
+
+    if (plantilla === "B5.jpeg" || plantilla === "B10.jpeg") {
+        ZONAS_STICKERS = ZONAS_B5_B10;
+    } else if (plantilla === "B7.jpeg" || plantilla === "B9.jpeg") {
+        ZONAS_STICKERS = ZONAS_B7_B9;
+    } else {
+        ZONAS_STICKERS = ZONAS_B1;
+    }
+
     return ZONAS_STICKERS.find(zona =>
         !stickersColocados.some(sticker => sticker.zonaId === zona.id)
     );
@@ -961,28 +972,28 @@ function buscarZonaLibre() {
 // TRES ZONAS PERMITIDAS PARA LOS STICKERS
 // ==========================================
 
-const ZONAS_STICKERS = [
-    {
-        id: 1,
-        centroX: 361,
-        centroY: 320,
-        radio: 100
-    },
-    {
-       id: 2,
-centroX: 790,
-centroY: 623,
-radio: 100
-    },
-    {
-        id: 3,
-        centroX: 356,
-        centroY: 860,
-        radio: 100
-    }
+const ZONAS_B1 = [
+    { id: 1, centroX: 361, centroY: 320, radio: 100 },
+    { id: 2, centroX: 790, centroY: 623, radio: 100 },
+    { id: 3, centroX: 356, centroY: 860, radio: 100 }
 ];
-  
 
+// B5 y B10 comparten posiciones
+const ZONAS_B5_B10 = [
+    { id: 1, centroX: 750, centroY: 350, radio: 100 },
+    { id: 2, centroX: 750, centroY: 620, radio: 100 },
+    { id: 3, centroX: 750, centroY: 890, radio: 100 }
+];
+
+// B7 y B9 comparten posiciones
+const ZONAS_B7_B9 = [
+    { id: 1, centroX: 790, centroY: 650, radio: 75 },
+    { id: 2, centroX: 790, centroY: 850, radio: 75 },
+    { id: 3, centroX: 790, centroY: 1050, radio: 75 }
+];
+
+let ZONAS_STICKERS = ZONAS_B1;
+  
 const capaStickers = document.getElementById("capa-stickers");
 
 let imagenStickersActiva = null;
