@@ -1,4 +1,22 @@
 /* ==========================================
+   FUENTES EXCLUSIVAS CREDENCIAL B3
+   ========================================== */
+
+@font-face {
+    font-family: "AlwaysStarArmy";
+    src: url("./Always in the Star.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "ChiladaArmy";
+    src: url("./Chilada ICG Dos Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* ==========================================
    FUENTE EXCLUSIVA CREDENCIAL B2
    ========================================== */
 
