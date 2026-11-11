@@ -465,6 +465,64 @@ bias: {
     }
 };
 
+// ==========================================
+// CONFIGURACIÓN EXCLUSIVA B4
+// ==========================================
+
+const CONFIGURACION_B4 = {
+    width: 880,
+    height: 1204,
+
+    fotografia: {
+        x: 77,
+        y: 160,
+        width: 202,
+        height: 274
+    },
+
+    biasFoto: {
+        x: 579,
+        y: 160,
+        width: 202,
+        height: 274
+    },
+
+    nombre: {
+        centerX: 170,
+        baselineY: 553,
+        maxWidth: 260,
+        fontSize: 96,
+        color: "#f28cff",
+        outline: "#8a00c2"
+    },
+
+    bias: {
+        centerX: 160,
+        baselineY: 736,
+        maxWidth: 260,
+        fontSize: 100,
+        color: "#f28cff",
+        outline: "#8a00c2"
+    },
+
+    pais: {
+        centerX: 170,
+        baselineY: 958,
+        maxWidth: 270,
+        fontSize: 72,
+        color: "#f28cff",
+        outline: "#8a00c2"
+    },
+
+    codigo: {
+        centerX: 725,
+        baselineY: 954,
+        maxWidth: 180,
+        fontSize: 66,
+        color: "#ff4da6",
+        outline: "#ff0000"
+    }
+};
 
 // ==========================================
 // CONFIGURACIÓN EXCLUSIVA B7 Y B9
@@ -1019,6 +1077,186 @@ async function mostrarCredencialB3(datos) {
     });
 }
 
+// ==========================================
+// MOSTRAR CREDENCIAL EXCLUSIVA B4
+// ==========================================
+
+async function mostrarCredencialB4(datos) {
+
+    const editor = document.getElementById("editor-credencial");
+    const creador = document.getElementById("creador-credencial");
+    const canvas = document.getElementById("canvas-credencial");
+
+    if (!editor || !creador || !canvas) {
+        throw new Error("No se encontró el editor de B4.");
+    }
+
+    const contexto = canvas.getContext("2d");
+
+    // CARGAR FUENTES
+    await document.fonts.load('96px "CurlzArmy"');
+    await document.fonts.load('66px "ArialArmy"');
+
+    // CARGAR PLANTILLA
+    const plantilla = new Image();
+
+    await new Promise((resolve, reject) => {
+        plantilla.onload = resolve;
+        plantilla.onerror = () => reject(
+            new Error("No se pudo cargar B4PLANTILLA.jpg")
+        );
+        plantilla.src = "./B4PLANTILLA.jpg";
+    });
+
+    canvas.width = CONFIGURACION_B4.width;
+    canvas.height = CONFIGURACION_B4.height;
+
+    contexto.clearRect(0, 0, canvas.width, canvas.height);
+
+    contexto.drawImage(
+        plantilla,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    // ==========================================
+    // DIBUJAR FOTO DEL BIAS EN EL LADO DERECHO
+    // ==========================================
+
+    const archivoBias = obtenerArchivoBiasB4(datos.bias);
+
+    if (archivoBias) {
+
+        const imagenBias = new Image();
+
+        await new Promise((resolve, reject) => {
+            imagenBias.onload = resolve;
+            imagenBias.onerror = reject;
+            imagenBias.src = archivoBias;
+        });
+
+        const zona = CONFIGURACION_B4.biasFoto;
+
+        const escalaBias = Math.max(
+            zona.width / imagenBias.width,
+            zona.height / imagenBias.height
+        );
+
+        const anchoBias = imagenBias.width * escalaBias;
+        const altoBias = imagenBias.height * escalaBias;
+
+        const dxBias = (zona.width - anchoBias) / 2;
+        const dyBias = (zona.height - altoBias) / 2;
+
+        contexto.save();
+        contexto.beginPath();
+        contexto.rect(zona.x, zona.y, zona.width, zona.height);
+        contexto.clip();
+
+        contexto.drawImage(
+            imagenBias,
+            zona.x + dxBias,
+            zona.y + dyBias,
+            anchoBias,
+            altoBias
+        );
+
+        contexto.restore();
+    }
+
+    // ==========================================
+    // FUNCIÓN PARA ESCRIBIR DATOS B4
+    // ==========================================
+
+    function escribirDato(texto, config, fuente, esCodigo = false) {
+
+        if (!texto) return;
+
+        texto = String(texto);
+
+        let tamano = config.fontSize;
+
+        contexto.save();
+
+        contexto.textAlign = "center";
+        contexto.textBaseline = "alphabetic";
+        contexto.font = `${tamano}px "${fuente}"`;
+
+        while (
+            contexto.measureText(texto).width > config.maxWidth &&
+            tamano > 18
+        ) {
+            tamano--;
+            contexto.font = `${tamano}px "${fuente}"`;
+        }
+
+        contexto.fillStyle = config.color;
+        contexto.strokeStyle = config.outline;
+        contexto.lineWidth = esCodigo ? 6 : 5;
+        contexto.lineJoin = "round";
+
+        contexto.strokeText(
+            texto,
+            config.centerX,
+            config.baselineY,
+            config.maxWidth
+        );
+
+        contexto.fillText(
+            texto,
+            config.centerX,
+            config.baselineY,
+            config.maxWidth
+        );
+
+        contexto.restore();
+    }
+
+    // NOMBRE
+    escribirDato(
+        datos.nombre,
+        CONFIGURACION_B4.nombre,
+        "CurlzArmy"
+    );
+
+    // BIAS
+    escribirDato(
+        datos.bias,
+        CONFIGURACION_B4.bias,
+        "CurlzArmy"
+    );
+
+    // PAÍS
+    escribirDato(
+        datos.pais,
+        CONFIGURACION_B4.pais,
+        "CurlzArmy"
+    );
+
+    // CÓDIGO
+    escribirDato(
+        datos.codigo,
+        CONFIGURACION_B4.codigo,
+        "ArialArmy",
+        true
+    );
+
+    // PREPARAR LA FOTO DEL USUARIO
+    credencialB5B10Activa = false;
+    credencialB7B9Activa = false;
+    baseCredencialSinFoto = null;
+
+    creador.classList.add("oculta");
+    editor.classList.remove("oculta");
+
+    editor.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}
+
 // =====================================
 // GENERAR CREDENCIALES B5 Y B10
 // =====================================
@@ -1267,7 +1505,49 @@ function dibujarFotografiaB3(imagen) {
 
     contexto.restore();
 }
+// ==========================================
+// FOTOGRAFÍA EXCLUSIVA B4
+// ==========================================
 
+function dibujarFotografiaB4(imagen) {
+
+    const canvas = document.getElementById("canvas-credencial");
+    const contexto = canvas.getContext("2d");
+
+    const foto = CONFIGURACION_B4.fotografia;
+
+    const x = foto.x;
+    const y = foto.y;
+    const ancho = foto.width;
+    const alto = foto.height;
+
+    const escala = Math.max(
+        ancho / imagen.width,
+        alto / imagen.height
+    );
+
+    const anchoImagen = imagen.width * escala;
+    const altoImagen = imagen.height * escala;
+
+    const desplazamientoX = (ancho - anchoImagen) / 2;
+    const desplazamientoY = (alto - altoImagen) / 2;
+
+    contexto.save();
+
+    contexto.beginPath();
+    contexto.rect(x, y, ancho, alto);
+    contexto.clip();
+
+    contexto.drawImage(
+        imagen,
+        x + desplazamientoX,
+        y + desplazamientoY,
+        anchoImagen,
+        altoImagen
+    );
+
+    contexto.restore();
+}
   
   // ==========================================
 // FOTOGRAFÍA EXCLUSIVA B5 Y B10
@@ -1457,7 +1737,11 @@ if (fotoArmy) {
 
             }
 
- if (plantillaSeleccionada === "B3.jpeg") {
+if (plantillaSeleccionada === "B4.jpeg") {
+
+    dibujarFotografiaB4(imagen);
+
+} else if (plantillaSeleccionada === "B3.jpeg") {
 
     dibujarFotografiaB3(imagen);
 
@@ -1846,6 +2130,75 @@ const alto = sticker.height * escalaY;
 
     });
 
+}
+  // ==========================================
+// FOTOS DE BIAS PARA LA CREDENCIAL B4
+// ==========================================
+
+const ARCHIVOS_BIAS_B4 = {
+    jin: "./kimseokjin-jin.jpg",
+    v: "./kimtaehyung-v.jpg",
+    suga: "./minyoongi-suga.jpg",
+    jimin: "./parkjimin.jpg",
+    jungkook: "./jeonjungook.jpg",
+    jhope: "./junghoseok-jhope.jpg",
+    rm: "./kimnamjoon-rm.jpg",
+    ot7: "./bts-ot7.jpg"
+};
+
+function obtenerArchivoBiasB4(bias) {
+
+    const texto = (bias || "")
+        .toUpperCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .trim();
+
+    if (texto.includes("OT7") || texto.includes("BTS")) {
+        return ARCHIVOS_BIAS_B4.ot7;
+    }
+
+    if (texto.includes("JIN") || texto.includes("SEOKJIN")) {
+        return ARCHIVOS_BIAS_B4.jin;
+    }
+
+    if (texto.includes("TAEHYUNG") || texto === "V") {
+        return ARCHIVOS_BIAS_B4.v;
+    }
+
+    if (texto.includes("SUGA") || texto.includes("YOONGI")) {
+        return ARCHIVOS_BIAS_B4.suga;
+    }
+
+    if (texto.includes("JIMIN")) {
+        return ARCHIVOS_BIAS_B4.jimin;
+    }
+
+    if (
+        texto.includes("JUNGKOOK") ||
+        texto.includes("JUNGOOK") ||
+        texto.includes("JEON") ||
+        texto === "JK"
+    ) {
+        return ARCHIVOS_BIAS_B4.jungkook;
+    }
+
+    if (
+        texto.includes("JHOPE") ||
+        texto.includes("J-HOPE") ||
+        texto.includes("HOSEOK")
+    ) {
+        return ARCHIVOS_BIAS_B4.jhope;
+    }
+
+    if (
+        texto.includes("NAMJOON") ||
+        texto === "RM"
+    ) {
+        return ARCHIVOS_BIAS_B4.rm;
+    }
+
+    return ARCHIVOS_BIAS_B4.ot7;
 }
   // ==========================================
 // GALERÍA DE MARCOS PARA FOTOGRAFÍAS
@@ -2719,12 +3072,9 @@ if (resultado.codigo) {
 
     await mostrarCredencialB3(datosCredencial);
 
-    } else if (plantillaSeleccionada === "B4.jpeg") {
+} else if (plantillaSeleccionada === "B4.jpeg") {
 
-        await mostrarCredencialPendiente(
-            datosCredencial,
-            "B4PLANTILLA.jpg"
-        );
+    await mostrarCredencialB4(datosCredencial);
 
     } else if (plantillaSeleccionada === "B5.jpeg") {
 
