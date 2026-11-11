@@ -411,6 +411,61 @@ const CONFIGURACION_B2 = {
     }
 };
 
+
+ // ==========================================
+ // CONFIGURACIÓN EXCLUSIVA B3
+ // ==========================================
+
+const CONFIGURACION_B3 = {
+
+    width: 880,
+    height: 1204,
+
+    fotografia: {
+        x: 298,
+        y: 240,
+        width: 285,
+        height: 343
+    },
+
+    nombre: {
+        centerX: 440,
+        baselineY: 680,
+        maxWidth: 550,
+        fontSize: 92,
+        color: "#e59be9",
+        outline: "#9225b1"
+    },
+
+    pais: {
+        centerX: 718,
+        baselineY: 357,
+        maxWidth: 230,
+        fontSize: 65,
+        color: "#e59be9",
+        outline: "#9225b1"
+    },
+
+    bias: {
+        centerX: 155,
+        baselineY: 380,
+        maxWidth: 245,
+        fontSize: 43,
+        color: "#e59be9",
+        outline: "#9225b1"
+    },
+
+    codigo: {
+        centerX: 153,
+        baselineY: 523,
+        maxWidth: 240,
+        fontSize: 60,
+        color: "#e9a5e9",
+        outline: "#ff0000"
+    }
+};
+
+
 // ==========================================
 // CONFIGURACIÓN EXCLUSIVA B7 Y B9
 // ==========================================
@@ -828,6 +883,142 @@ async function mostrarCredencialB2(datos) {
     });
 }
 
+// ==========================================
+// MOSTRAR CREDENCIAL EXCLUSIVA B3
+// ==========================================
+
+async function mostrarCredencialB3(datos) {
+
+    const editor = document.getElementById("editor-credencial");
+    const creador = document.getElementById("creador-credencial");
+    const canvas = document.getElementById("canvas-credencial");
+
+    if (!editor || !creador || !canvas) {
+        throw new Error("No se encontró el editor de B3.");
+    }
+
+    // CARGAR FUENTES
+    await document.fonts.load('92px "AlwaysStarArmy"');
+    await document.fonts.load('60px "ChiladaArmy"');
+
+    // CARGAR PLANTILLA ORIGINAL
+    const plantilla = new Image();
+
+    await new Promise((resolve, reject) => {
+        plantilla.onload = resolve;
+        plantilla.onerror = () => reject(
+            new Error("No se pudo cargar B3PLANTILLA.jpg")
+        );
+        plantilla.src = "./B3PLANTILLA.jpg";
+    });
+
+    canvas.width = CONFIGURACION_B3.width;
+    canvas.height = CONFIGURACION_B3.height;
+
+    const contexto = canvas.getContext("2d");
+
+    contexto.clearRect(0, 0, canvas.width, canvas.height);
+
+    contexto.drawImage(
+        plantilla,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    // ==========================================
+    // ESCRIBIR DATOS B3
+    // ==========================================
+
+    function escribirDato(texto, config, fuente) {
+
+        if (!texto) return;
+
+        texto = String(texto);
+
+        let tamano = config.fontSize;
+
+        contexto.save();
+
+        contexto.textAlign = "center";
+        contexto.textBaseline = "alphabetic";
+
+        contexto.font = `${tamano}px "${fuente}"`;
+
+        while (
+            contexto.measureText(texto).width > config.maxWidth &&
+            tamano > 18
+        ) {
+            tamano--;
+            contexto.font = `${tamano}px "${fuente}"`;
+        }
+
+        contexto.fillStyle = config.color;
+        contexto.strokeStyle = config.outline;
+        contexto.lineWidth = 5;
+        contexto.lineJoin = "round";
+
+        contexto.strokeText(
+            texto,
+            config.centerX,
+            config.baselineY,
+            config.maxWidth
+        );
+
+        contexto.fillText(
+            texto,
+            config.centerX,
+            config.baselineY,
+            config.maxWidth
+        );
+
+        contexto.restore();
+    }
+
+    // NOMBRE
+    escribirDato(
+        datos.nombre,
+        CONFIGURACION_B3.nombre,
+        "AlwaysStarArmy"
+    );
+
+    // PAÍS
+    escribirDato(
+        datos.pais,
+        CONFIGURACION_B3.pais,
+        "AlwaysStarArmy"
+    );
+
+    // BIAS
+    escribirDato(
+        datos.bias,
+        CONFIGURACION_B3.bias,
+        "AlwaysStarArmy"
+    );
+
+    // CÓDIGO AUTOMÁTICO
+    escribirDato(
+        datos.codigo,
+        CONFIGURACION_B3.codigo,
+        "ChiladaArmy"
+    );
+
+    // PREPARAR FOTOGRAFÍA
+    credencialB5B10Activa = false;
+    credencialB7B9Activa = false;
+    baseCredencialSinFoto = null;
+
+    // MOSTRAR EDITOR
+    creador.classList.add("oculta");
+    editor.classList.remove("oculta");
+
+    editor.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}
+
 // =====================================
 // GENERAR CREDENCIALES B5 Y B10
 // =====================================
@@ -1033,6 +1224,51 @@ function dibujarFotografiaB2(imagen) {
     contexto.restore();
 }
   
+// ==========================================
+// FOTOGRAFÍA EXCLUSIVA B3
+// ==========================================
+
+function dibujarFotografiaB3(imagen) {
+
+    const canvas = document.getElementById("canvas-credencial");
+    const contexto = canvas.getContext("2d");
+
+    const foto = CONFIGURACION_B3.fotografia;
+
+    const x = foto.x;
+    const y = foto.y;
+    const ancho = foto.width;
+    const alto = foto.height;
+
+    const escala = Math.max(
+        ancho / imagen.width,
+        alto / imagen.height
+    );
+
+    const anchoImagen = imagen.width * escala;
+    const altoImagen = imagen.height * escala;
+
+    const desplazamientoX = (ancho - anchoImagen) / 2;
+    const desplazamientoY = (alto - altoImagen) / 2;
+
+    contexto.save();
+
+    contexto.beginPath();
+    contexto.rect(x, y, ancho, alto);
+    contexto.clip();
+
+    contexto.drawImage(
+        imagen,
+        x + desplazamientoX,
+        y + desplazamientoY,
+        anchoImagen,
+        altoImagen
+    );
+
+    contexto.restore();
+}
+
+  
   // ==========================================
 // FOTOGRAFÍA EXCLUSIVA B5 Y B10
 // ==========================================
@@ -1221,7 +1457,11 @@ if (fotoArmy) {
 
             }
 
- if (plantillaSeleccionada === "B2.jpeg") {
+ if (plantillaSeleccionada === "B3.jpeg") {
+
+    dibujarFotografiaB3(imagen);
+
+} else if (plantillaSeleccionada === "B2.jpeg") {
 
     dibujarFotografiaB2(imagen);
 
@@ -2475,12 +2715,9 @@ if (resultado.codigo) {
 
     await mostrarCredencialB2(datosCredencial);
 
-    } else if (plantillaSeleccionada === "B3.jpeg") {
+   } else if (plantillaSeleccionada === "B3.jpeg") {
 
-        await mostrarCredencialPendiente(
-            datosCredencial,
-            "B3PLANTILLA.jpg"
-        );
+    await mostrarCredencialB3(datosCredencial);
 
     } else if (plantillaSeleccionada === "B4.jpeg") {
 
