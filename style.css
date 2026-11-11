@@ -1,4 +1,25 @@
 /* ==========================================
+   FUENTES EXCLUSIVAS CREDENCIAL B4
+   ========================================== */
+
+@font-face {
+    font-family: "CurlzArmy";
+    src: url("./Curlz MT Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "ArialArmy";
+    src: url("./arial.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+
+/* ==========================================
    FUENTES EXCLUSIVAS CREDENCIAL B3
    ========================================== */
 
