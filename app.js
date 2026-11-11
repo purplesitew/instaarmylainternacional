@@ -505,23 +505,23 @@ const CONFIGURACION_B4 = {
         outline: "#8a00c2"
     },
 
-    pais: {
-        centerX: 170,
-        baselineY: 958,
-        maxWidth: 270,
-        fontSize: 72,
-        color: "#f28cff",
-        outline: "#8a00c2"
-    },
+   pais: {
+    centerX: 170,
+    baselineY: 910,
+    maxWidth: 270,
+    fontSize: 72,
+    color: "#f28cff",
+    outline: "#8a00c2"
+},
 
-    codigo: {
-        centerX: 725,
-        baselineY: 954,
-        maxWidth: 180,
-        fontSize: 66,
-        color: "#ff4da6",
-        outline: "#ff0000"
-    }
+   codigo: {
+    centerX: 725,
+    baselineY: 906,
+    maxWidth: 180,
+    fontSize: 66,
+    color: "#ff4da6",
+    outline: "#ff0000"
+}
 };
 
 // ==========================================
