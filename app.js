@@ -489,7 +489,7 @@ const CONFIGURACION_B4 = {
 
 
 nombre: {
-    centerX: 420,
+    centerX: 290,
     baselineY: 553,
     maxWidth: 650,
     fontSize: 110,
