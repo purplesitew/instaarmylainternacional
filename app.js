@@ -552,22 +552,22 @@ const CONFIGURACION_B6 = {
     },
 
     nombre: {
-        centerX: 555,
-        baselineY: 492,
-        maxWidth: 360,
-        fontSize: 110,
-        color: "#ffffff",
-        outline: "#f2d56b"
-    },
+    centerX: 555,
+    baselineY: 470,
+    maxWidth: 360,
+    fontSize: 110,
+    color: "#ffffff",
+    outline: "#f2d56b"
+},
 
-    bias: {
-        centerX: 153,
-        baselineY: 705,
-        maxWidth: 220,
-        fontSize: 108,
-        color: "#ffffff",
-        outline: "#f2d56b"
-    }
+bias: {
+    centerX: 153,
+    baselineY: 675,
+    maxWidth: 220,
+    fontSize: 108,
+    color: "#ffffff",
+    outline: "#f2d56b"
+}
 };
 
 // ==========================================
