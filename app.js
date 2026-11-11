@@ -2875,7 +2875,8 @@ if (btnEditarCredencial) {
     "3 - B5\n" +
     "4 - B10\n" +
     "5 - B7\n" +
-    "6 - B9"
+    "6 - B9\n" +
+     "7 - B6"
 );
 
         if (opcion === null) return;
@@ -2923,19 +2924,29 @@ if (btnEditarCredencial) {
         "B7PLANTILLA.jpg"
     );
 
+
 } else if (opcion === "6") {
 
     plantillaSeleccionada = "B9.jpeg";
+
     await mostrarCredencialB7B9(
         datosPrueba,
         "B9PLANTILLA.jpg"
     );
+
+} else if (opcion === "7") {
+
+    // PRUEBA EXCLUSIVA B6 SIN REGISTRO
+    plantillaSeleccionada = "B6.jpeg";
+
+    await mostrarCredencialB6(datosPrueba);
 
 } else {
 
     alert("Opción no válida. Inténtalo de nuevo.");
 
 }
+
 
                             } catch (error) {
             console.error("Error al probar la credencial:", error);
