@@ -487,41 +487,44 @@ const CONFIGURACION_B4 = {
         height: 274
     },
 
-    nombre: {
-        centerX: 170,
-        baselineY: 553,
-        maxWidth: 260,
-        fontSize: 96,
-        color: "#f28cff",
-        outline: "#8a00c2"
-    },
 
-    bias: {
-        centerX: 160,
-        baselineY: 736,
-        maxWidth: 260,
-        fontSize: 100,
-        color: "#f28cff",
-        outline: "#8a00c2"
-    },
+nombre: {
+    centerX: 420,
+    baselineY: 553,
+    maxWidth: 650,
+    fontSize: 110,
+    color: "#f28cff",
+    outline: "#8a00c2"
+},
 
-   pais: {
+bias: {
+    centerX: 410,
+    baselineY: 736,
+    maxWidth: 650,
+    fontSize: 110,
+    color: "#f28cff",
+    outline: "#8a00c2"
+},
+
+pais: {
     centerX: 170,
-    baselineY: 910,
+    baselineY: 870,
     maxWidth: 270,
     fontSize: 72,
     color: "#f28cff",
     outline: "#8a00c2"
 },
 
-   codigo: {
+codigo: {
     centerX: 725,
-    baselineY: 906,
+    baselineY: 866,
     maxWidth: 180,
     fontSize: 66,
     color: "#ff4da6",
     outline: "#ff0000"
 }
+
+  
 };
 
 // ==========================================
