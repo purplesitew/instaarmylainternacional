@@ -498,7 +498,7 @@ nombre: {
 },
 
 bias: {
-    centerX: 410,
+    centerX: 290,
     baselineY: 736,
     maxWidth: 650,
     fontSize: 110,
