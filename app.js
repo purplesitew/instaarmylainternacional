@@ -428,32 +428,32 @@ const CONFIGURACION_B3 = {
         height: 343
     },
 
-    nombre: {
-        centerX: 440,
-        baselineY: 680,
-        maxWidth: 550,
-        fontSize: 92,
-        color: "#e59be9",
-        outline: "#9225b1"
-    },
+  nombre: {
+    centerX: 440,
+    baselineY: 680,
+    maxWidth: 650,
+    fontSize: 120,
+    color: "#e59be9",
+    outline: "#9225b1"
+},
 
-    pais: {
-        centerX: 718,
-        baselineY: 357,
-        maxWidth: 230,
-        fontSize: 65,
-        color: "#e59be9",
-        outline: "#9225b1"
-    },
+pais: {
+    centerX: 718,
+    baselineY: 357,
+    maxWidth: 290,
+    fontSize: 90,
+    color: "#e59be9",
+    outline: "#9225b1"
+},
 
-    bias: {
-        centerX: 155,
-        baselineY: 380,
-        maxWidth: 245,
-        fontSize: 43,
-        color: "#e59be9",
-        outline: "#9225b1"
-    },
+bias: {
+    centerX: 155,
+    baselineY: 380,
+    maxWidth: 300,
+    fontSize: 60,
+    color: "#e59be9",
+    outline: "#9225b1"
+},
 
     codigo: {
         centerX: 153,
