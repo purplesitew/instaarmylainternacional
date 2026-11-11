@@ -1125,7 +1125,7 @@ async function mostrarCredencialB4(datos) {
     // DIBUJAR FOTO DEL BIAS EN EL LADO DERECHO
     // ==========================================
 
-    const archivoBias = obtenerArchivoBiasB4(datos.bias);
+    const archivoBias = window.obtenerArchivoBiasB4(datos.bias);
 
     if (archivoBias) {
 
@@ -2200,6 +2200,7 @@ function obtenerArchivoBiasB4(bias) {
 
     return ARCHIVOS_BIAS_B4.ot7;
 }
+  window.obtenerArchivoBiasB4 = obtenerArchivoBiasB4;
   // ==========================================
 // GALERÍA DE MARCOS PARA FOTOGRAFÍAS
 // ==========================================
