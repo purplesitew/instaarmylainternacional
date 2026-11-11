@@ -528,6 +528,49 @@ codigo: {
 };
 
 // ==========================================
+// CONFIGURACIÓN EXCLUSIVA B6
+// ==========================================
+
+const CONFIGURACION_B6 = {
+    width: 840,
+    height: 1204,
+
+    fotografia: {
+        x: 37,
+        y: 47,
+        width: 244,
+        height: 310
+    },
+
+    codigo: {
+        centerX: 156,
+        baselineY: 436,
+        maxWidth: 230,
+        fontSize: 82,
+        color: "#ff0000",
+        outline: "#ffffff"
+    },
+
+    nombre: {
+        centerX: 555,
+        baselineY: 492,
+        maxWidth: 360,
+        fontSize: 110,
+        color: "#ffffff",
+        outline: "#f2d56b"
+    },
+
+    bias: {
+        centerX: 153,
+        baselineY: 705,
+        maxWidth: 220,
+        fontSize: 108,
+        color: "#ffffff",
+        outline: "#f2d56b"
+    }
+};
+
+// ==========================================
 // CONFIGURACIÓN EXCLUSIVA B7 Y B9
 // ==========================================
 
@@ -1260,6 +1303,127 @@ async function mostrarCredencialB4(datos) {
     });
 }
 
+// ==========================================
+// MOSTRAR CREDENCIAL EXCLUSIVA B6
+// ==========================================
+
+async function mostrarCredencialB6(datos) {
+
+    const editor = document.getElementById("editor-credencial");
+    const creador = document.getElementById("creador-credencial");
+    const canvas = document.getElementById("canvas-credencial");
+
+    if (!editor || !creador || !canvas) {
+        throw new Error("No se encontró el editor de B6.");
+    }
+
+    const contexto = canvas.getContext("2d");
+
+    // CARGAR FUENTE
+    await document.fonts.load('110px "FankyBubbleArmy"');
+
+    // CARGAR PLANTILLA
+    const plantilla = new Image();
+
+    await new Promise((resolve, reject) => {
+        plantilla.onload = resolve;
+        plantilla.onerror = () => reject(
+            new Error("No se pudo cargar B6PLANTILLA.jpg")
+        );
+        plantilla.src = "./B6PLANTILLA.jpg";
+    });
+
+    canvas.width = CONFIGURACION_B6.width;
+    canvas.height = CONFIGURACION_B6.height;
+
+    contexto.clearRect(0, 0, canvas.width, canvas.height);
+
+    contexto.drawImage(
+        plantilla,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    function escribirDato(texto, config, esCodigo = false) {
+
+        if (!texto) return;
+
+        texto = String(texto);
+
+        let tamano = config.fontSize;
+
+        contexto.save();
+
+        contexto.textAlign = "center";
+        contexto.textBaseline = "alphabetic";
+        contexto.font = `${tamano}px "FankyBubbleArmy"`;
+
+        while (
+            contexto.measureText(texto).width > config.maxWidth &&
+            tamano > 18
+        ) {
+            tamano--;
+            contexto.font = `${tamano}px "FankyBubbleArmy"`;
+        }
+
+        contexto.fillStyle = config.color;
+        contexto.strokeStyle = config.outline;
+        contexto.lineWidth = esCodigo ? 6 : 5;
+        contexto.lineJoin = "round";
+
+        contexto.strokeText(
+            texto,
+            config.centerX,
+            config.baselineY,
+            config.maxWidth
+        );
+
+        contexto.fillText(
+            texto,
+            config.centerX,
+            config.baselineY,
+            config.maxWidth
+        );
+
+        contexto.restore();
+    }
+
+    // CÓDIGO
+    escribirDato(
+        datos.codigo,
+        CONFIGURACION_B6.codigo,
+        true
+    );
+
+    // NOMBRE
+    escribirDato(
+        datos.nombre,
+        CONFIGURACION_B6.nombre
+    );
+
+    // BIAS
+    escribirDato(
+        datos.bias,
+        CONFIGURACION_B6.bias
+    );
+
+    // PREPARAR FOTOGRAFÍA
+    credencialB5B10Activa = false;
+    credencialB7B9Activa = false;
+    baseCredencialSinFoto = null;
+
+    // MOSTRAR EDITOR
+    creador.classList.add("oculta");
+    editor.classList.remove("oculta");
+
+    editor.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}
+
 // =====================================
 // GENERAR CREDENCIALES B5 Y B10
 // =====================================
@@ -1551,6 +1715,49 @@ function dibujarFotografiaB4(imagen) {
 
     contexto.restore();
 }
+  // ==========================================
+// FOTOGRAFÍA EXCLUSIVA B6
+// ==========================================
+
+function dibujarFotografiaB6(imagen) {
+
+    const canvas = document.getElementById("canvas-credencial");
+    const contexto = canvas.getContext("2d");
+
+    const foto = CONFIGURACION_B6.fotografia;
+
+    const x = foto.x;
+    const y = foto.y;
+    const ancho = foto.width;
+    const alto = foto.height;
+
+    const escala = Math.max(
+        ancho / imagen.width,
+        alto / imagen.height
+    );
+
+    const anchoImagen = imagen.width * escala;
+    const altoImagen = imagen.height * escala;
+
+    const desplazamientoX = (ancho - anchoImagen) / 2;
+    const desplazamientoY = (alto - altoImagen) / 2;
+
+    contexto.save();
+
+    contexto.beginPath();
+    contexto.rect(x, y, ancho, alto);
+    contexto.clip();
+
+    contexto.drawImage(
+        imagen,
+        x + desplazamientoX,
+        y + desplazamientoY,
+        anchoImagen,
+        altoImagen
+    );
+
+    contexto.restore();
+}
   
   // ==========================================
 // FOTOGRAFÍA EXCLUSIVA B5 Y B10
@@ -1740,7 +1947,11 @@ if (fotoArmy) {
 
             }
 
-if (plantillaSeleccionada === "B4.jpeg") {
+if (plantillaSeleccionada === "B6.jpeg") {
+
+    dibujarFotografiaB6(imagen);
+
+} else if (plantillaSeleccionada === "B4.jpeg") {
 
     dibujarFotografiaB4(imagen);
 
@@ -3087,12 +3298,9 @@ if (resultado.codigo) {
             "B5PLANTILLA.jpeg"
         );
 
-    } else if (plantillaSeleccionada === "B6.jpeg") {
+   } else if (plantillaSeleccionada === "B6.jpeg") {
 
-        await mostrarCredencialPendiente(
-            datosCredencial,
-            "B6PLANTILLA.jpg"
-        );
+    await mostrarCredencialB6(datosCredencial);
 
     } else if (plantillaSeleccionada === "B7.jpeg") {
 
