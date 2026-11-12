@@ -2741,8 +2741,12 @@ function obtenerArchivoBiasB4(bias) {
 
     return ARCHIVOS_BIAS_B4.ot7;
 }
-  window.obtenerArchivoBiasB4 = obtenerArchivoBiasB4;
-if (capaStickers) {
+ window.obtenerArchivoBiasB4 = obtenerArchivoBiasB4;
+
+// ==========================================
+// MOVIMIENTO DE STICKERS
+// ==========================================
+
 if (capaStickers) {
 
     capaStickers.addEventListener("pointerdown", (evento) => {
