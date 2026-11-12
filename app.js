@@ -571,6 +571,81 @@ bias: {
   
 };
 
+
+ // ==========================================
+ // CONFIGURACIÓN EXCLUSIVA B8
+ // ==========================================
+
+ const CONFIGURACION_B8 = {
+
+     // Coordenadas de referencia de la imagen B8
+     width: 768,
+     height: 1365,
+
+     fuente: "AlterCreedArmy",
+
+     fotografia: {
+         x: 97,
+         y: 476,
+         width: 263,
+         height: 412
+     },
+
+     nombre: {
+         centerX: 524,
+         baselineY: 539,
+         maxWidth: 270,
+         fontSize: 42,
+         color: "#ffffff",
+         outline: "#333333"
+     },
+
+     armyTipo: {
+         centerX: 514,
+         baselineY: 608,
+         maxWidth: 250,
+         fontSize: 36,
+         color: "#ffffff",
+         outline: "#333333"
+     },
+
+     codigo: {
+         centerX: 519,
+         baselineY: 693,
+         maxWidth: 250,
+         fontSize: 44,
+         color: "#ffffff",
+         outline: "#ff0000"
+     },
+
+     fechaRegistro: {
+         centerX: 508,
+         baselineY: 770,
+         maxWidth: 245,
+         fontSize: 34,
+         color: "#ffffff",
+         outline: "#333333"
+     },
+
+     paisRegion: {
+         centerX: 504,
+         baselineY: 913,
+         maxWidth: 260,
+         fontSize: 39,
+         color: "#ffffff",
+         outline: "#333333"
+     },
+
+     paisDebajoFoto: {
+         centerX: 229,
+         baselineY: 974,
+         maxWidth: 260,
+         fontSize: 48,
+         color: "#ffffff",
+         outline: "#333333"
+     }
+ };
+
 // ==========================================
 // CONFIGURACIÓN EXCLUSIVA B7 Y B9
 // ==========================================
@@ -1425,6 +1500,173 @@ async function mostrarCredencialB6(datos) {
     });
 }
 
+// ==========================================
+// MOSTRAR CREDENCIAL EXCLUSIVA B8
+// ==========================================
+
+async function mostrarCredencialB8(datos) {
+
+    const editor = document.getElementById("editor-credencial");
+    const creador = document.getElementById("creador-credencial");
+    const canvas = document.getElementById("canvas-credencial");
+
+    if (!editor || !creador || !canvas) {
+        throw new Error("No se encontró el editor de B8.");
+    }
+
+    const contexto = canvas.getContext("2d");
+
+    // CARGAR FUENTE
+    await document.fonts.load('48px "AlterCreedArmy"');
+
+    // CARGAR PLANTILLA
+    const plantilla = new Image();
+
+    await new Promise((resolve, reject) => {
+        plantilla.onload = resolve;
+        plantilla.onerror = () => reject(
+            new Error("No se pudo cargar B8PLANTILLA.jpg")
+        );
+        plantilla.src = "./B8PLANTILLA.jpg";
+    });
+
+    canvas.width = CONFIGURACION_B8.width;
+    canvas.height = CONFIGURACION_B8.height;
+
+    contexto.clearRect(0, 0, canvas.width, canvas.height);
+
+    contexto.drawImage(
+        plantilla,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    // ==========================================
+    // FECHA DE REGISTRO
+    // ==========================================
+
+    function formatearFechaB8(fechaEntrada) {
+
+        const fecha = fechaEntrada
+            ? new Date(fechaEntrada)
+            : new Date();
+
+        const meses = [
+            "January", "February", "March", "April",
+            "May", "June", "July", "August",
+            "September", "October", "November", "December"
+        ];
+
+        const dia = fecha.getDate();
+        const mes = meses[fecha.getMonth()];
+        const anio = fecha.getFullYear();
+
+        return `${mes} ${dia}, ${anio}`;
+    }
+
+    function escribirDato(texto, config, esCodigo = false) {
+
+        if (!texto) return;
+
+        texto = String(texto);
+
+        let tamano = config.fontSize;
+
+        contexto.save();
+
+        contexto.textAlign = "left";
+        contexto.textBaseline = "alphabetic";
+        contexto.font = `${tamano}px "AlterCreedArmy"`;
+
+        while (
+            contexto.measureText(texto).width > config.maxWidth &&
+            tamano > 16
+        ) {
+            tamano--;
+            contexto.font = `${tamano}px "AlterCreedArmy"`;
+        }
+
+        contexto.fillStyle = config.color;
+        contexto.strokeStyle = config.outline;
+        contexto.lineWidth = esCodigo ? 5 : 3;
+        contexto.lineJoin = "round";
+
+        const x = config.centerX - (config.maxWidth / 2);
+
+        contexto.strokeText(
+            texto,
+            x,
+            config.baselineY,
+            config.maxWidth
+        );
+
+        contexto.fillText(
+            texto,
+            x,
+            config.baselineY,
+            config.maxWidth
+        );
+
+        contexto.restore();
+    }
+
+    const fechaRegistroTexto = formatearFechaB8(datos.fechaRegistro);
+    const armyTipoTexto = datos.armyTipo || "ARMY GIRL";
+
+    // NAME
+    escribirDato(
+        datos.nombre,
+        CONFIGURACION_B8.nombre
+    );
+
+    // INSTA USERNAME
+    escribirDato(
+        armyTipoTexto,
+        CONFIGURACION_B8.armyTipo
+    );
+
+    // MEMBERSHIP NO.
+    escribirDato(
+        datos.codigo,
+        CONFIGURACION_B8.codigo,
+        true
+    );
+
+    // JOIN DATE
+    escribirDato(
+        fechaRegistroTexto,
+        CONFIGURACION_B8.fechaRegistro
+    );
+
+    // REGION
+    escribirDato(
+        datos.pais,
+        CONFIGURACION_B8.paisRegion
+    );
+
+    // PAÍS DEBAJO DE LA FOTO
+    escribirDato(
+        datos.pais,
+        CONFIGURACION_B8.paisDebajoFoto
+    );
+
+    // PREPARAR FOTOGRAFÍA
+    credencialB5B10Activa = false;
+    credencialB7B9Activa = false;
+    baseCredencialSinFoto = null;
+
+    // MOSTRAR EDITOR
+    creador.classList.add("oculta");
+    editor.classList.remove("oculta");
+
+    editor.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}
+
 // =====================================
 // GENERAR CREDENCIALES B5 Y B10
 // =====================================
@@ -1802,6 +2044,53 @@ function dibujarFotografiaB5B10(imagen) {
 
     contexto.restore();
 }
+  
+ // ==========================================
+ // FOTOGRAFÍA EXCLUSIVA B8
+ // ==========================================
+
+ function dibujarFotografiaB8(imagen) {
+
+     const canvas = document.getElementById("canvas-credencial");
+     const contexto = canvas.getContext("2d");
+
+     const foto = CONFIGURACION_B8.fotografia;
+
+     const x = foto.x;
+     const y = foto.y;
+     const ancho = foto.width;
+     const alto = foto.height;
+
+     // Ajustar la foto sin deformarla
+     const escala = Math.max(
+         ancho / imagen.width,
+         alto / imagen.height
+     );
+
+     const anchoImagen = imagen.width * escala;
+     const altoImagen = imagen.height * escala;
+
+     const desplazamientoX = (ancho - anchoImagen) / 2;
+     const desplazamientoY = (alto - altoImagen) / 2;
+
+     contexto.save();
+
+     // Mantener la fotografía dentro de su recuadro
+     contexto.beginPath();
+     contexto.rect(x, y, ancho, alto);
+     contexto.clip();
+
+     contexto.drawImage(
+         imagen,
+         x + desplazamientoX,
+         y + desplazamientoY,
+         anchoImagen,
+         altoImagen
+     );
+
+     contexto.restore();
+ }
+
 // ==========================================
 // FOTOGRAFÍA EXCLUSIVA B7 Y B9
 // ==========================================
@@ -1948,11 +2237,17 @@ if (fotoArmy) {
 
             }
 
-if (plantillaSeleccionada === "B6.jpeg") {
+
+if (plantillaSeleccionada === "B8.jpeg") {
+
+    dibujarFotografiaB8(imagen);
+
+} else if (plantillaSeleccionada === "B6.jpeg") {
 
     dibujarFotografiaB6(imagen);
 
 } else if (plantillaSeleccionada === "B4.jpeg") {
+
 
     dibujarFotografiaB4(imagen);
 
@@ -2877,7 +3172,8 @@ if (btnEditarCredencial) {
     "4 - B10\n" +
     "5 - B7\n" +
     "6 - B9\n" +
-     "7 - B6"
+     "7 - B6\n" +
+      "8 - B8"
 );
 
         if (opcion === null) return;
@@ -2935,14 +3231,28 @@ if (btnEditarCredencial) {
         "B9PLANTILLA.jpg"
     );
 
+
 } else if (opcion === "7") {
 
-    // PRUEBA EXCLUSIVA B6 SIN REGISTRO
     plantillaSeleccionada = "B6.jpeg";
 
     await mostrarCredencialB6(datosPrueba);
 
+} else if (opcion === "8") {
+
+    // PRUEBA EXCLUSIVA DE B8 SIN REGISTRO
+    plantillaSeleccionada = "B8.jpeg";
+
+    const datosPruebaB8 = {
+        ...datosPrueba,
+        armyTipo: "ARMY GIRL",
+        fechaRegistro: new Date()
+    };
+
+    await mostrarCredencialB8(datosPruebaB8);
+
 } else {
+
 
     alert("Opción no válida. Inténtalo de nuevo.");
 
@@ -3087,6 +3397,95 @@ if (btnContinuarSaludo) {
   let plantillaSeleccionada = null;
   const credencialesVistas = new Set();
 
+  
+  // ==========================================
+  // SELECTOR EXCLUSIVO ARMY GIRL / ARMY BOY B8
+  // ==========================================
+
+  let armyTipoSeleccionadoB8 = "";
+
+  const formularioB8 = document.getElementById("formularioRegistro");
+
+  const contenedorArmyB8 = document.createElement("div");
+
+  contenedorArmyB8.id = "selector-army-b8";
+  contenedorArmyB8.style.display = "none";
+  contenedorArmyB8.style.textAlign = "center";
+  contenedorArmyB8.style.margin = "20px 0";
+  contenedorArmyB8.style.padding = "15px";
+  contenedorArmyB8.style.border = "2px solid #c58aff";
+  contenedorArmyB8.style.borderRadius = "15px";
+
+  function actualizarSelectorArmyB8() {
+
+      if (plantillaSeleccionada !== "B8.jpeg") {
+          contenedorArmyB8.style.display = "none";
+          return;
+      }
+
+      contenedorArmyB8.style.display = "block";
+
+      if (armyTipoSeleccionadoB8) {
+          contenedorArmyB8.innerHTML = "";
+
+          const textoElegido = document.createElement("p");
+          textoElegido.textContent = armyTipoSeleccionadoB8;
+          textoElegido.style.color = "#c58aff";
+          textoElegido.style.fontWeight = "bold";
+          textoElegido.style.fontSize = "22px";
+
+          contenedorArmyB8.appendChild(textoElegido);
+          return;
+      }
+
+      contenedorArmyB8.innerHTML = "";
+
+      const titulo = document.createElement("p");
+      titulo.textContent = "ELIGE TU IDENTIFICACIÓN ARMY 💜";
+      titulo.style.fontWeight = "bold";
+
+      const botonElegir = document.createElement("button");
+      botonElegir.type = "button";
+      botonElegir.textContent = "ELEGIR ARMY GIRL / ARMY BOY";
+
+      contenedorArmyB8.appendChild(titulo);
+      contenedorArmyB8.appendChild(botonElegir);
+
+      botonElegir.addEventListener("click", () => {
+
+          botonElegir.remove();
+
+          ["ARMY GIRL", "ARMY BOY"].forEach((opcion) => {
+
+              const boton = document.createElement("button");
+              boton.type = "button";
+              boton.textContent = opcion;
+
+              boton.style.margin = "8px";
+              boton.style.padding = "12px";
+              boton.style.borderRadius = "12px";
+              boton.style.background = "#6a0dad";
+              boton.style.color = "#ffffff";
+              boton.style.border = "none";
+
+              boton.addEventListener("click", () => {
+
+                  armyTipoSeleccionadoB8 = opcion;
+
+                  actualizarSelectorArmyB8();
+
+              });
+
+              contenedorArmyB8.appendChild(boton);
+          });
+      });
+  }
+
+  if (formularioB8) {
+      formularioB8.appendChild(contenedorArmyB8);
+  }
+
+
   if (
     listaCredenciales &&
     vistaPrevia &&
@@ -3111,6 +3510,13 @@ imagen.addEventListener("click", () => {
 
   // Guardar la plantilla seleccionada
   plantillaSeleccionada = `B${i}.jpeg`;
+
+  // Mostrar el selector solo para B8
+if (plantillaSeleccionada === "B8.jpeg") {
+    armyTipoSeleccionadoB8 = "";
+}
+
+actualizarSelectorArmyB8();
 
   // Registrar que esta credencial ya fue vista
   credencialesVistas.add(i);
@@ -3205,6 +3611,19 @@ if (formularioRegistro) {
       alert("Selecciona si ya tienes una credencial.");
       return;
     }
+    
+    // ==========================================
+    // VALIDAR ARMY GIRL / ARMY BOY SOLO EN B8
+    // ==========================================
+
+    if (
+        plantillaSeleccionada === "B8.jpeg" &&
+        !armyTipoSeleccionadoB8
+    ) {
+        alert("Selecciona ARMY GIRL o ARMY BOY para tu credencial B8. 💜");
+        return;
+    }
+
 
     if (!nombre || !pais || !bias || !whatsapp) {
       alert("Completa todos los campos.");
@@ -3321,12 +3740,18 @@ if (resultado.codigo) {
             "B7PLANTILLA.jpg"
         );
 
-    } else if (plantillaSeleccionada === "B8.jpeg") {
+   
+} else if (plantillaSeleccionada === "B8.jpeg") {
 
-        await mostrarCredencialPendiente(
-            datosCredencial,
-            "B8PLANTILLA.jpg"
-        );
+    // DATOS EXCLUSIVOS DE LA CREDENCIAL B8
+    const datosB8 = {
+        ...datosCredencial,
+        armyTipo: armyTipoSeleccionadoB8,
+        fechaRegistro: new Date()
+    };
+
+    await mostrarCredencialB8(datosB8);
+
 
     } else if (plantillaSeleccionada === "B9.jpeg") {
 
