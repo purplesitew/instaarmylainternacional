@@ -610,22 +610,22 @@ const CONFIGURACION_B8 = {
     },
 
     codigo: {
-        centerX: 480,
-        baselineY: 480,
-        maxWidth: 195,
-        fontSize: 39,
-        color: "#ffffff",
-        outline: "#ff0000"
-    },
+    centerX: 480,
+    baselineY: 500,
+    maxWidth: 210,
+    fontSize: 42,
+    color: "#ffffff",
+    outline: "#ff0000"
+},
 
-    fechaRegistro: {
-        centerX: 480,
-        baselineY: 548,
-        maxWidth: 205,
-        fontSize: 29,
-        color: "#ffffff",
-        outline: "#333333"
-    },
+fechaRegistro: {
+    centerX: 480,
+    baselineY: 586,
+    maxWidth: 110,
+    fontSize: 42,
+    color: "#ffffff",
+    outline: "#333333"
+},
 
     paisRegion: {
         centerX: 477,
@@ -1519,6 +1519,7 @@ async function mostrarCredencialB8(datos) {
 
     // CARGAR FUENTE
     await document.fonts.load('48px "AlterCreedArmy"');
+    await document.fonts.load('42px "ArialArmy"');
 
     // CARGAR PLANTILLA
     const plantilla = new Image();
@@ -1567,7 +1568,12 @@ async function mostrarCredencialB8(datos) {
         return `${mes} ${dia}, ${anio}`;
     }
 
-    function escribirDato(texto, config, esCodigo = false) {
+   function escribirDato(
+    texto,
+    config,
+    esCodigo = false,
+    fuente = "AlterCreedArmy"
+) {
 
         if (!texto) return;
 
@@ -1579,14 +1585,14 @@ async function mostrarCredencialB8(datos) {
 
         contexto.textAlign = "left";
         contexto.textBaseline = "alphabetic";
-        contexto.font = `${tamano}px "AlterCreedArmy"`;
+        contexto.font = `${tamano}px "${fuente}"`;
 
         while (
             contexto.measureText(texto).width > config.maxWidth &&
             tamano > 16
         ) {
             tamano--;
-            contexto.font = `${tamano}px "AlterCreedArmy"`;
+            contexto.font = `${tamano}px "${fuente}"`;
         }
 
         contexto.fillStyle = config.color;
@@ -1629,30 +1635,27 @@ async function mostrarCredencialB8(datos) {
         armyTipoTexto,
         CONFIGURACION_B8.armyTipo
     );
-
+  
     // MEMBERSHIP NO.
-    escribirDato(
-        datos.codigo,
-        CONFIGURACION_B8.codigo,
-        true
-    );
+escribirDato(
+    datos.codigo,
+    CONFIGURACION_B8.codigo,
+    true,
+    "ArialArmy"
+);
 
-    // JOIN DATE
-    escribirDato(
-        fechaRegistroTexto,
-        CONFIGURACION_B8.fechaRegistro
-    );
+   // JOIN DATE
+escribirDato(
+    fechaRegistroTexto,
+    CONFIGURACION_B8.fechaRegistro,
+    false,
+    "ArialArmy"
+);
 
     // REGION
     escribirDato(
         datos.pais,
         CONFIGURACION_B8.paisRegion
-    );
-
-    // PAÍS DEBAJO DE LA FOTO
-    escribirDato(
-        datos.pais,
-        CONFIGURACION_B8.paisDebajoFoto
     );
 
     // PREPARAR FOTOGRAFÍA
