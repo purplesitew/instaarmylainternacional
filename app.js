@@ -584,13 +584,13 @@ const CONFIGURACION_B8 = {
 
     fuente: "AlterCreedArmy",
 
-    fotografia: {
+ fotografia: {
     x: 145,
     y: 324,
-    width: 190,
-    height: 300
+    width: 202,
+    height: 320
 },
-
+  
     nombre: {
         centerX: 480,
         baselineY: 359,
