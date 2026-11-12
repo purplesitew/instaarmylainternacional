@@ -609,18 +609,18 @@ const CONFIGURACION_B8 = {
         outline: "#333333"
     },
 
-    codigo: {
+ codigo: {
     centerX: 480,
     baselineY: 500,
     maxWidth: 210,
-    fontSize: 42,
+    fontSize: 30,
     color: "#ffffff",
     outline: "#ff0000"
 },
 
 fechaRegistro: {
     centerX: 480,
-    baselineY: 586,
+    baselineY: 558,
     maxWidth: 110,
     fontSize: 42,
     color: "#ffffff",
