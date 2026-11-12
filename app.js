@@ -588,7 +588,7 @@ const CONFIGURACION_B8 = {
     x: 145,
     y: 324,
     width: 202,
-    height: 320
+    height: 330
 },
   
     nombre: {
