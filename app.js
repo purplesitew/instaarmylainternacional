@@ -1595,10 +1595,35 @@ async function mostrarCredencialB8(datos) {
             contexto.font = `${tamano}px "${fuente}"`;
         }
 
-        contexto.fillStyle = config.color;
-        contexto.strokeStyle = config.outline;
-        contexto.lineWidth = esCodigo ? 5 : 3;
-        contexto.lineJoin = "round";
+        
+if (esCodigo) {
+
+    // CÓDIGO: BLANCO CON BORDE ROJO
+    contexto.fillStyle = "#ffffff";
+    contexto.strokeStyle = "#ff0000";
+    contexto.lineWidth = 5;
+
+} else {
+
+    // DEMÁS DATOS: DEGRADADO BLANCO A GRIS
+    const degradado = contexto.createLinearGradient(
+        0,
+        config.baselineY - tamano,
+        0,
+        config.baselineY
+    );
+
+    degradado.addColorStop(0, "#ffffff");
+    degradado.addColorStop(0.45, "#e5e5e5");
+    degradado.addColorStop(1, "#888888");
+
+    contexto.fillStyle = degradado;
+    contexto.strokeStyle = "#333333";
+    contexto.lineWidth = 3;
+}
+
+contexto.lineJoin = "round";
+
 
         const x = config.centerX - (config.maxWidth / 2);
 
