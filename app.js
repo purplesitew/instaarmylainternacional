@@ -601,17 +601,17 @@ const CONFIGURACION_B8 = {
     },
 
     armyTipo: {
-        centerX: 478,
-        baselineY: 417,
-        maxWidth: 200,
-        fontSize: 34,
-        color: "#ffffff",
-        outline: "#333333"
-    },
+    centerX: 488,
+    baselineY: 417,
+    maxWidth: 200,
+    fontSize: 34,
+    color: "#ffffff",
+    outline: "#333333"
+},
 
- codigo: {
-    centerX: 480,
-    baselineY: 500,
+codigo: {
+    centerX: 490,
+    baselineY: 490,
     maxWidth: 210,
     fontSize: 30,
     color: "#ffffff",
