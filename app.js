@@ -1613,7 +1613,9 @@ async function mostrarCredencialB8(datos) {
         contexto.restore();
     }
 
-    const fechaRegistroTexto = formatearFechaB8(datos.fechaRegistro);
+    const fechaRegistroTexto = String(
+    new Date(datos.fechaRegistro || Date.now()).getFullYear()
+);
     const armyTipoTexto = datos.armyTipo || "ARMY GIRL";
 
     // NAME
