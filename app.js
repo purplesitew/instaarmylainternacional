@@ -2743,6 +2743,248 @@ function obtenerArchivoBiasB4(bias) {
 }
  window.obtenerArchivoBiasB4 = obtenerArchivoBiasB4;
 
+  
+ // ==========================================
+ // GALERÍA NUEVA DE MARCOS PNG
+ // ==========================================
+
+ const ARCHIVOS_MARCOS_PNG = {
+     suga: "./marcosuga.png",
+     jin: "./marcojin.png",
+     jhope: "./marcojhope.png",
+     v: "./marcov.png",
+     jungkook: "./marcojungkook.png",
+     rm: "./marcorm.png",
+     jimin: "./marcojimin.png",
+     ot7: "./marcoot7.png"
+ };
+
+ // ==========================================
+ // POSICIÓN DEL MARCO SEGÚN CREDENCIAL
+ // ==========================================
+
+ function obtenerZonaMarcoPNG() {
+
+     let foto;
+     let anchoBase;
+     let altoBase;
+
+     switch (plantillaSeleccionada) {
+
+         case "B1.jpeg":
+             foto = { x: 25, y: 209, width: 273, height: 365 };
+             anchoBase = 880;
+             altoBase = 1204;
+             break;
+
+         case "B2.jpeg":
+             foto = CONFIGURACION_B2.fotografia;
+             anchoBase = CONFIGURACION_B2.width;
+             altoBase = CONFIGURACION_B2.height;
+             break;
+
+         case "B3.jpeg":
+             foto = CONFIGURACION_B3.fotografia;
+             anchoBase = CONFIGURACION_B3.width;
+             altoBase = CONFIGURACION_B3.height;
+             break;
+
+         case "B4.jpeg":
+             foto = CONFIGURACION_B4.fotografia;
+             anchoBase = CONFIGURACION_B4.width;
+             altoBase = CONFIGURACION_B4.height;
+             break;
+
+         case "B5.jpeg":
+         case "B10.jpeg":
+             foto = CONFIGURACION_B5_B10.fotografia;
+             anchoBase = CONFIGURACION_B5_B10.imagen.width;
+             altoBase = CONFIGURACION_B5_B10.imagen.height;
+             break;
+
+         case "B6.jpeg":
+             foto = CONFIGURACION_B6.fotografia;
+             anchoBase = CONFIGURACION_B6.width;
+             altoBase = CONFIGURACION_B6.height;
+             break;
+
+         case "B7.jpeg":
+         case "B9.jpeg":
+             foto = CONFIGURACION_B7_B9.fotografia;
+             anchoBase = CONFIGURACION_B7_B9.width;
+             altoBase = CONFIGURACION_B7_B9.height;
+             break;
+
+         case "B8.jpeg":
+             foto = CONFIGURACION_B8.fotografia;
+             anchoBase = CONFIGURACION_B8.width;
+             altoBase = CONFIGURACION_B8.height;
+             break;
+
+         default:
+             return null;
+     }
+
+     const canvasFoto = document.getElementById("canvas-credencial");
+
+     if (!canvasFoto || !capaStickers) return null;
+
+     const rectFoto = canvasFoto.getBoundingClientRect();
+     const rectCapa = capaStickers.getBoundingClientRect();
+
+     if (
+         !rectFoto.width ||
+         !rectFoto.height ||
+         !rectCapa.width ||
+         !rectCapa.height
+     ) {
+         return null;
+     }
+
+     const escalaX = capaStickers.width / rectCapa.width;
+     const escalaY = capaStickers.height / rectCapa.height;
+
+     return {
+         x: (
+             rectFoto.left - rectCapa.left +
+             (foto.x / anchoBase) * rectFoto.width
+         ) * escalaX,
+
+         y: (
+             rectFoto.top - rectCapa.top +
+             (foto.y / altoBase) * rectFoto.height
+         ) * escalaY,
+
+         ancho: (
+             (foto.width / anchoBase) * rectFoto.width
+         ) * escalaX,
+
+         alto: (
+             (foto.height / altoBase) * rectFoto.height
+         ) * escalaY
+     };
+ }
+
+ // ==========================================
+ // MOSTRAR LOS OCHO MARCOS
+ // ==========================================
+
+ if (btnMarcoFoto && listaMarcos) {
+
+     btnMarcoFoto.addEventListener("click", async () => {
+
+         if (listaMarcos.children.length > 0) {
+
+             listaMarcos.style.display =
+                 listaMarcos.style.display === "none"
+                     ? "flex"
+                     : "none";
+
+             return;
+         }
+
+         listaMarcos.innerHTML = "Cargando marcos...";
+         listaMarcos.style.display = "flex";
+
+         const nombres = [
+             "suga",
+             "jin",
+             "jhope",
+             "v",
+             "jungkook",
+             "rm",
+             "jimin",
+             "ot7"
+         ];
+
+         listaMarcos.innerHTML = "";
+
+         let marcosCargados = 0;
+
+         for (const nombre of nombres) {
+
+             try {
+
+                 const imagen = new Image();
+
+                 await new Promise((resolve, reject) => {
+
+                     imagen.onload = resolve;
+                     imagen.onerror = reject;
+
+                     imagen.src = ARCHIVOS_MARCOS_PNG[nombre];
+
+                 });
+
+                 const opcion = document.createElement("button");
+                 opcion.type = "button";
+                 opcion.className = "sticker-opcion";
+                 opcion.title = "Marco " + nombre.toUpperCase();
+
+                 const miniatura = document.createElement("img");
+
+                 miniatura.src = ARCHIVOS_MARCOS_PNG[nombre];
+                 miniatura.alt = "Marco " + nombre;
+
+                 miniatura.style.width = "110px";
+                 miniatura.style.height = "110px";
+                 miniatura.style.objectFit = "contain";
+
+                 opcion.appendChild(miniatura);
+
+                 opcion.addEventListener("click", () => {
+
+                     const zona = obtenerZonaMarcoPNG();
+
+                     if (!zona) {
+                         alert("Primero abre una credencial.");
+                         return;
+                     }
+
+                     marcoSeleccionado = {
+
+                         imagen: imagen,
+
+                         origenX: 0,
+                         origenY: 0,
+                         origenAncho: imagen.naturalWidth,
+                         origenAlto: imagen.naturalHeight,
+
+                         x: zona.x,
+                         y: zona.y,
+                         ancho: zona.ancho,
+                         alto: zona.alto
+
+                     };
+
+                     dibujarStickers();
+
+                     listaMarcos.style.display = "none";
+
+                 });
+
+                 listaMarcos.appendChild(opcion);
+                 marcosCargados++;
+
+             } catch (error) {
+
+                 console.error(
+                     "No se pudo cargar el marco " + nombre,
+                     error
+                 );
+             }
+         }
+
+         if (marcosCargados === 0) {
+             listaMarcos.textContent =
+                 "No se pudieron cargar los marcos PNG. Revisa sus nombres en GitHub.";
+         }
+
+     });
+
+ }
+
+
 // ==========================================
 // MOVIMIENTO DE STICKERS
 // ==========================================
