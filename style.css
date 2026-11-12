@@ -307,6 +307,17 @@ transform: translate(-50%, -50%);
   }
 }
 
+/* ==========================================
+   FUENTE EXCLUSIVA CREDENCIAL B8
+   ========================================== */
+
+@font-face {
+    font-family: "AlterCreedArmy";
+    src: url("./AlterCreed_PERSONAL_USE_ONLY.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}
+
 
 /* ===================================
    FORMULARIO DE CREDENCIALES
