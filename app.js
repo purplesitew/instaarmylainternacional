@@ -572,79 +572,80 @@ bias: {
 };
 
 
- // ==========================================
- // CONFIGURACIÓN EXCLUSIVA B8
- // ==========================================
 
- const CONFIGURACION_B8 = {
+// ==========================================
+// CONFIGURACIÓN EXCLUSIVA B8 CORREGIDA
+// ==========================================
 
-     // Coordenadas de referencia de la imagen B8
-     width: 768,
-     height: 1365,
+const CONFIGURACION_B8 = {
 
-     fuente: "AlterCreedArmy",
+    width: 750,
+    height: 1000,
 
-     fotografia: {
-         x: 97,
-         y: 476,
-         width: 263,
-         height: 412
-     },
+    fuente: "AlterCreedArmy",
 
-     nombre: {
-         centerX: 524,
-         baselineY: 539,
-         maxWidth: 270,
-         fontSize: 42,
-         color: "#ffffff",
-         outline: "#333333"
-     },
+    fotografia: {
+        x: 133,
+        y: 314,
+        width: 213,
+        height: 341
+    },
 
-     armyTipo: {
-         centerX: 514,
-         baselineY: 608,
-         maxWidth: 250,
-         fontSize: 36,
-         color: "#ffffff",
-         outline: "#333333"
-     },
+    nombre: {
+        centerX: 480,
+        baselineY: 359,
+        maxWidth: 195,
+        fontSize: 39,
+        color: "#ffffff",
+        outline: "#333333"
+    },
 
-     codigo: {
-         centerX: 519,
-         baselineY: 693,
-         maxWidth: 250,
-         fontSize: 44,
-         color: "#ffffff",
-         outline: "#ff0000"
-     },
+    armyTipo: {
+        centerX: 478,
+        baselineY: 417,
+        maxWidth: 200,
+        fontSize: 34,
+        color: "#ffffff",
+        outline: "#333333"
+    },
 
-     fechaRegistro: {
-         centerX: 508,
-         baselineY: 770,
-         maxWidth: 245,
-         fontSize: 34,
-         color: "#ffffff",
-         outline: "#333333"
-     },
+    codigo: {
+        centerX: 480,
+        baselineY: 480,
+        maxWidth: 195,
+        fontSize: 39,
+        color: "#ffffff",
+        outline: "#ff0000"
+    },
 
-     paisRegion: {
-         centerX: 504,
-         baselineY: 913,
-         maxWidth: 260,
-         fontSize: 39,
-         color: "#ffffff",
-         outline: "#333333"
-     },
+    fechaRegistro: {
+        centerX: 480,
+        baselineY: 548,
+        maxWidth: 205,
+        fontSize: 29,
+        color: "#ffffff",
+        outline: "#333333"
+    },
 
-     paisDebajoFoto: {
-         centerX: 229,
-         baselineY: 974,
-         maxWidth: 260,
-         fontSize: 48,
-         color: "#ffffff",
-         outline: "#333333"
-     }
- };
+    paisRegion: {
+        centerX: 477,
+        baselineY: 677,
+        maxWidth: 195,
+        fontSize: 35,
+        color: "#ffffff",
+        outline: "#333333"
+    },
+
+    paisDebajoFoto: {
+        centerX: 240,
+        baselineY: 710,
+        maxWidth: 220,
+        fontSize: 40,
+        color: "#ffffff",
+        outline: "#333333"
+    }
+};
+
 
 // ==========================================
 // CONFIGURACIÓN EXCLUSIVA B7 Y B9
