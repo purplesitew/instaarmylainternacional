@@ -561,7 +561,7 @@ const CONFIGURACION_B6 = {
 },
 
 bias: {
-    centerX: 153,
+    centerX: 163,
     baselineY: 650,
     maxWidth: 220,
     fontSize: 108,
