@@ -562,12 +562,13 @@ const CONFIGURACION_B6 = {
 
 bias: {
     centerX: 153,
-    baselineY: 675,
+    baselineY: 660,
     maxWidth: 220,
     fontSize: 108,
     color: "#ffffff",
     outline: "#f2d56b"
 }
+  
 };
 
 // ==========================================
