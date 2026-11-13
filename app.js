@@ -212,6 +212,44 @@ const COORDENADAS_OT7_3464 = [
 
  ];
 
+
+ // ==========================================
+ // STICKERS NUEVOS DE RM
+ // Archivo: stickerrm.png
+ // ==========================================
+
+ const COORDENADAS_RM_NUEVOS = [
+
+     // 1. RM con ropa deportiva
+     { id: 1, x: 35, y: 70, width: 510, height: 770 },
+
+     // 2. RM vestido de negro
+     { id: 2, x: 560, y: 80, width: 470, height: 750 },
+
+     // 3. RM con chaleco negro
+     { id: 3, x: 1080, y: 70, width: 440, height: 780 },
+
+     // 4. RM vestido de blanco
+     { id: 4, x: 1570, y: 70, width: 440, height: 780 },
+
+     // 5. Koya acostado
+     { id: 5, x: 100, y: 900, width: 550, height: 400 },
+
+     // 6. Muñeco de RM
+     { id: 6, x: 750, y: 900, width: 450, height: 500 },
+
+     // 7. Koya azul
+     { id: 7, x: 1360, y: 900, width: 500, height: 460 },
+
+     // 8. Firma de RM
+     { id: 8, x: 150, y: 1550, width: 850, height: 330 },
+
+     // 9. Nombre Kim Namjoon
+     { id: 9, x: 1100, y: 1560, width: 850, height: 330 }
+
+ ];
+
+
 // ==========================================
 // COORDENADAS DE LOS MARCOS DE FOTOGRAFÍA
 // ==========================================
@@ -2525,8 +2563,13 @@ const tamanoBase = usaCoordenadas3464
         ? 2047
         : TAMANO_COORDENADAS;
 
-const escalaX = imagen.naturalWidth / tamanoBase;
-const escalaY = imagen.naturalHeight / tamanoBase;
+
+const tamanoBase =
+    imagen === imagenesStickers.jungkook ? 2047 :
+    imagen === imagenesStickers.rm ? 2048 :
+    usaCoordenadas3464 ? 3464 :
+    TAMANO_COORDENADAS;
+
 
     const origenX = sticker.x * escalaX;
     const origenY = sticker.y * escalaY;
@@ -2628,7 +2671,7 @@ if (biasSeleccionado === "jhope") {
 } else if (biasSeleccionado === "ot7") {
     coordenadasActuales = COORDENADAS_OT7_3464.slice(0, 9);
 } else if (biasSeleccionado === "rm") {
-    coordenadasActuales = COORDENADAS_RM.slice(0, 9);
+    coordenadasActuales = COORDENADAS_RM_NUEVOS.slice(0, 9);
 } else if (biasSeleccionado === "jungkook") {
     coordenadasActuales = COORDENADAS_JUNGKOOK_NUEVOS.slice(0, 9);
 } else {
@@ -2663,8 +2706,12 @@ const tamanoBase = usaCoordenadas3464
         ? 2047
         : TAMANO_COORDENADAS;
 
-const escalaX = imagen.naturalWidth / tamanoBase;
-const escalaY = imagen.naturalHeight / tamanoBase;
+
+const tamanoBase =
+    biasSeleccionado === "jungkook" ? 2047 :
+    biasSeleccionado === "rm" ? 2048 :
+    usaCoordenadas3464 ? 3464 :
+    TAMANO_COORDENADAS;
 
 const x = sticker.x * escalaX;
 const y = sticker.y * escalaY;
