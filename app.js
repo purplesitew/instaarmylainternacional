@@ -218,36 +218,37 @@ const COORDENADAS_OT7_3464 = [
  // Archivo: stickerrm.png
  // ==========================================
 
- const COORDENADAS_RM_NUEVOS = [
 
-     // 1. RM con ropa deportiva
-     { id: 1, x: 35, y: 70, width: 510, height: 770 },
+const COORDENADAS_RM_NUEVOS = [
 
-     // 2. RM vestido de negro
-     { id: 2, x: 560, y: 80, width: 470, height: 750 },
+    // 1. RM con ropa deportiva
+    { id: 1, x: 425, y: 122, width: 240, height: 830 },
 
-     // 3. RM con chaleco negro
-     { id: 3, x: 1080, y: 70, width: 440, height: 780 },
+    // 2. RM vestido de negro
+    { id: 2, x: 1038, y: 162, width: 415, height: 805 },
 
-     // 4. RM vestido de blanco
-     { id: 4, x: 1570, y: 70, width: 440, height: 780 },
+    // 3. RM con chaleco negro
+    { id: 3, x: 1648, y: 137, width: 262, height: 752 },
 
-     // 5. Koya acostado
-     { id: 5, x: 100, y: 900, width: 550, height: 400 },
+    // 4. RM vestido de blanco
+    { id: 4, x: 147, y: 1218, width: 380, height: 740 },
 
-     // 6. Muñeco de RM
-     { id: 6, x: 750, y: 900, width: 450, height: 500 },
+    // 5. Koya acostado
+    { id: 5, x: 438, y: 1030, width: 440, height: 315 },
 
-     // 7. Koya azul
-     { id: 7, x: 1360, y: 900, width: 500, height: 460 },
+    // 6. Muñeco de RM
+    { id: 6, x: 1109, y: 1026, width: 258, height: 323 },
 
-     // 8. Firma de RM
-     { id: 8, x: 150, y: 1550, width: 850, height: 330 },
+    // 7. Koya azul
+    { id: 7, x: 1505, y: 1010, width: 456, height: 355 },
 
-     // 9. Nombre Kim Namjoon
-     { id: 9, x: 1100, y: 1560, width: 850, height: 330 }
+    // 8. Firma de RM
+    { id: 8, x: 620, y: 1545, width: 555, height: 335 },
 
- ];
+    // 9. Nombre Kim Namjoon
+    { id: 9, x: 1240, y: 1580, width: 805, height: 305 }
+
+];
 
 
 // ==========================================
