@@ -2654,6 +2654,135 @@ radio: 100
 
 const capaStickers = document.getElementById("capa-stickers");
 
+  
+// ==========================================
+// ZONAS PROTEGIDAS EXCLUSIVAS DE B8
+// ==========================================
+
+function obtenerZonasProtegidasB8() {
+
+  
+// ==========================================
+// COMPROBAR ZONAS PROTEGIDAS DE B8
+// ==========================================
+
+function stickerInvadeZonaB8(x, y, ancho, alto) {
+
+    if (plantillaSeleccionada !== "B8.jpeg") {
+        return false;
+    }
+
+    const canvasFoto = document.getElementById(
+        "canvas-credencial"
+    );
+
+    if (!canvasFoto || !capaStickers) return false;
+
+    const rectFoto = canvasFoto.getBoundingClientRect();
+    const rectCapa = capaStickers.getBoundingClientRect();
+
+    if (
+        !rectFoto.width ||
+        !rectFoto.height ||
+        !rectCapa.width ||
+        !rectCapa.height
+    ) {
+        return true;
+    }
+
+    // Convertir coordenadas de B8 a la capa de stickers
+    const escalaX =
+        (rectFoto.width / CONFIGURACION_B8.width) *
+        (capaStickers.width / rectCapa.width);
+
+    const escalaY =
+        (rectFoto.height / CONFIGURACION_B8.height) *
+        (capaStickers.height / rectCapa.height);
+
+    const desplazamientoX =
+        (rectFoto.left - rectCapa.left) *
+        capaStickers.width / rectCapa.width;
+
+    const desplazamientoY =
+        (rectFoto.top - rectCapa.top) *
+        capaStickers.height / rectCapa.height;
+
+    return obtenerZonasProtegidasB8().some((zona) => {
+
+        const zx = desplazamientoX + zona.x * escalaX;
+        const zy = desplazamientoY + zona.y * escalaY;
+        const zw = zona.width * escalaX;
+        const zh = zona.height * escalaY;
+
+        return (
+            x < zx + zw &&
+            x + ancho > zx &&
+            y < zy + zh &&
+            y + alto > zy
+        );
+
+    });
+}
+
+
+    if (plantillaSeleccionada !== "B8.jpeg") {
+        return [];
+    }
+
+    const foto = CONFIGURACION_B8.fotografia;
+
+    return [
+        // Fotografía
+        {
+            x: foto.x,
+            y: foto.y,
+            width: foto.width,
+            height: foto.height
+        },
+
+        // Nombre
+        {
+            x: 370,
+            y: 310,
+            width: 230,
+            height: 55
+        },
+
+        // ARMY GIRL / ARMY BOY
+        {
+            x: 370,
+            y: 370,
+            width: 230,
+            height: 55
+        },
+
+        // Código personal
+        {
+            x: 370,
+            y: 445,
+            width: 240,
+            height: 55
+        },
+
+        // Año de registro
+        {
+            x: 370,
+            y: 515,
+            width: 230,
+            height: 55
+        },
+
+        // País / REGION
+        {
+            x: 370,
+            y: 630,
+            width: 230,
+            height: 60
+        }
+    ];
+}
+
+
 let imagenStickersActiva = null;
 let stickerArrastrado = null;
 let desplazamientoStickerX = 0;
@@ -3504,10 +3633,21 @@ if (capaStickers) {
                 )
             );
 
-            stickerArrastrado.x = nuevoX;
-            stickerArrastrado.y = nuevoY;
+           
+// Comprobar que el sticker no invada zonas protegidas
+if (!stickerInvadeZonaB8(
+    nuevoX,
+    nuevoY,
+    stickerArrastrado.ancho,
+    stickerArrastrado.alto
+)) {
 
-            dibujarStickers();
+    stickerArrastrado.x = nuevoX;
+    stickerArrastrado.y = nuevoY;
+
+    dibujarStickers();
+}
+
         }
 
 
