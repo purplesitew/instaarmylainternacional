@@ -53,17 +53,18 @@ const TAMANO_COORDENADAS = 1024;
 const FACTOR_STICKERS =
     TAMANO_STICKERS / TAMANO_COORDENADAS;
 
-// Archivos de stickers según el Bias
+
 const ARCHIVOS_STICKERS = {
-    "jhope": "./stickers-jhope.png",
-    "jin": "./stickers-jin.png",
-    "v": "./stickers-v-taehyung.png",
-    "rm": "./stickers-rm.png",
-    "ot7": "./stickers-ot7.png",
-    "jungkook": "./stickers-jungkook.png",
-    "jimin": "./stickers-jimin.png",
-    "suga": "./stickers-suga.png"
+    "jhope": "./stickerjhope.png",
+    "jin": "./stickerjin.png",
+    "v": "./stickerv.png",
+    "rm": "./stickerrm.png",
+    "ot7": "./stickerot7.png",
+    "jungkook": "./stickerjungkook.png",
+    "jimin": "./stickerjimin.png",
+    "suga": "./stickersuga.png"
 };
+
 
 // Coordenadas de los 10 stickers
 const COORDENADAS_STICKERS = [
@@ -172,6 +173,45 @@ const COORDENADAS_OT7_3464 = [
     { id: 9, x: 197, y: 2641, width: 1471, height: 653 },
     { id: 10, x: 2175, y: 2329, width: 965, height: 965 }
 ];
+
+
+ // ==========================================
+ // STICKERS NUEVOS DE JUNGKOOK
+ // Archivo: stickerjungkook.png
+ // Tamaño original: 2047 x 2047
+ // ==========================================
+
+ const COORDENADAS_JUNGKOOK_NUEVOS = [
+
+     // 1. Jungkook saltando
+     { id: 1, x: 200, y: 110, width: 545, height: 825 },
+
+     // 2. Jungkook con ropa oscura
+     { id: 2, x: 975, y: 260, width: 530, height: 690 },
+
+     // 3. Jungkook con flores
+     { id: 3, x: 1625, y: 120, width: 320, height: 815 },
+
+     // 4. Jungkook sin camisa
+     { id: 4, x: 65, y: 1185, width: 540, height: 780 },
+
+     // 5. Peluche de Jungkook
+     { id: 5, x: 565, y: 960, width: 310, height: 440 },
+
+     // 6. Cooky rosa
+     { id: 6, x: 1035, y: 970, width: 350, height: 430 },
+
+     // 7. Cooky Insta Army
+     { id: 7, x: 1570, y: 940, width: 430, height: 420 },
+
+     // 8. Firma de Jungkook
+     { id: 8, x: 640, y: 1600, width: 600, height: 310 },
+
+     // 9. Nombre Jeon Jungkook
+     { id: 9, x: 1240, y: 1570, width: 770, height: 350 }
+
+ ];
+
 // ==========================================
 // COORDENADAS DE LOS MARCOS DE FOTOGRAFÍA
 // ==========================================
@@ -2478,11 +2518,15 @@ function colocarSticker(sticker, imagen) {
         imagen === imagenesStickers.suga ||
         imagen === imagenesStickers.ot7;
 
-    const escalaX = imagen.naturalWidth /
-        (usaCoordenadas3464 ? 3464 : TAMANO_COORDENADAS);
+  
+const tamanoBase = usaCoordenadas3464
+    ? 3464
+    : imagen === imagenesStickers.jungkook
+        ? 2047
+        : TAMANO_COORDENADAS;
 
-    const escalaY = imagen.naturalHeight /
-        (usaCoordenadas3464 ? 3464 : TAMANO_COORDENADAS);
+const escalaX = imagen.naturalWidth / tamanoBase;
+const escalaY = imagen.naturalHeight / tamanoBase;
 
     const origenX = sticker.x * escalaX;
     const origenY = sticker.y * escalaY;
@@ -2586,7 +2630,7 @@ if (biasSeleccionado === "jhope") {
 } else if (biasSeleccionado === "rm") {
     coordenadasActuales = COORDENADAS_RM.slice(0, 9);
 } else if (biasSeleccionado === "jungkook") {
-    coordenadasActuales = COORDENADAS_STICKERS.slice(0, 9);
+    coordenadasActuales = COORDENADAS_JUNGKOOK_NUEVOS.slice(0, 9);
 } else {
     coordenadasActuales = COORDENADAS_STICKERS.slice(0, 9);
 }
@@ -2612,11 +2656,15 @@ coordenadasActuales.forEach((sticker) => {
     biasSeleccionado === "jimin" ||
     biasSeleccionado === "suga" ||
     biasSeleccionado === "ot7";
-const escalaX = imagen.naturalWidth /
-    (usaCoordenadas3464 ? 3464 : TAMANO_COORDENADAS);
 
-const escalaY = imagen.naturalHeight /
-    (usaCoordenadas3464 ? 3464 : TAMANO_COORDENADAS);
+const tamanoBase = usaCoordenadas3464
+    ? 3464
+    : biasSeleccionado === "jungkook"
+        ? 2047
+        : TAMANO_COORDENADAS;
+
+const escalaX = imagen.naturalWidth / tamanoBase;
+const escalaY = imagen.naturalHeight / tamanoBase;
 
 const x = sticker.x * escalaX;
 const y = sticker.y * escalaY;
