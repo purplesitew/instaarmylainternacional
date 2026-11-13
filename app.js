@@ -2584,10 +2584,13 @@ function colocarSticker(sticker, imagen) {
     // TAMAÑO REAL DE LOS STICKERS
     // ==========================================
 
-    const tamanoBase =
-        imagen === imagenesStickers.jungkook ? 2047 :
-        imagen === imagenesStickers.rm ? 2048 :
-        3464;
+    
+const tamanoBase =
+    imagen === imagenesStickers.jungkook ? 2047 :
+    imagen === imagenesStickers.rm ? 2048 :
+    imagen === imagenesStickers.ot7 ? 1097 :
+    3464;
+
 
     const escalaX = imagen.naturalWidth / tamanoBase;
     const escalaY = imagen.naturalHeight / tamanoBase;
@@ -2692,7 +2695,7 @@ if (biasSeleccionado === "jhope") {
 } else if (biasSeleccionado === "suga") {
     coordenadasActuales = COORDENADAS_SUGA_3464.slice(0, 9);
 } else if (biasSeleccionado === "ot7") {
-    coordenadasActuales = COORDENADAS_OT7_3464.slice(0, 9);
+    coordenadasActuales = COORDENADAS_OT7_NUEVOS.slice(0, 7);
 } else if (biasSeleccionado === "rm") {
     coordenadasActuales = COORDENADAS_RM_NUEVOS.slice(0, 9);
 } else if (biasSeleccionado === "jungkook") {
@@ -2719,10 +2722,13 @@ coordenadasActuales.forEach((sticker) => {
     // ESCALA PARA LAS MINIATURAS
     // ==========================================
 
-    const tamanoBase =
-        biasSeleccionado === "jungkook" ? 2047 :
-        biasSeleccionado === "rm" ? 2048 :
-        3464;
+    
+const tamanoBase =
+    biasSeleccionado === "jungkook" ? 2047 :
+    biasSeleccionado === "rm" ? 2048 :
+    biasSeleccionado === "ot7" ? 1097 :
+    3464;
+
 
     const escalaX = imagen.naturalWidth / tamanoBase;
     const escalaY = imagen.naturalHeight / tamanoBase;
