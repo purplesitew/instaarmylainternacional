@@ -3606,6 +3606,7 @@ if (capaStickers) {
 
 
       
+       
         // ==========================================
         // MOVIMIENTO LIBRE DE STICKERS
         // ==========================================
@@ -3615,7 +3616,7 @@ if (capaStickers) {
             let nuevoX = x - desplazamientoStickerX;
             let nuevoY = y - desplazamientoStickerY;
 
-            // No permitir que salga por los lados
+            // Mantener el sticker dentro de la credencial
             nuevoX = Math.max(
                 0,
                 Math.min(
@@ -3624,7 +3625,6 @@ if (capaStickers) {
                 )
             );
 
-            // No permitir que salga por arriba o abajo
             nuevoY = Math.max(
                 0,
                 Math.min(
@@ -3633,21 +3633,11 @@ if (capaStickers) {
                 )
             );
 
-           
-// Comprobar que el sticker no invada zonas protegidas
-if (!stickerInvadeZonaB8(
-    nuevoX,
-    nuevoY,
-    stickerArrastrado.ancho,
-    stickerArrastrado.alto
-)) {
+            // Permitir moverlo nuevamente
+            stickerArrastrado.x = nuevoX;
+            stickerArrastrado.y = nuevoY;
 
-    stickerArrastrado.x = nuevoX;
-    stickerArrastrado.y = nuevoY;
-
-    dibujarStickers();
-}
-
+            dibujarStickers();
         }
 
 
