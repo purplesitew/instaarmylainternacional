@@ -389,6 +389,43 @@ const COORDENADAS_V_NUEVOS = [
 
  ];
 
+ // ==========================================
+ // STICKERS NUEVOS DE JIN
+ // Archivo: stickerjin.png
+ // Coordenadas de referencia: 1240 x 1240
+ // ==========================================
+
+ const COORDENADAS_JIN_NUEVOS = [
+
+     // 1. Jin con camiseta roja
+     { id: 1, x: 207, y: 80, width: 205, height: 445 },
+
+     // 2. Jin con traje rojo
+     { id: 2, x: 610, y: 95, width: 300, height: 420 },
+
+     // 3. Jin con chaqueta negra
+     { id: 3, x: 1015, y: 48, width: 175, height: 525 },
+
+     // 4. Jin con camiseta negra
+     { id: 4, x: 90, y: 672, width: 225, height: 568 },
+
+     // 5. RJ blanco
+     { id: 5, x: 337, y: 565, width: 220, height: 255 },
+
+     // 6. Jin con Army Bomb
+     { id: 6, x: 700, y: 532, width: 110, height: 320 },
+
+     // 7. Jin con disfraz de RJ
+     { id: 7, x: 965, y: 593, width: 240, height: 250 },
+
+     // 8. Firma de Jin
+     { id: 8, x: 424, y: 920, width: 345, height: 180 },
+
+     // 9. Nombre Kim Seokjin
+     { id: 9, x: 818, y: 975, width: 385, height: 170 }
+
+ ];
+
 
 // ==========================================
 // COORDENADAS DE LOS MARCOS DE FOTOGRAFÍA
@@ -2695,6 +2732,7 @@ function colocarSticker(sticker, imagen) {
 
 
 
+
 const tamanoBase =
     imagen === imagenesStickers.jungkook ? 2047 :
     imagen === imagenesStickers.rm ? 2048 :
@@ -2702,7 +2740,9 @@ const tamanoBase =
     imagen === imagenesStickers.jhope ? 1462 :
     imagen === imagenesStickers.v ? 1097 :
     imagen === imagenesStickers.jimin ? 1240 :
+    imagen === imagenesStickers.jin ? 1240 :
     3464;
+
 
 
 
@@ -2803,7 +2843,7 @@ let coordenadasActuales;
 if (biasSeleccionado === "jhope") {
    coordenadasActuales = COORDENADAS_JHOPE_NUEVOS.slice(0, 9);
 } else if (biasSeleccionado === "jin") {
-    coordenadasActuales = COORDENADAS_JIN.slice(0, 9);
+    coordenadasActuales = COORDENADAS_JIN_NUEVOS.slice(0, 9);
 } else if (biasSeleccionado === "v") {
     coordenadasActuales = COORDENADAS_V_NUEVOS.slice(0, 9);
 } else if (biasSeleccionado === "jimin") {
@@ -2842,6 +2882,7 @@ coordenadasActuales.forEach((sticker) => {
 
 
 
+
 const tamanoBase =
     biasSeleccionado === "jungkook" ? 2047 :
     biasSeleccionado === "rm" ? 2048 :
@@ -2849,7 +2890,9 @@ const tamanoBase =
     biasSeleccionado === "jhope" ? 1462 :
     biasSeleccionado === "v" ? 1097 :
     biasSeleccionado === "jimin" ? 1240 :
+    biasSeleccionado === "jin" ? 1240 :
     3464;
+
 
 
   
