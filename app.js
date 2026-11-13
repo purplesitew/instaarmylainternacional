@@ -427,6 +427,41 @@ const COORDENADAS_V_NUEVOS = [
  ];
 
 
+ // ==========================================
+ // STICKERS NUEVOS DE SUGA
+ // Archivo: stickersuga.png
+ // Coordenadas de referencia: 1240 x 1240
+ // ==========================================
+
+ const COORDENADAS_SUGA_NUEVOS = [
+
+     // 1. SUGA sentado señalando arriba
+     { id: 1, x: 70, y: 65, width: 365, height: 455 },
+
+     // 2. SUGA con flor roja
+     { id: 2, x: 575, y: 110, width: 140, height: 450 },
+
+     // 3. SUGA con ropa deportiva
+     { id: 3, x: 925, y: 70, width: 170, height: 455 },
+
+     // 4. SUGA con camiseta Insta Army
+     { id: 4, x: 130, y: 590, width: 205, height: 600 },
+
+     // 5. SUGA ilustrado
+     { id: 5, x: 415, y: 640, width: 210, height: 330 },
+
+     // 6. Shooky con Army Bomb
+     { id: 6, x: 640, y: 685, width: 305, height: 230 },
+
+     // 7. Shooky sonriente
+     { id: 7, x: 985, y: 690, width: 250, height: 215 },
+
+     // 8. Nombre Min Yoongi - Insta Army
+     { id: 8, x: 775, y: 970, width: 460, height: 200 }
+
+ ];
+
+
 // ==========================================
 // COORDENADAS DE LOS MARCOS DE FOTOGRAFÍA
 // ==========================================
@@ -2728,10 +2763,6 @@ function colocarSticker(sticker, imagen) {
     // TAMAÑO REAL DE LOS STICKERS
     // ==========================================
 
-    
-
-
-
 
 const tamanoBase =
     imagen === imagenesStickers.jungkook ? 2047 :
@@ -2741,7 +2772,9 @@ const tamanoBase =
     imagen === imagenesStickers.v ? 1097 :
     imagen === imagenesStickers.jimin ? 1240 :
     imagen === imagenesStickers.jin ? 1240 :
+    imagen === imagenesStickers.suga ? 1240 :
     3464;
+
 
 
 
@@ -2849,7 +2882,7 @@ if (biasSeleccionado === "jhope") {
 } else if (biasSeleccionado === "jimin") {
     coordenadasActuales = COORDENADAS_JIMIN_NUEVOS.slice(0, 9);
 } else if (biasSeleccionado === "suga") {
-    coordenadasActuales = COORDENADAS_SUGA_3464.slice(0, 9);
+    coordenadasActuales = COORDENADAS_SUGA_NUEVOS.slice(0, 8);
 } else if (biasSeleccionado === "ot7") {
     coordenadasActuales = COORDENADAS_OT7_NUEVOS.slice(0, 7);
 } else if (biasSeleccionado === "rm") {
@@ -2877,11 +2910,7 @@ coordenadasActuales.forEach((sticker) => {
     // ==========================================
     // ESCALA PARA LAS MINIATURAS
     // ==========================================
-
-    
-
-
-
+  
 
 const tamanoBase =
     biasSeleccionado === "jungkook" ? 2047 :
@@ -2891,7 +2920,9 @@ const tamanoBase =
     biasSeleccionado === "v" ? 1097 :
     biasSeleccionado === "jimin" ? 1240 :
     biasSeleccionado === "jin" ? 1240 :
+    biasSeleccionado === "suga" ? 1240 :
     3464;
+
 
 
 
