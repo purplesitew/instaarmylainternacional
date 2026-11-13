@@ -3633,11 +3633,34 @@ if (capaStickers) {
                 )
             );
 
-            // Permitir moverlo nuevamente
-            stickerArrastrado.x = nuevoX;
-            stickerArrastrado.y = nuevoY;
+            
+// Comprobar si el sticker está en una zona protegida
+const estabaBloqueado = stickerInvadeZonaB8(
+    stickerArrastrado.x,
+    stickerArrastrado.y,
+    stickerArrastrado.ancho,
+    stickerArrastrado.alto
+);
 
-            dibujarStickers();
+// Comprobar la nueva posición
+const nuevaPosicionBloqueada = stickerInvadeZonaB8(
+    nuevoX,
+    nuevoY,
+    stickerArrastrado.ancho,
+    stickerArrastrado.alto
+);
+
+// Permitir movimiento en áreas libres.
+// Si comenzó dentro de una zona protegida,
+// permitir que pueda salir de ella.
+if (!nuevaPosicionBloqueada || estabaBloqueado) {
+
+    stickerArrastrado.x = nuevoX;
+    stickerArrastrado.y = nuevoY;
+
+    dibujarStickers();
+}
+
         }
 
 
