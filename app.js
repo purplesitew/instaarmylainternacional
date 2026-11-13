@@ -2623,11 +2623,14 @@ function colocarSticker(sticker, imagen) {
     // ==========================================
 
     
+
 const tamanoBase =
     imagen === imagenesStickers.jungkook ? 2047 :
     imagen === imagenesStickers.rm ? 2048 :
     imagen === imagenesStickers.ot7 ? 1097 :
+    imagen === imagenesStickers.jhope ? 1462 :
     3464;
+
 
 
     const escalaX = imagen.naturalWidth / tamanoBase;
@@ -2723,7 +2726,7 @@ imagenesStickers[biasSeleccionado] = imagen;
 let coordenadasActuales;
 
 if (biasSeleccionado === "jhope") {
-    coordenadasActuales = COORDENADAS_JHOPE.slice(0, 9);
+   coordenadasActuales = COORDENADAS_JHOPE_NUEVOS.slice(0, 9);
 } else if (biasSeleccionado === "jin") {
     coordenadasActuales = COORDENADAS_JIN.slice(0, 9);
 } else if (biasSeleccionado === "v") {
@@ -2761,11 +2764,14 @@ coordenadasActuales.forEach((sticker) => {
     // ==========================================
 
     
+
 const tamanoBase =
     biasSeleccionado === "jungkook" ? 2047 :
     biasSeleccionado === "rm" ? 2048 :
     biasSeleccionado === "ot7" ? 1097 :
+    biasSeleccionado === "jhope" ? 1462 :
     3464;
+
 
 
     const escalaX = imagen.naturalWidth / tamanoBase;
