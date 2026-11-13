@@ -2546,29 +2546,19 @@ function colocarSticker(sticker, imagen) {
         return;
     }
 
-    // Reconocer el tamaño de coordenadas de cada imagen
-    const usaCoordenadas3464 =
-        imagen === imagenesStickers.jhope ||
-        imagen === imagenesStickers.jin ||
-        imagen === imagenesStickers.v ||
-        imagen === imagenesStickers.rm ||
-        imagen === imagenesStickers.jimin ||
-        imagen === imagenesStickers.suga ||
-        imagen === imagenesStickers.ot7;
+   
+    // ==========================================
+    // TAMAÑO REAL DE LOS STICKERS
+    // ==========================================
 
-  
-const tamanoBase = usaCoordenadas3464
-    ? 3464
-    : imagen === imagenesStickers.jungkook
-        ? 2047
-        : TAMANO_COORDENADAS;
+    const tamanoBase =
+        imagen === imagenesStickers.jungkook ? 2047 :
+        imagen === imagenesStickers.rm ? 2048 :
+        3464;
 
+    const escalaX = imagen.naturalWidth / tamanoBase;
+    const escalaY = imagen.naturalHeight / tamanoBase;
 
-const tamanoBase =
-    imagen === imagenesStickers.jungkook ? 2047 :
-    imagen === imagenesStickers.rm ? 2048 :
-    usaCoordenadas3464 ? 3464 :
-    TAMANO_COORDENADAS;
 
 
     const origenX = sticker.x * escalaX;
@@ -2691,27 +2681,19 @@ coordenadasActuales.forEach((sticker) => {
 
                 const contextoMiniatura = miniatura.getContext("2d");
 
-         const usaCoordenadas3464 =
-    biasSeleccionado === "jhope" ||
-    biasSeleccionado === "jin" ||
-    biasSeleccionado === "v" ||
-    biasSeleccionado === "rm" ||
-    biasSeleccionado === "jimin" ||
-    biasSeleccionado === "suga" ||
-    biasSeleccionado === "ot7";
+      
+    // ==========================================
+    // ESCALA PARA LAS MINIATURAS
+    // ==========================================
 
-const tamanoBase = usaCoordenadas3464
-    ? 3464
-    : biasSeleccionado === "jungkook"
-        ? 2047
-        : TAMANO_COORDENADAS;
+    const tamanoBase =
+        biasSeleccionado === "jungkook" ? 2047 :
+        biasSeleccionado === "rm" ? 2048 :
+        3464;
 
+    const escalaX = imagen.naturalWidth / tamanoBase;
+    const escalaY = imagen.naturalHeight / tamanoBase;
 
-const tamanoBase =
-    biasSeleccionado === "jungkook" ? 2047 :
-    biasSeleccionado === "rm" ? 2048 :
-    usaCoordenadas3464 ? 3464 :
-    TAMANO_COORDENADAS;
 
 const x = sticker.x * escalaX;
 const y = sticker.y * escalaY;
