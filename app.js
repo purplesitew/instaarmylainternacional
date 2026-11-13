@@ -587,8 +587,8 @@ const CONFIGURACION_B8 = {
  fotografia: {
     x: 145,
     y: 324,
-    width: 202,
-    height: 330
+    width: 212,
+    height: 340
 },
   
     nombre: {
