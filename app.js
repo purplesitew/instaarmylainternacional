@@ -3470,52 +3470,40 @@ const escalaFinal = Math.min(
             return;
         }
 
-        // MOVER CON UN SOLO DEDO
+      
+        // ==========================================
+        // MOVIMIENTO LIBRE DE STICKERS
+        // ==========================================
+
         if (puntosToque.size === 1 && stickerArrastrado) {
 
-            const zona = ZONAS_STICKERS.find(
-                zona => zona.id === stickerArrastrado.zonaId
+            let nuevoX = x - desplazamientoStickerX;
+            let nuevoY = y - desplazamientoStickerY;
+
+            // No permitir que salga por los lados
+            nuevoX = Math.max(
+                0,
+                Math.min(
+                    nuevoX,
+                    capaStickers.width - stickerArrastrado.ancho
+                )
             );
 
-            if (!zona) return;
-
-            const mitadDiagonal = Math.sqrt(
-                Math.pow(stickerArrastrado.ancho / 2, 2) +
-                Math.pow(stickerArrastrado.alto / 2, 2)
+            // No permitir que salga por arriba o abajo
+            nuevoY = Math.max(
+                0,
+                Math.min(
+                    nuevoY,
+                    capaStickers.height - stickerArrastrado.alto
+                )
             );
 
-            const radioMovimiento = (zona.radio * 1.5) - mitadDiagonal;
-
-            let centroX = x - desplazamientoStickerX +
-                stickerArrastrado.ancho / 2;
-
-            let centroY = y - desplazamientoStickerY +
-                stickerArrastrado.alto / 2;
-
-            const diferenciaX = centroX - zona.centroX;
-            const diferenciaY = centroY - zona.centroY;
-
-            const distancia = Math.sqrt(
-                diferenciaX * diferenciaX +
-                diferenciaY * diferenciaY
-            );
-
-            if (distancia > radioMovimiento) {
-
-                const factor = radioMovimiento / distancia;
-
-                centroX = zona.centroX + diferenciaX * factor;
-                centroY = zona.centroY + diferenciaY * factor;
-            }
-
-            stickerArrastrado.x =
-                centroX - stickerArrastrado.ancho / 2;
-
-            stickerArrastrado.y =
-                centroY - stickerArrastrado.alto / 2;
+            stickerArrastrado.x = nuevoX;
+            stickerArrastrado.y = nuevoY;
 
             dibujarStickers();
         }
+
 
     });
 
