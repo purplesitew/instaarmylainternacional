@@ -320,6 +320,38 @@ const COORDENADAS_RM_NUEVOS = [
 
  ];
 
+ 
+const COORDENADAS_V_NUEVOS = [
+
+    // 1. V agachado
+    { id: 1, x: 190, y: 90, width: 250, height: 395 },
+
+    // 2. V con saco café
+    { id: 2, x: 495, y: 83, width: 205, height: 395 },
+
+    // 3. V saltando
+    { id: 3, x: 711, y: 44, width: 378, height: 460 },
+
+    // 4. V con camiseta negra
+    { id: 4, x: 68, y: 605, width: 222, height: 492 },
+
+    // 5. Tata corazón
+    { id: 5, x: 290, y: 575, width: 215, height: 200 },
+
+    // 6. Muñeco con corazón rojo
+    { id: 6, x: 532, y: 543, width: 215, height: 195 },
+
+    // 7. Carita de V con corazón
+    { id: 7, x: 802, y: 557, width: 215, height: 195 },
+
+    // 8. Firma de V
+    { id: 8, x: 400, y: 930, width: 305, height: 165 },
+
+    // 9. Nombre Kim Taehyung
+    { id: 9, x: 714, y: 875, width: 355, height: 155 }
+
+];
+
 
 // ==========================================
 // COORDENADAS DE LOS MARCOS DE FOTOGRAFÍA
@@ -2624,12 +2656,15 @@ function colocarSticker(sticker, imagen) {
 
     
 
+
 const tamanoBase =
     imagen === imagenesStickers.jungkook ? 2047 :
     imagen === imagenesStickers.rm ? 2048 :
     imagen === imagenesStickers.ot7 ? 1097 :
     imagen === imagenesStickers.jhope ? 1462 :
+    imagen === imagenesStickers.v ? 1097 :
     3464;
+
 
 
 
@@ -2730,7 +2765,7 @@ if (biasSeleccionado === "jhope") {
 } else if (biasSeleccionado === "jin") {
     coordenadasActuales = COORDENADAS_JIN.slice(0, 9);
 } else if (biasSeleccionado === "v") {
-    coordenadasActuales = COORDENADAS_V.slice(0, 9);
+    coordenadasActuales = COORDENADAS_V_NUEVOS.slice(0, 9);
 } else if (biasSeleccionado === "jimin") {
     coordenadasActuales = COORDENADAS_JIMIN_3464.slice(0, 9);
 } else if (biasSeleccionado === "suga") {
@@ -2765,12 +2800,15 @@ coordenadasActuales.forEach((sticker) => {
 
     
 
+
 const tamanoBase =
     biasSeleccionado === "jungkook" ? 2047 :
     biasSeleccionado === "rm" ? 2048 :
     biasSeleccionado === "ot7" ? 1097 :
     biasSeleccionado === "jhope" ? 1462 :
+    biasSeleccionado === "v" ? 1097 :
     3464;
+
 
 
 
