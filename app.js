@@ -251,6 +251,38 @@ const COORDENADAS_RM_NUEVOS = [
 ];
 
 
+ // ==========================================
+ // STICKERS NUEVOS DE OT7
+ // Archivo: stickerot7.png
+ // Dimensiones: 1097 x 1097
+ // ==========================================
+
+ const COORDENADAS_OT7_NUEVOS = [
+
+     // 1. BTS fotografía grupal
+     { id: 1, x: 135, y: 83, width: 325, height: 195 },
+
+     // 2. BTS vestidos de traje
+     { id: 2, x: 597, y: 70, width: 350, height: 250 },
+
+     // 3. BTS bailando
+     { id: 3, x: 136, y: 360, width: 352, height: 280 },
+
+     // 4. BTS versión miniatura
+     { id: 4, x: 499, y: 455, width: 220, height: 130 },
+
+     // 5. Personajes BT21
+     { id: 5, x: 770, y: 408, width: 175, height: 170 },
+
+     // 6. Collage fotográfico BTS
+     { id: 6, x: 115, y: 715, width: 255, height: 360 },
+
+     // 7. Ballena morada
+     { id: 7, x: 763, y: 843, width: 200, height: 120 }
+
+ ];
+
+
 // ==========================================
 // COORDENADAS DE LOS MARCOS DE FOTOGRAFÍA
 // ==========================================
