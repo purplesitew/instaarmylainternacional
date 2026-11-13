@@ -3395,7 +3395,11 @@ if (capaStickers) {
 
         puntosToque.set(evento.pointerId, { x, y });
 
-        // CAMBIAR TAMAÑO CON DOS DEDOS
+       
+        // ==========================================
+        // AGRANDAR Y REDUCIR STICKERS CON DOS DEDOS
+        // ==========================================
+
         if (puntosToque.size === 2 && stickerEnPinza) {
 
             const puntos = Array.from(puntosToque.values());
@@ -3403,72 +3407,74 @@ if (capaStickers) {
             const dx = puntos[1].x - puntos[0].x;
             const dy = puntos[1].y - puntos[0].y;
 
-            const distanciaActual = Math.sqrt(dx * dx + dy * dy);
-
-            if (distanciaInicialPinza <= 0) return;
-
-            const zona = ZONAS_STICKERS.find(
-                zona => zona.id === stickerEnPinza.zonaId
+            const distanciaActual = Math.sqrt(
+                dx * dx + dy * dy
             );
 
-            if (!zona) return;
+            if (distanciaInicialPinza <= 0) return;
 
             const escalaSolicitada =
                 distanciaActual / distanciaInicialPinza;
 
-            const centroX = stickerEnPinza.x +
-                stickerEnPinza.ancho / 2;
+            const proporcion =
+                stickerEnPinza.origenAlto /
+                stickerEnPinza.origenAncho;
 
-            const centroY = stickerEnPinza.y +
-                stickerEnPinza.alto / 2;
-
-            const distanciaCentro = Math.sqrt(
-                Math.pow(centroX - zona.centroX, 2) +
-                Math.pow(centroY - zona.centroY, 2)
+            // Tamaño moderado: máximo 320 píxeles
+            const anchoMaximo = Math.min(
+                320,
+                320 / proporcion,
+                capaStickers.width,
+                capaStickers.height / proporcion
             );
 
-       const diagonalMaxima = Math.max(
-    1,
-   2 * (zona.radio * 1.50 - distanciaCentro)
-);
+            const anchoMinimo = Math.min(
+                anchoMaximo,
+                40
+            );
 
-const proporcionAlto =
-    stickerEnPinza.origenAlto /
-    stickerEnPinza.origenAncho;
+            const nuevoAncho = Math.max(
+                anchoMinimo,
+                Math.min(
+                    tamanoInicialPinza * escalaSolicitada,
+                    anchoMaximo
+                )
+            );
 
-const diagonalPorUnidad = Math.sqrt(
-    1 + Math.pow(proporcionAlto, 2)
-);
+            const nuevoAlto = nuevoAncho * proporcion;
 
-const anchoMaximo =
-    diagonalMaxima / diagonalPorUnidad;
+            // Conservar el centro del sticker
+            const centroX =
+                stickerEnPinza.x + stickerEnPinza.ancho / 2;
 
-const escalaMaxima =
-    anchoMaximo / tamanoInicialPinza;
+            const centroY =
+                stickerEnPinza.y + stickerEnPinza.alto / 2;
 
-const escalaFinal = Math.min(
-    escalaMaxima,
-    Math.max(0.25, escalaSolicitada)
-);
+            stickerEnPinza.ancho = nuevoAncho;
+            stickerEnPinza.alto = nuevoAlto;
 
-            stickerEnPinza.ancho =
-                tamanoInicialPinza * escalaFinal;
+            // Evitar que salga de la credencial
+            stickerEnPinza.x = Math.max(
+                0,
+                Math.min(
+                    centroX - nuevoAncho / 2,
+                    capaStickers.width - nuevoAncho
+                )
+            );
 
-            stickerEnPinza.alto =
-                (stickerEnPinza.origenAlto /
-                stickerEnPinza.origenAncho) *
-                stickerEnPinza.ancho;
-
-            stickerEnPinza.x =
-                centroX - stickerEnPinza.ancho / 2;
-
-            stickerEnPinza.y =
-                centroY - stickerEnPinza.alto / 2;
+            stickerEnPinza.y = Math.max(
+                0,
+                Math.min(
+                    centroY - nuevoAlto / 2,
+                    capaStickers.height - nuevoAlto
+                )
+            );
 
             dibujarStickers();
 
             return;
         }
+
 
       
         // ==========================================
