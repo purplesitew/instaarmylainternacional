@@ -283,6 +283,44 @@ const COORDENADAS_RM_NUEVOS = [
  ];
 
 
+ // ==========================================
+ // STICKERS NUEVOS DE J-HOPE
+ // Archivo: stickerjhope.png
+ // Dimensiones: 1462 x 1462
+ // ==========================================
+
+ const COORDENADAS_JHOPE_NUEVOS = [
+
+     // 1. J-Hope con traje negro
+     { id: 1, x: 220, y: 80, width: 340, height: 570 },
+
+     // 2. J-Hope vestido de gris
+     { id: 2, x: 735, y: 95, width: 270, height: 555 },
+
+     // 3. J-Hope con ropa roja oscura
+     { id: 3, x: 1080, y: 55, width: 340, height: 600 },
+
+     // 4. J-Hope haciendo corazón
+     { id: 4, x: 75, y: 795, width: 290, height: 650 },
+
+     // 5. Mang de BT21
+     { id: 5, x: 340, y: 690, width: 290, height: 310 },
+
+     // 6. J-Hope haciendo corazón de pie
+     { id: 6, x: 745, y: 675, width: 210, height: 355 },
+
+     // 7. Muñeco de J-Hope con Mang
+     { id: 7, x: 1090, y: 690, width: 330, height: 300 },
+
+     // 8. Firma de J-Hope
+     { id: 8, x: 455, y: 1110, width: 390, height: 290 },
+
+     // 9. Nombre Jung Hoseok
+     { id: 9, x: 940, y: 1130, width: 500, height: 250 }
+
+ ];
+
+
 // ==========================================
 // COORDENADAS DE LOS MARCOS DE FOTOGRAFÍA
 // ==========================================
