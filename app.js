@@ -2747,84 +2747,102 @@ function buscarPosicionSticker(ancho, alto) {
 
 }
 
-// Seleccionar un sticker de la galería
+// ==========================================
+// COLOCAR STICKERS SIN CÍRCULOS OBLIGATORIOS
+// ==========================================
+
 function colocarSticker(sticker, imagen) {
 
-    // Buscar el primer círculo disponible
-    const zona = buscarZonaLibre();
+     // Máximo 2 stickers para B7 y B9.
+     // Máximo 3 para las demás credenciales.
+     const maximoStickers =
+         plantillaSeleccionada === "B7.jpeg" ||
+         plantillaSeleccionada === "B9.jpeg"
+             ? 2
+             : 3;
 
-    if (!zona) {
-        alert("Ya colocaste tus 3 stickers. Elimina uno para elegir otro. 💜");
-        return;
-    }
+     if (stickersColocados.length >= maximoStickers) {
+         alert(
+             "Puedes colocar un máximo de " +
+             maximoStickers +
+             " stickers en esta credencial. 💜"
+         );
+         return;
+     }
 
-   
-    // ==========================================
-    // TAMAÑO REAL DE LOS STICKERS
-    // ==========================================
+     // Tamaños de referencia de las imágenes PNG
+     const tamanoBase =
+         imagen === imagenesStickers.jungkook ? 2047 :
+         imagen === imagenesStickers.rm ? 2048 :
+         imagen === imagenesStickers.ot7 ? 1097 :
+         imagen === imagenesStickers.jhope ? 1462 :
+         imagen === imagenesStickers.v ? 1097 :
+         imagen === imagenesStickers.jimin ? 1240 :
+         imagen === imagenesStickers.jin ? 1240 :
+         imagen === imagenesStickers.suga ? 1240 :
+         3464;
 
+     const escalaX = imagen.naturalWidth / tamanoBase;
+     const escalaY = imagen.naturalHeight / tamanoBase;
 
-const tamanoBase =
-    imagen === imagenesStickers.jungkook ? 2047 :
-    imagen === imagenesStickers.rm ? 2048 :
-    imagen === imagenesStickers.ot7 ? 1097 :
-    imagen === imagenesStickers.jhope ? 1462 :
-    imagen === imagenesStickers.v ? 1097 :
-    imagen === imagenesStickers.jimin ? 1240 :
-    imagen === imagenesStickers.jin ? 1240 :
-    imagen === imagenesStickers.suga ? 1240 :
-    3464;
+     const origenX = sticker.x * escalaX;
+     const origenY = sticker.y * escalaY;
+     const origenAncho = sticker.width * escalaX;
+     const origenAlto = sticker.height * escalaY;
 
+     // Tamaño inicial, conservando proporciones
+     const escala = Math.min(
+         180 / origenAncho,
+         180 / origenAlto
+     );
 
+     const ancho = origenAncho * escala;
+     const alto = origenAlto * escala;
 
+     // Posiciones iniciales provisionales
+     const posiciones = [
+         { x: 10, y: 10 },
+         { x: capaStickers.width - ancho - 10, y: 10 },
+         {
+             x: 10,
+             y: capaStickers.height - alto - 10
+         }
+     ];
 
+     const posicion = posiciones[stickersColocados.length];
 
+     const x = Math.max(
+         0,
+         Math.min(
+             posicion.x,
+             capaStickers.width - ancho
+         )
+     );
 
+     const y = Math.max(
+         0,
+         Math.min(
+             posicion.y,
+             capaStickers.height - alto
+         )
+     );
 
-    const escalaX = imagen.naturalWidth / tamanoBase;
-    const escalaY = imagen.naturalHeight / tamanoBase;
+     stickersColocados.push({
+         imagen,
+         origenX,
+         origenY,
+         origenAncho,
+         origenAlto,
+         x,
+         y,
+         ancho,
+         alto,
+         zonaId: null
+     });
 
+     dibujarStickers();
+ }
 
-
-    const origenX = sticker.x * escalaX;
-    const origenY = sticker.y * escalaY;
-    const origenAncho = sticker.width * escalaX;
-    const origenAlto = sticker.height * escalaY;
-
-    // Mantener proporciones y ajustar al círculo
-    const mitadDiagonal = Math.sqrt(
-        Math.pow(origenAncho / 2, 2) +
-        Math.pow(origenAlto / 2, 2)
-    );
-
-    const escala = Math.min(
-        225 / origenAncho,
-        225 / origenAlto,
-        (zona.radio * 1.0) / mitadDiagonal
-    );
-
-    const ancho = origenAncho * escala;
-    const alto = origenAlto * escala;
-
-    // Colocar en el centro del círculo
-    const x = zona.centroX - ancho / 2;
-    const y = zona.centroY - alto / 2;
-
-    stickersColocados.push({
-        imagen,
-        origenX,
-        origenY,
-        origenAncho,
-        origenAlto,
-        x,
-        y,
-        ancho,
-        alto,
-        zonaId: zona.id
-    });
-
-    dibujarStickers();
-}
 
 // Cargar los stickers del Bias seleccionado
 if (selectorBiasStickers && listaStickers) {
