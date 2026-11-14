@@ -824,7 +824,40 @@ codigo: {
 
   
 };
+// ==========================================
+// ZONAS PROTEGIDAS EXCLUSIVAS B4
+// ==========================================
 
+function obtenerZonasProtegidasB4() {
+    return [
+
+        // FOTO IZQUIERDA
+        {
+            x: CONFIGURACION_B4.fotografia.x,
+            y: CONFIGURACION_B4.fotografia.y,
+            width: CONFIGURACION_B4.fotografia.width,
+            height: CONFIGURACION_B4.fotografia.height
+        },
+
+        // FOTO DERECHA (BIAS / GRUPO)
+        {
+            x: CONFIGURACION_B4.biasFoto.x,
+            y: CONFIGURACION_B4.biasFoto.y,
+            width: CONFIGURACION_B4.biasFoto.width,
+            height: CONFIGURACION_B4.biasFoto.height
+        },
+
+        // SPOTIFY
+        {
+            x: 286,
+            y: 923,
+            width: 311,
+            height: 94
+        }
+    ];
+}
+
+  
 // ==========================================
 // CONFIGURACIÓN EXCLUSIVA B6
 // ==========================================
@@ -3048,13 +3081,21 @@ function stickerInvadeZonaProtegida(x, y, ancho, alto) {
         zonas = obtenerZonasProtegidasB2();
         anchoBase = CONFIGURACION_B2.width;
         altoBase = CONFIGURACION_B2.height;
-    } else if (plantillaSeleccionada === "B3.jpeg") {
-        zonas = obtenerZonasProtegidasB3();
-        anchoBase = CONFIGURACION_B3.width;
-        altoBase = CONFIGURACION_B3.height;
-    } else {
-        return false;
-    }
+    
+} else if (plantillaSeleccionada === "B3.jpeg") {
+    zonas = obtenerZonasProtegidasB3();
+    anchoBase = CONFIGURACION_B3.width;
+    altoBase = CONFIGURACION_B3.height;
+
+} else if (plantillaSeleccionada === "B4.jpeg") {
+    zonas = obtenerZonasProtegidasB4();
+    anchoBase = CONFIGURACION_B4.width;
+    altoBase = CONFIGURACION_B4.height;
+
+} else {
+    return false;
+}
+
 
     const canvasFoto = document.getElementById("canvas-credencial");
 
