@@ -3013,7 +3013,52 @@ function colocarSticker(sticker, imagen) {
          }
      ];
 
-     const posicion = posiciones[stickersColocados.length];
+     
+     // Buscar una posición inicial libre y permitida
+     let posicion = null;
+
+     const margen = 10;
+     const paso = 15;
+
+     for (
+         let py = margen;
+         py <= capaStickers.height - alto - margen;
+         py += paso
+     ) {
+
+         for (
+             let px = margen;
+             px <= capaStickers.width - ancho - margen;
+             px += paso
+         ) {
+
+             // Evitar zonas protegidas de B8
+             if (stickerInvadeZonaB8(px, py, ancho, alto)) {
+                 continue;
+             }
+
+             // Evitar superponer los stickers existentes
+             const ocupado = stickersColocados.some((otro) => (
+                 px < otro.x + otro.ancho &&
+                 px + ancho > otro.x &&
+                 py < otro.y + otro.alto &&
+                 py + alto > otro.y
+             ));
+
+             if (!ocupado) {
+                 posicion = { x: px, y: py };
+                 break;
+             }
+         }
+
+         if (posicion) break;
+     }
+
+     if (!posicion) {
+         alert("No hay espacio libre para colocar otro sticker. 💜");
+         return;
+     }
+
 
      const x = Math.max(
          0,
