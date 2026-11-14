@@ -1370,7 +1370,7 @@ async function mostrarCredencialB2(datos) {
 
 async function mostrarCredencialB3(datos) {
 
-  datosActualesB3 = datos;
+  window.datosActualesB3 = datos;
 
     const editor = document.getElementById("editor-credencial");
     const creador = document.getElementById("creador-credencial");
@@ -3188,9 +3188,9 @@ function dibujarDatosB1SobreStickers(contexto) {
 
   function dibujarDatosB3SobreStickers(contexto) {
 
-    if (plantillaSeleccionada !== "B3.jpeg" || !datosActualesB3) {
-        return;
-    }
+    if (plantillaSeleccionada !== "B3.jpeg" || !window.datosActualesB3) {
+    return;
+}
 
     function escribirDato(texto, configuracion, fuente, esCodigo = false) {
 
@@ -3236,7 +3236,7 @@ function dibujarDatosB1SobreStickers(contexto) {
     escribirDato(datosActualesB3.bias, CONFIGURACION_B3.bias, "Always in the Star");
     escribirDato(datosActualesB3.codigo, CONFIGURACION_B3.codigo, "Chilada ICG Dos Regular", true);
     escribirDato(datosActualesB3.pais, CONFIGURACION_B3.pais, "Always in the Star");
-    escribirDato(datosActualesB3.nombre, CONFIGURACION_B3.nombre, "Always in the Star");
+    escribirDato(window.datosActualesB3.nombre, CONFIGURACION_B3.nombre, "Always in the Star");
 }
   
 
