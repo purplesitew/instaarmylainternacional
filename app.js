@@ -4644,17 +4644,6 @@ if (capaStickers) {
 
             dibujarStickers();
 
-// Permitir movimiento en áreas libres.
-// Si comenzó dentro de una zona protegida,
-// permitir que pueda salir de ella.
-if (!nuevaPosicionBloqueada) {
-
-    stickerArrastrado.x = nuevoX;
-    stickerArrastrado.y = nuevoY;
-
-    dibujarStickers();
-}
-
         }
 
 
