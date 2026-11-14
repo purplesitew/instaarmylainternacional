@@ -2857,6 +2857,62 @@ function stickerInvadeZonaB8(x, y, ancho, alto) {
     ];
 }
 
+  
+ // ==========================================
+ // ZONAS PROTEGIDAS EXCLUSIVAS DE B1
+ // ==========================================
+
+ function obtenerZonasProtegidasB1() {
+
+     if (plantillaSeleccionada !== "B1.jpeg") {
+         return [];
+     }
+
+     return [
+
+         // FOTOGRAFÍA
+         {
+             x: 25,
+             y: 209,
+             width: 273,
+             height: 365
+         },
+
+         // NOMBRE
+         {
+             x: 335,
+             y: 290,
+             width: 535,
+             height: 165
+         },
+
+         // CÓDIGO PERSONAL
+         {
+             x: 25,
+             y: 590,
+             width: 280,
+             height: 85
+         },
+
+         // CÓDIGO QR
+         {
+             x: 20,
+             y: 675,
+             width: 285,
+             height: 280
+         },
+
+         // SPOTIFY
+         {
+             x: 30,
+             y: 985,
+             width: 375,
+             height: 90
+         }
+
+     ];
+ }
+
 
 let imagenStickersActiva = null;
 let stickerArrastrado = null;
