@@ -1246,6 +1246,8 @@ async function mostrarCredencialPendiente(datos, archivoPlantilla) {
 
 async function mostrarCredencialB2(datos) {
 
+  window.datosCredencialActual = { ...datos };
+  
     const editor = document.getElementById("editor-credencial");
     const creador = document.getElementById("creador-credencial");
     const canvas = document.getElementById("canvas-credencial");
@@ -2200,7 +2202,91 @@ function dibujarFotografiaB2(imagen) {
 
     contexto.restore();
 }
-  
+
+  // ==========================================
+// ZONAS PROTEGIDAS EXCLUSIVAS B2
+// SOLO LA FOTO REBOTA
+// ==========================================
+
+function obtenerZonasProtegidasB2() {
+    return [
+        {
+            x: CONFIGURACION_B2.fotografia.x,
+            y: CONFIGURACION_B2.fotografia.y,
+            ancho: CONFIGURACION_B2.fotografia.width,
+            alto: CONFIGURACION_B2.fotografia.height
+        }
+    ];
+}
+
+// ==========================================
+// REDIBUJAR TEXTOS DE B2 ENCIMA DE STICKERS
+// ==========================================
+
+function dibujarTextosEncimaB2(contexto) {
+
+    if (!window.datosCredencialActual) return;
+
+    const datos = window.datosCredencialActual;
+
+    function escribirDatoB2(texto, configuracion) {
+
+        if (!texto) return;
+
+        let tamano = configuracion.fontSize;
+
+        contexto.save();
+
+        contexto.textAlign = "center";
+        contexto.textBaseline = "alphabetic";
+        contexto.font = `${tamano}px "TangoArmy"`;
+
+        while (
+            contexto.measureText(texto).width > configuracion.maxWidth &&
+            tamano > 18
+        ) {
+            tamano--;
+            contexto.font = `${tamano}px "TangoArmy"`;
+        }
+
+        contexto.fillStyle = configuracion.color;
+        contexto.strokeStyle = configuracion.outline;
+        contexto.lineWidth = 5;
+        contexto.lineJoin = "round";
+
+        contexto.strokeText(
+            texto,
+            configuracion.centerX,
+            configuracion.baselineY
+        );
+
+        contexto.fillText(
+            texto,
+            configuracion.centerX,
+            configuracion.baselineY
+        );
+
+        contexto.restore();
+    }
+
+    // NOMBRE
+    escribirDatoB2(
+        datos.nombre,
+        CONFIGURACION_B2.nombre
+    );
+
+    // PAÍS (donde antes iba el apellido)
+    escribirDatoB2(
+        datos.pais,
+        CONFIGURACION_B2.pais
+    );
+
+    // CÓDIGO
+    escribirDatoB2(
+        datos.codigo,
+        CONFIGURACION_B2.codigo
+    );
+}
 // ==========================================
 // FOTOGRAFÍA EXCLUSIVA B3
 // ==========================================
@@ -2905,23 +2991,45 @@ function stickerInvadeZonaB8(x, y, ancho, alto) {
      ];
  }
 
+
 // ==========================================
-// COMPROBAR ZONAS PROTEGIDAS DE B1 Y B8
+// ZONAS PROTEGIDAS DE B1, B2 Y B8
 // ==========================================
 
 function stickerInvadeZonaProtegida(x, y, ancho, alto) {
 
-    // Mantener la protección de B8 como ya funciona
+    // B8: conservar su protección original
     if (plantillaSeleccionada === "B8.jpeg") {
         return stickerInvadeZonaB8(x, y, ancho, alto);
     }
 
-    // Protección exclusiva de B1
-    if (plantillaSeleccionada !== "B1.jpeg") {
+    // Seleccionar las zonas según la credencial
+    let zonas;
+    let anchoPlantilla;
+    let altoPlantilla;
+
+    if (plantillaSeleccionada === "B1.jpeg") {
+
+        zonas = obtenerZonasProtegidasB1();
+        anchoPlantilla = 880;
+        altoPlantilla = 1204;
+
+    } else if (plantillaSeleccionada === "B2.jpeg") {
+
+        // B2: proteger únicamente la fotografía
+        zonas = [CONFIGURACION_B2.fotografia];
+        anchoPlantilla = CONFIGURACION_B2.width;
+        altoPlantilla = CONFIGURACION_B2.height;
+
+    } else {
+
+        // No alterar las demás credenciales
         return false;
     }
 
-    const canvasFoto = document.getElementById("canvas-credencial");
+    const canvasFoto = document.getElementById(
+        "canvas-credencial"
+    );
 
     if (!canvasFoto || !capaStickers) return false;
 
@@ -2937,12 +3045,13 @@ function stickerInvadeZonaProtegida(x, y, ancho, alto) {
         return true;
     }
 
+    // Convertir coordenadas a la capa de stickers
     const escalaX =
-        (rectFoto.width / 880) *
+        (rectFoto.width / anchoPlantilla) *
         (capaStickers.width / rectCapa.width);
 
     const escalaY =
-        (rectFoto.height / 1204) *
+        (rectFoto.height / altoPlantilla) *
         (capaStickers.height / rectCapa.height);
 
     const desplazamientoX =
@@ -2953,7 +3062,7 @@ function stickerInvadeZonaProtegida(x, y, ancho, alto) {
         (rectFoto.top - rectCapa.top) *
         capaStickers.height / rectCapa.height;
 
-    return obtenerZonasProtegidasB1().some((zona) => {
+    return zonas.some((zona) => {
 
         const zx = desplazamientoX + zona.x * escalaX;
         const zy = desplazamientoY + zona.y * escalaY;
@@ -2968,6 +3077,7 @@ function stickerInvadeZonaProtegida(x, y, ancho, alto) {
         );
     });
 }
+
 
 
 let imagenStickersActiva = null;
