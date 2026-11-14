@@ -3146,11 +3146,18 @@ function dibujarStickers() {
   
     });
 
+    
     dibujarMarcoFoto(contexto);
 
-    // En B1, los textos siempre quedan encima de los stickers
+    // B1: conservar sus textos encima de los stickers
     dibujarDatosB1SobreStickers(contexto);
+
+    // B2: mostrar nombre, país, bias y código encima
+    if (plantillaSeleccionada === "B2.jpeg") {
+        dibujarTextosEncimaB2(contexto);
+    }
 }
+
 
 
   
