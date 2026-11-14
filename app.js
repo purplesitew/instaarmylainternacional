@@ -1370,6 +1370,8 @@ async function mostrarCredencialB2(datos) {
 
 async function mostrarCredencialB3(datos) {
 
+  datosActualesB3 = datos;
+
     const editor = document.getElementById("editor-credencial");
     const creador = document.getElementById("creador-credencial");
     const canvas = document.getElementById("canvas-credencial");
@@ -3000,60 +3002,61 @@ function stickerInvadeZonaB8(x, y, ancho, alto) {
      ];
  }
 
+function obtenerZonasProtegidasB3() {
+    return [
+        // FOTO CENTRAL
+        {
+            x: 298,
+            y: 240,
+            width: 285,
+            height: 343
+        },
 
-// ==========================================
-// ZONAS PROTEGIDAS DE B1, B2 Y B8
-// ==========================================
+        // QR INFERIOR IZQUIERDO
+        {
+            x: 30,
+            y: 885,
+            width: 230,
+            height: 220
+        },
 
+        // SPOTIFY INFERIOR DERECHO
+        {
+            x: 565,
+            y: 945,
+            width: 275,
+            height: 100
+        }
+    ];
+}
 function stickerInvadeZonaProtegida(x, y, ancho, alto) {
 
-    // B8: conservar su protección original
+    // Mantener la protección de B8 como ya funciona
     if (plantillaSeleccionada === "B8.jpeg") {
         return stickerInvadeZonaB8(x, y, ancho, alto);
     }
 
-    // Seleccionar las zonas según la credencial
-    let zonas;
-    let anchoPlantilla;
-    let altoPlantilla;
+    let zonas = [];
+    let anchoBase = 880;
+    let altoBase = 1204;
 
     if (plantillaSeleccionada === "B1.jpeg") {
-
         zonas = obtenerZonasProtegidasB1();
-        anchoPlantilla = 880;
-        altoPlantilla = 1204;
-
+        anchoBase = 880;
+        altoBase = 1204;
     } else if (plantillaSeleccionada === "B2.jpeg") {
-
-       
-        // B2: proteger fotografía y código de Spotify
-        zonas = [
-            CONFIGURACION_B2.fotografia,
-
-            // CÓDIGO DE SPOTIFY - B2
-            
-          {
-             x: 435,
-              y: 635,
-             width: 410,
-              height: 105
-            }
-
-        ];
-
-        anchoPlantilla = CONFIGURACION_B2.width;
-        altoPlantilla = CONFIGURACION_B2.height;
-
-
+        zonas = obtenerZonasProtegidasB2();
+        anchoBase = CONFIGURACION_B2.width;
+        altoBase = CONFIGURACION_B2.height;
+    } else if (plantillaSeleccionada === "B3.jpeg") {
+        zonas = obtenerZonasProtegidasB3();
+        anchoBase = CONFIGURACION_B3.width;
+        altoBase = CONFIGURACION_B3.height;
     } else {
-
-        // No alterar las demás credenciales
         return false;
     }
 
-    const canvasFoto = document.getElementById(
-        "canvas-credencial"
-    );
+    const canvasFoto = document.getElementById("canvas-credencial");
 
     if (!canvasFoto || !capaStickers) return false;
 
@@ -3069,13 +3072,12 @@ function stickerInvadeZonaProtegida(x, y, ancho, alto) {
         return true;
     }
 
-    // Convertir coordenadas a la capa de stickers
     const escalaX =
-        (rectFoto.width / anchoPlantilla) *
+        (rectFoto.width / anchoBase) *
         (capaStickers.width / rectCapa.width);
 
     const escalaY =
-        (rectFoto.height / altoPlantilla) *
+        (rectFoto.height / altoBase) *
         (capaStickers.height / rectCapa.height);
 
     const desplazamientoX =
@@ -3105,6 +3107,7 @@ function stickerInvadeZonaProtegida(x, y, ancho, alto) {
 
 
 let imagenStickersActiva = null;
+  let datosActualesB3 = null;
 let stickerArrastrado = null;
   let posicionSeguraArrastre = null;
 let desplazamientoStickerX = 0;
@@ -3156,14 +3159,21 @@ function dibujarStickers() {
     });
 
     
-    dibujarMarcoFoto(contexto);
+       dibujarMarcoFoto(contexto);
 
-    // B1: conservar sus textos encima de los stickers
-    dibujarDatosB1SobreStickers(contexto);
+    // B1: mostrar datos encima de los stickers
+    if (plantillaSeleccionada === "B1.jpeg") {
+        dibujarDatosB1SobreStickers(contexto);
+    }
 
     // B2: mostrar nombre, país, bias y código encima
     if (plantillaSeleccionada === "B2.jpeg") {
         dibujarTextosEncimaB2(contexto);
+    }
+
+    // B3: mostrar nombre, país, bias y código encima
+    if (plantillaSeleccionada === "B3.jpeg") {
+        dibujarDatosB3SobreStickers(contexto);
     }
 }
 
@@ -3175,6 +3185,60 @@ function dibujarStickers() {
 // ==========================================
 
 function dibujarDatosB1SobreStickers(contexto) {
+
+  function dibujarDatosB3SobreStickers(contexto) {
+
+    if (plantillaSeleccionada !== "B3.jpeg" || !datosActualesB3) {
+        return;
+    }
+
+    function escribirDato(texto, configuracion, fuente, esCodigo = false) {
+
+        if (!texto) return;
+
+        let tamano = configuracion.fontSize;
+
+        contexto.save();
+
+        contexto.textAlign = "center";
+        contexto.textBaseline = "alphabetic";
+        contexto.font = `${tamano}px "${fuente}"`;
+
+        while (
+            contexto.measureText(texto).width > configuracion.maxWidth &&
+            tamano > 18
+        ) {
+            tamano--;
+            contexto.font = `${tamano}px "${fuente}"`;
+        }
+
+        contexto.fillStyle = configuracion.color;
+        contexto.strokeStyle = configuracion.outline;
+        contexto.lineWidth = esCodigo ? 5 : 4;
+        contexto.lineJoin = "round";
+
+        contexto.strokeText(
+            texto,
+            configuracion.centerX,
+            configuracion.baselineY
+        );
+
+        contexto.fillText(
+            texto,
+            configuracion.centerX,
+            configuracion.baselineY
+        );
+
+        contexto.restore();
+    }
+
+    // USA AQUÍ LOS MISMOS NOMBRES DE FUENTE QUE YA TE FUNCIONAN EN B3
+    escribirDato(datosActualesB3.bias, CONFIGURACION_B3.bias, "Always in the Star");
+    escribirDato(datosActualesB3.codigo, CONFIGURACION_B3.codigo, "Chilada ICG Dos Regular", true);
+    escribirDato(datosActualesB3.pais, CONFIGURACION_B3.pais, "Always in the Star");
+    escribirDato(datosActualesB3.nombre, CONFIGURACION_B3.nombre, "Always in the Star");
+}
+  
 
     if (plantillaSeleccionada !== "B1.jpeg") return;
 
