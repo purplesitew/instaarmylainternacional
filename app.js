@@ -1700,6 +1700,13 @@ async function mostrarCredencialB4(datos) {
         "ArialArmy",
         true
     );
+  // GUARDAR DATOS ACTUALES DE B4
+window.datosActualesB4 = {
+    nombre: datos.nombre,
+    bias: datos.bias,
+    pais: datos.pais,
+    codigo: datos.codigo
+};
 
     // PREPARAR LA FOTO DEL USUARIO
     credencialB5B10Activa = false;
@@ -3216,8 +3223,141 @@ function dibujarStickers() {
     if (plantillaSeleccionada === "B3.jpeg") {
         dibujarDatosB3SobreStickers(contexto);
     }
+  
+  if (plantillaSeleccionada === "B4.jpeg") {
+    dibujarDatosB4SobreStickers(contexto);
 }
+  
+}
+// ==========================================
+// TEXTOS DE B4 POR ENCIMA DE LOS STICKERS
+// ==========================================
 
+function dibujarDatosB4SobreStickers(contexto) {
+
+    if (
+        plantillaSeleccionada !== "B4.jpeg" ||
+        !window.datosActualesB4
+    ) {
+        return;
+    }
+
+    const datos = window.datosActualesB4;
+
+    const canvasBase = document.getElementById("canvas-credencial");
+
+    if (!canvasBase || !capaStickers) return;
+
+    const rectBase = canvasBase.getBoundingClientRect();
+    const rectCapa = capaStickers.getBoundingClientRect();
+
+    if (
+        !rectBase.width ||
+        !rectBase.height ||
+        !rectCapa.width ||
+        !rectCapa.height
+    ) return;
+
+    const escalaX =
+        rectBase.width / CONFIGURACION_B4.width *
+        capaStickers.width / rectCapa.width;
+
+    const escalaY =
+        rectBase.height / CONFIGURACION_B4.height *
+        capaStickers.height / rectCapa.height;
+
+    const desplazamientoX =
+        (rectBase.left - rectCapa.left) *
+        capaStickers.width / rectCapa.width;
+
+    const desplazamientoY =
+        (rectBase.top - rectCapa.top) *
+        capaStickers.height / rectCapa.height;
+
+    contexto.save();
+
+    contexto.setTransform(
+        escalaX,
+        0,
+        0,
+        escalaY,
+        desplazamientoX,
+        desplazamientoY
+    );
+
+    function escribirDato(texto, config, fuente, esCodigo = false) {
+
+        texto = String(texto || "");
+
+        let tamano = config.fontSize;
+
+        contexto.save();
+
+        contexto.textAlign = "center";
+        contexto.textBaseline = "alphabetic";
+        contexto.font = `${tamano}px "${fuente}"`;
+
+        while (
+            contexto.measureText(texto).width > config.maxWidth &&
+            tamano > 18
+        ) {
+            tamano--;
+            contexto.font = `${tamano}px "${fuente}"`;
+        }
+
+        contexto.fillStyle = config.color;
+        contexto.strokeStyle = config.outline;
+        contexto.lineWidth = esCodigo ? 6 : 5;
+        contexto.lineJoin = "round";
+
+        contexto.strokeText(
+            texto,
+            config.centerX,
+            config.baselineY,
+            config.maxWidth
+        );
+
+        contexto.fillText(
+            texto,
+            config.centerX,
+            config.baselineY,
+            config.maxWidth
+        );
+
+        contexto.restore();
+    }
+
+    // NOMBRE
+    escribirDato(
+        datos.nombre,
+        CONFIGURACION_B4.nombre,
+        "CurlzArmy"
+    );
+
+    // BIAS
+    escribirDato(
+        datos.bias,
+        CONFIGURACION_B4.bias,
+        "CurlzArmy"
+    );
+
+    // PAÍS
+    escribirDato(
+        datos.pais,
+        CONFIGURACION_B4.pais,
+        "CurlzArmy"
+    );
+
+    // CÓDIGO
+    escribirDato(
+        datos.codigo,
+        CONFIGURACION_B4.codigo,
+        "ArialArmy",
+        true
+    );
+
+    contexto.restore();
+}
 
 
   
