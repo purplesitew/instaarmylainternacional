@@ -2281,6 +2281,15 @@ function dibujarTextosEncimaB2(contexto) {
         CONFIGURACION_B2.pais
     );
 
+  
+    // BIAS: siempre encima de los stickers
+    escribirDatoB2(
+        datos.bias,
+        CONFIGURACION_B2.bias
+    );
+
+
+  
     // CÓDIGO
     escribirDatoB2(
         datos.codigo,
