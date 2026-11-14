@@ -555,8 +555,6 @@ async function mostrarCredencialB1(datos) {
         canvas.height
     );
 
- 
-
 // ==========================================
 // ESTILO Y POSICIÓN DE LOS DATOS
 // ==========================================
@@ -628,6 +626,16 @@ contexto.lineJoin = "round";
 contexto.strokeText(datos.codigo, 160, 630, 270);
 contexto.fillText(datos.codigo, 160, 630, 270);
 
+  
+    // Guardar los datos para mostrarlos encima de los stickers
+    window.datosB1SobreStickers = {
+        nombre: datos.nombre,
+        pais: datos.pais,
+        bias: datos.bias,
+        codigo: datos.codigo
+    };
+
+  
     // Mostrar el editor
     if (creador) {
         creador.classList.add("oculta");
@@ -2878,22 +2886,6 @@ function stickerInvadeZonaB8(x, y, ancho, alto) {
              height: 365
          },
 
-         // NOMBRE
-         {
-             x: 335,
-             y: 290,
-             width: 535,
-             height: 165
-         },
-
-         // CÓDIGO PERSONAL
-         {
-             x: 25,
-             y: 590,
-             width: 280,
-             height: 85
-         },
-
          // CÓDIGO QR
          {
              x: 20,
@@ -3026,10 +3018,238 @@ function dibujarStickers() {
             sticker.alto
         );
 
+  
     });
-dibujarMarcoFoto(contexto);
+
+    dibujarMarcoFoto(contexto);
+
+    // En B1, los textos siempre quedan encima de los stickers
+    dibujarDatosB1SobreStickers(contexto);
 }
 
+
+  
+// ==========================================
+// TEXTOS DE B1 POR ENCIMA DE LOS STICKERS
+// ==========================================
+
+function dibujarDatosB1SobreStickers(contexto) {
+
+    if (plantillaSeleccionada !== "B1.jpeg") return;
+
+    const datos = window.datosB1SobreStickers;
+
+    if (!datos || !capaStickers) return;
+
+    const canvasBase = document.getElementById(
+        "canvas-credencial"
+    );
+
+    if (!canvasBase) return;
+
+    const rectBase = canvasBase.getBoundingClientRect();
+    const rectStickers = capaStickers.getBoundingClientRect();
+
+    if (
+        !rectBase.width ||
+        !rectBase.height ||
+        !rectStickers.width ||
+        !rectStickers.height
+    ) return;
+
+    // Alinear los textos con la credencial original
+    const escalaX =
+        rectBase.width / canvasBase.width *
+        capaStickers.width / rectStickers.width;
+
+    const escalaY =
+        rectBase.height / canvasBase.height *
+        capaStickers.height / rectStickers.height;
+
+    const desplazamientoX =
+        (rectBase.left - rectStickers.left) *
+        capaStickers.width / rectStickers.width;
+
+    const desplazamientoY =
+        (rectBase.top - rectStickers.top) *
+        capaStickers.height / rectStickers.height;
+
+    contexto.save();
+
+    contexto.setTransform(
+        escalaX,
+        0,
+        0,
+        escalaY,
+        desplazamientoX,
+        desplazamientoY
+    );
+
+    contexto.textAlign = "center";
+    contexto.textBaseline = "bottom";
+
+    contexto.fillStyle = "#ffffff";
+    contexto.strokeStyle = "#c58aff";
+    contexto.lineJoin = "round";
+    contexto.lineWidth = 3;
+
+    // Mismo ajuste de textos que ya tiene B1
+    function escribirTexto(texto, x, y, anchoMaximo) {
+
+        texto = String(texto || "");
+
+        let tamano = 68;
+
+        contexto.font = `${tamano}px "MilasianArmy"`;
+
+        while (
+            contexto.measureText(texto).width > anchoMaximo &&
+            tamano > 30
+        ) {
+            tamano--;
+            contexto.font = `${tamano}px "MilasianArmy"`;
+        }
+
+        contexto.strokeText(texto, x, y);
+        contexto.fillText(texto, x, y);
+    }
+
+    // NOMBRE
+    escribirTexto(datos.nombre, 603, 430, 536);
+
+    // PAÍS
+    escribirTexto(datos.pais, 603, 692, 536);
+
+    // BIAS
+    escribirTexto(datos.bias, 603, 933, 536);
+
+    // CÓDIGO PERSONAL
+    contexto.textBaseline = "middle";
+    contexto.font = '32px "MoliendaArmy"';
+
+    contexto.fillStyle = "#ffffff";
+    contexto.strokeStyle = "#ff0000";
+    contexto.lineWidth = 6;
+    contexto.lineJoin = "round";
+
+    contexto.strokeText(datos.codigo, 160, 630, 270);
+    contexto.fillText(datos.codigo, 160, 630, 270);
+
+    contexto.restore();
+}
+
+  
+// ==========================================
+// TEXTOS DE B1 POR ENCIMA DE LOS STICKERS
+// ==========================================
+
+function dibujarDatosB1SobreStickers(contexto) {
+
+    if (plantillaSeleccionada !== "B1.jpeg") return;
+
+    const datos = window.datosB1SobreStickers;
+
+    if (!datos || !capaStickers) return;
+
+    const canvasBase = document.getElementById(
+        "canvas-credencial"
+    );
+
+    if (!canvasBase) return;
+
+    const rectBase = canvasBase.getBoundingClientRect();
+    const rectStickers = capaStickers.getBoundingClientRect();
+
+    if (
+        !rectBase.width ||
+        !rectBase.height ||
+        !rectStickers.width ||
+        !rectStickers.height
+    ) return;
+
+    // Alinear los textos con la credencial original
+    const escalaX =
+        rectBase.width / canvasBase.width *
+        capaStickers.width / rectStickers.width;
+
+    const escalaY =
+        rectBase.height / canvasBase.height *
+        capaStickers.height / rectStickers.height;
+
+    const desplazamientoX =
+        (rectBase.left - rectStickers.left) *
+        capaStickers.width / rectStickers.width;
+
+    const desplazamientoY =
+        (rectBase.top - rectStickers.top) *
+        capaStickers.height / rectStickers.height;
+
+    contexto.save();
+
+    contexto.setTransform(
+        escalaX,
+        0,
+        0,
+        escalaY,
+        desplazamientoX,
+        desplazamientoY
+    );
+
+    contexto.textAlign = "center";
+    contexto.textBaseline = "bottom";
+
+    contexto.fillStyle = "#ffffff";
+    contexto.strokeStyle = "#c58aff";
+    contexto.lineJoin = "round";
+    contexto.lineWidth = 3;
+
+    // Mismo ajuste de textos que ya tiene B1
+    function escribirTexto(texto, x, y, anchoMaximo) {
+
+        texto = String(texto || "");
+
+        let tamano = 68;
+
+        contexto.font = `${tamano}px "MilasianArmy"`;
+
+        while (
+            contexto.measureText(texto).width > anchoMaximo &&
+            tamano > 30
+        ) {
+            tamano--;
+            contexto.font = `${tamano}px "MilasianArmy"`;
+        }
+
+        contexto.strokeText(texto, x, y);
+        contexto.fillText(texto, x, y);
+    }
+
+    // NOMBRE
+    escribirTexto(datos.nombre, 603, 430, 536);
+
+    // PAÍS
+    escribirTexto(datos.pais, 603, 692, 536);
+
+    // BIAS
+    escribirTexto(datos.bias, 603, 933, 536);
+
+    // CÓDIGO PERSONAL
+    contexto.textBaseline = "middle";
+    contexto.font = '32px "MoliendaArmy"';
+
+    contexto.fillStyle = "#ffffff";
+    contexto.strokeStyle = "#ff0000";
+    contexto.lineWidth = 6;
+    contexto.lineJoin = "round";
+
+    contexto.strokeText(datos.codigo, 160, 630, 270);
+    contexto.fillText(datos.codigo, 160, 630, 270);
+
+    contexto.restore();
+}
+
+
+  
 // Buscar un lugar inicial para cada sticker
 function buscarPosicionSticker(ancho, alto) {
 
