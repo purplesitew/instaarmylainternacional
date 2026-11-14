@@ -512,6 +512,36 @@ const CONFIGURACION_B5_B10 = {
         maxWidth: 270
     }
 };
+
+
+ // ==========================================
+ // ZONAS PROTEGIDAS EXCLUSIVAS B5 Y B10
+ // ==========================================
+
+ function obtenerZonasProtegidasB5B10() {
+
+     return [
+
+         // FOTOGRAFÍA SUPERIOR CENTRAL
+         {
+             x: CONFIGURACION_B5_B10.fotografia.x,
+             y: CONFIGURACION_B5_B10.fotografia.y,
+             width: CONFIGURACION_B5_B10.fotografia.width,
+             height: CONFIGURACION_B5_B10.fotografia.height
+         },
+
+         // CÓDIGO DE SPOTIFY INFERIOR DERECHO
+         {
+             x: 670,
+             y: 1110,
+             width: 280,
+             height: 105
+         }
+
+     ];
+ }
+
+
 // ==========================================
 // GENERAR CREDENCIAL B1 CON LOS DATOS
 // ==========================================
@@ -3094,14 +3124,26 @@ function stickerInvadeZonaProtegida(x, y, ancho, alto) {
     anchoBase = CONFIGURACION_B3.width;
     altoBase = CONFIGURACION_B3.height;
 
+
 } else if (plantillaSeleccionada === "B4.jpeg") {
     zonas = obtenerZonasProtegidasB4();
     anchoBase = CONFIGURACION_B4.width;
     altoBase = CONFIGURACION_B4.height;
 
+} else if (
+    plantillaSeleccionada === "B5.jpeg" ||
+    plantillaSeleccionada === "B10.jpeg"
+) {
+    // B5 y B10 comparten las mismas zonas protegidas
+    zonas = obtenerZonasProtegidasB5B10();
+
+    anchoBase = CONFIGURACION_B5_B10.imagen.width;
+    altoBase = CONFIGURACION_B5_B10.imagen.height;
+
 } else {
     return false;
 }
+
 
 
     const canvasFoto = document.getElementById("canvas-credencial");
