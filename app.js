@@ -2655,6 +2655,81 @@ radio: 100
 const capaStickers = document.getElementById("capa-stickers");
 
   
+ // ==========================================
+ // PROTECCIÓN DE STICKERS EXCLUSIVA B8
+ // ==========================================
+
+ function stickerInvadeZonaB8(x, y, ancho, alto) {
+
+     // Las demás credenciales no se modifican
+     if (plantillaSeleccionada !== "B8.jpeg") {
+         return false;
+     }
+
+     const canvasFoto = document.getElementById(
+         "canvas-credencial"
+     );
+
+     if (!canvasFoto || !capaStickers) {
+         return false;
+     }
+
+     const rectFoto = canvasFoto.getBoundingClientRect();
+     const rectCapa = capaStickers.getBoundingClientRect();
+
+     if (
+         !rectFoto.width ||
+         !rectFoto.height ||
+         !rectCapa.width ||
+         !rectCapa.height
+     ) {
+         return false;
+     }
+
+     const escalaX =
+         rectFoto.width / CONFIGURACION_B8.width *
+         capaStickers.width / rectCapa.width;
+
+     const escalaY =
+         rectFoto.height / CONFIGURACION_B8.height *
+         capaStickers.height / rectCapa.height;
+
+     const desplazamientoX =
+         (rectFoto.left - rectCapa.left) *
+         capaStickers.width / rectCapa.width;
+
+     const desplazamientoY =
+         (rectFoto.top - rectCapa.top) *
+         capaStickers.height / rectCapa.height;
+
+     // Zonas protegidas de B8
+     const zonas = [
+         CONFIGURACION_B8.fotografia,
+         { x: 370, y: 310, width: 230, height: 55 },
+         { x: 370, y: 370, width: 230, height: 55 },
+         { x: 370, y: 445, width: 240, height: 55 },
+         { x: 370, y: 515, width: 230, height: 55 },
+         { x: 370, y: 630, width: 230, height: 60 }
+     ];
+
+     return zonas.some((zona) => {
+
+         const zx = desplazamientoX + zona.x * escalaX;
+         const zy = desplazamientoY + zona.y * escalaY;
+         const zw = zona.width * escalaX;
+         const zh = zona.height * escalaY;
+
+         return (
+             x < zx + zw &&
+             x + ancho > zx &&
+             y < zy + zh &&
+             y + alto > zy
+         );
+
+     });
+ }
+
+  
 // ==========================================
 // ZONAS PROTEGIDAS EXCLUSIVAS DE B8
 // ==========================================
