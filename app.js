@@ -3022,12 +3022,14 @@ function stickerInvadeZonaProtegida(x, y, ancho, alto) {
             CONFIGURACION_B2.fotografia,
 
             // CÓDIGO DE SPOTIFY - B2
-            {
-                x: 675,
-                y: 760,
-                width: 205,
-                height: 95
+            
+          {
+             x: 435,
+              y: 635,
+             width: 410,
+              height: 105
             }
+
         ];
 
         anchoPlantilla = CONFIGURACION_B2.width;
