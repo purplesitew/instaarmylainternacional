@@ -2980,6 +2980,7 @@ function stickerInvadeZonaProtegida(x, y, ancho, alto) {
 
 let imagenStickersActiva = null;
 let stickerArrastrado = null;
+  let posicionSeguraArrastre = null;
 let desplazamientoStickerX = 0;
 let desplazamientoStickerY = 0;
   // Control para cambiar el tamaño con dos dedos
@@ -3721,6 +3722,10 @@ if (capaStickers) {
                 ) {
 
                     stickerArrastrado = sticker;
+                  posicionSeguraArrastre = {
+    x: sticker.x,
+    y: sticker.y
+};
                   stickerSeleccionado = sticker;
 
                     desplazamientoStickerX = x - sticker.x;
@@ -3893,21 +3898,25 @@ if (capaStickers) {
             );
 
             
-// Comprobar si el sticker está en una zona protegida
-const estabaBloqueado = stickerInvadeZonaProtegida(
-    stickerArrastrado.x,
-    stickerArrastrado.y,
-    stickerArrastrado.ancho,
-    stickerArrastrado.alto
-);
 
-// Comprobar la nueva posición
-const nuevaPosicionBloqueada = stickerInvadeZonaProtegida(
-    nuevoX,
-    nuevoY,
-    stickerArrastrado.ancho,
-    stickerArrastrado.alto
-);
+            // Permitir atravesar las zonas durante el arrastre
+            stickerArrastrado.x = nuevoX;
+            stickerArrastrado.y = nuevoY;
+
+            // Recordar solamente posiciones permitidas
+            if (!stickerInvadeZonaProtegida(
+                nuevoX,
+                nuevoY,
+                stickerArrastrado.ancho,
+                stickerArrastrado.alto
+            )) {
+                posicionSeguraArrastre = {
+                    x: nuevoX,
+                    y: nuevoY
+                };
+            }
+
+            dibujarStickers();
 
 // Permitir movimiento en áreas libres.
 // Si comenzó dentro de una zona protegida,
@@ -3926,6 +3935,25 @@ if (!nuevaPosicionBloqueada) {
     });
 
     function terminarMovimientoSticker(evento) {
+      
+    // Al soltar, impedir que quede sobre una zona protegida
+    if (stickerArrastrado && stickerInvadeZonaProtegida(
+        stickerArrastrado.x,
+        stickerArrastrado.y,
+        stickerArrastrado.ancho,
+        stickerArrastrado.alto
+    )) {
+
+        if (posicionSeguraArrastre) {
+            stickerArrastrado.x = posicionSeguraArrastre.x;
+            stickerArrastrado.y = posicionSeguraArrastre.y;
+        }
+
+        dibujarStickers();
+    }
+
+    posicionSeguraArrastre = null;
+
 
         puntosToque.delete(evento.pointerId);
 
