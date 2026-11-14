@@ -3289,135 +3289,6 @@ function dibujarDatosB1SobreStickers(contexto) {
     contexto.restore();
 }
 
-// ==========================================
-// TEXTOS DE B3 POR ENCIMA DE LOS STICKERS
-// ==========================================
-
-function dibujarDatosB3SobreStickers(contexto) {
-
-    if (
-        plantillaSeleccionada !== "B3.jpeg" ||
-        !window.datosActualesB3
-    ) {
-        return;
-    }
-
-    const datos = window.datosActualesB3;
-
-    const canvasBase = document.getElementById(
-        "canvas-credencial"
-    );
-
-    if (!canvasBase || !capaStickers) return;
-
-    const rectBase = canvasBase.getBoundingClientRect();
-    const rectStickers = capaStickers.getBoundingClientRect();
-
-    if (
-        !rectBase.width ||
-        !rectBase.height ||
-        !rectStickers.width ||
-        !rectStickers.height
-    ) return;
-
-    const escalaX =
-        rectBase.width / CONFIGURACION_B3.width *
-        capaStickers.width / rectStickers.width;
-
-    const escalaY =
-        rectBase.height / CONFIGURACION_B3.height *
-        capaStickers.height / rectStickers.height;
-
-    const desplazamientoX =
-        (rectBase.left - rectStickers.left) *
-        capaStickers.width / rectStickers.width;
-
-    const desplazamientoY =
-        (rectBase.top - rectStickers.top) *
-        capaStickers.height / rectStickers.height;
-
-    contexto.save();
-
-    contexto.setTransform(
-        escalaX,
-        0,
-        0,
-        escalaY,
-        desplazamientoX,
-        desplazamientoY
-    );
-
-    function escribirDato(texto, configuracion, fuente, esCodigo = false) {
-
-        texto = String(texto || "");
-
-        let tamano = configuracion.fontSize;
-
-        contexto.save();
-
-        contexto.textAlign = "center";
-        contexto.textBaseline = "alphabetic";
-        contexto.font = `${tamano}px "${fuente}"`;
-
-        while (
-            contexto.measureText(texto).width > configuracion.maxWidth &&
-            tamano > 18
-        ) {
-            tamano--;
-            contexto.font = `${tamano}px "${fuente}"`;
-        }
-
-        contexto.fillStyle = configuracion.color;
-        contexto.strokeStyle = configuracion.outline;
-        contexto.lineWidth = esCodigo ? 5 : 4;
-        contexto.lineJoin = "round";
-
-        contexto.strokeText(
-            texto,
-            configuracion.centerX,
-            configuracion.baselineY
-        );
-
-        contexto.fillText(
-            texto,
-            configuracion.centerX,
-            configuracion.baselineY
-        );
-
-        contexto.restore();
-    }
-
-    // BIAS
-    escribirDato(
-        datos.bias,
-        CONFIGURACION_B3.bias,
-        "Always in the Star"
-    );
-
-    // CÓDIGO
-    escribirDato(
-        datos.codigo,
-        CONFIGURACION_B3.codigo,
-        "Chilada ICG Dos Regular",
-        true
-    );
-
-    // PAÍS
-    escribirDato(
-        datos.pais,
-        CONFIGURACION_B3.pais,
-        "Always in the Star"
-    );
-
-    // NOMBRE
-    escribirDato(
-        datos.nombre,
-        CONFIGURACION_B3.nombre,
-        "Always in the Star"
-    );
-
-    contexto.restore();
-}
 
   
 // ==========================================
@@ -3529,6 +3400,137 @@ function dibujarDatosB1SobreStickers(contexto) {
     contexto.restore();
 }
 
+
+ // ==========================================
+ // TEXTOS EXCLUSIVOS B3 SOBRE LOS STICKERS
+ // ==========================================
+
+ function dibujarDatosB3SobreStickers(contexto) {
+
+     if (
+         plantillaSeleccionada !== "B3.jpeg" ||
+         !window.datosActualesB3
+     ) {
+         return;
+     }
+
+     const datos = window.datosActualesB3;
+
+     const canvasBase = document.getElementById(
+         "canvas-credencial"
+     );
+
+     if (!canvasBase || !capaStickers) return;
+
+     const rectBase = canvasBase.getBoundingClientRect();
+     const rectCapa = capaStickers.getBoundingClientRect();
+
+     if (
+         !rectBase.width ||
+         !rectBase.height ||
+         !rectCapa.width ||
+         !rectCapa.height
+     ) return;
+
+     const escalaX =
+         rectBase.width / CONFIGURACION_B3.width *
+         capaStickers.width / rectCapa.width;
+
+     const escalaY =
+         rectBase.height / CONFIGURACION_B3.height *
+         capaStickers.height / rectCapa.height;
+
+     const desplazamientoX =
+         (rectBase.left - rectCapa.left) *
+         capaStickers.width / rectCapa.width;
+
+     const desplazamientoY =
+         (rectBase.top - rectCapa.top) *
+         capaStickers.height / rectCapa.height;
+
+     contexto.save();
+
+     contexto.setTransform(
+         escalaX,
+         0,
+         0,
+         escalaY,
+         desplazamientoX,
+         desplazamientoY
+     );
+
+     function escribirDato(texto, configuracion, fuente, esCodigo = false) {
+
+         texto = String(texto || "");
+
+         let tamano = configuracion.fontSize;
+
+         contexto.save();
+
+         contexto.textAlign = "center";
+         contexto.textBaseline = "alphabetic";
+
+         contexto.font = `${tamano}px "${fuente}"`;
+
+         while (
+             contexto.measureText(texto).width > configuracion.maxWidth &&
+             tamano > 18
+         ) {
+             tamano--;
+             contexto.font = `${tamano}px "${fuente}"`;
+         }
+
+         contexto.fillStyle = configuracion.color;
+         contexto.strokeStyle = configuracion.outline;
+         contexto.lineWidth = esCodigo ? 5 : 4;
+         contexto.lineJoin = "round";
+
+         contexto.strokeText(
+             texto,
+             configuracion.centerX,
+             configuracion.baselineY
+         );
+
+         contexto.fillText(
+             texto,
+             configuracion.centerX,
+             configuracion.baselineY
+         );
+
+         contexto.restore();
+     }
+
+     // BIAS
+     escribirDato(
+         datos.bias,
+         CONFIGURACION_B3.bias,
+         "Always in the Star"
+     );
+
+     // CÓDIGO
+     escribirDato(
+         datos.codigo,
+         CONFIGURACION_B3.codigo,
+         "Chilada ICG Dos Regular",
+         true
+     );
+
+     // PAÍS
+     escribirDato(
+         datos.pais,
+         CONFIGURACION_B3.pais,
+         "Always in the Star"
+     );
+
+     // NOMBRE
+     escribirDato(
+         datos.nombre,
+         CONFIGURACION_B3.nombre,
+         "Always in the Star"
+     );
+
+     contexto.restore();
+ }
 
   
 // Buscar un lugar inicial para cada sticker
