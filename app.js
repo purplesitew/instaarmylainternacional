@@ -3016,10 +3016,23 @@ function stickerInvadeZonaProtegida(x, y, ancho, alto) {
 
     } else if (plantillaSeleccionada === "B2.jpeg") {
 
-        // B2: proteger únicamente la fotografía
-        zonas = [CONFIGURACION_B2.fotografia];
+       
+        // B2: proteger fotografía y código de Spotify
+        zonas = [
+            CONFIGURACION_B2.fotografia,
+
+            // CÓDIGO DE SPOTIFY - B2
+            {
+                x: 675,
+                y: 760,
+                width: 205,
+                height: 95
+            }
+        ];
+
         anchoPlantilla = CONFIGURACION_B2.width;
         altoPlantilla = CONFIGURACION_B2.height;
+
 
     } else {
 
