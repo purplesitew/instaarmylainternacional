@@ -2913,6 +2913,70 @@ function stickerInvadeZonaB8(x, y, ancho, alto) {
      ];
  }
 
+// ==========================================
+// COMPROBAR ZONAS PROTEGIDAS DE B1 Y B8
+// ==========================================
+
+function stickerInvadeZonaProtegida(x, y, ancho, alto) {
+
+    // Mantener la protección de B8 como ya funciona
+    if (plantillaSeleccionada === "B8.jpeg") {
+        return stickerInvadeZonaB8(x, y, ancho, alto);
+    }
+
+    // Protección exclusiva de B1
+    if (plantillaSeleccionada !== "B1.jpeg") {
+        return false;
+    }
+
+    const canvasFoto = document.getElementById("canvas-credencial");
+
+    if (!canvasFoto || !capaStickers) return false;
+
+    const rectFoto = canvasFoto.getBoundingClientRect();
+    const rectCapa = capaStickers.getBoundingClientRect();
+
+    if (
+        !rectFoto.width ||
+        !rectFoto.height ||
+        !rectCapa.width ||
+        !rectCapa.height
+    ) {
+        return true;
+    }
+
+    const escalaX =
+        (rectFoto.width / 880) *
+        (capaStickers.width / rectCapa.width);
+
+    const escalaY =
+        (rectFoto.height / 1204) *
+        (capaStickers.height / rectCapa.height);
+
+    const desplazamientoX =
+        (rectFoto.left - rectCapa.left) *
+        capaStickers.width / rectCapa.width;
+
+    const desplazamientoY =
+        (rectFoto.top - rectCapa.top) *
+        capaStickers.height / rectCapa.height;
+
+    return obtenerZonasProtegidasB1().some((zona) => {
+
+        const zx = desplazamientoX + zona.x * escalaX;
+        const zy = desplazamientoY + zona.y * escalaY;
+        const zw = zona.width * escalaX;
+        const zh = zona.height * escalaY;
+
+        return (
+            x < zx + zw &&
+            x + ancho > zx &&
+            y < zy + zh &&
+            y + alto > zy
+        );
+    });
+}
+
 
 let imagenStickersActiva = null;
 let stickerArrastrado = null;
@@ -3834,7 +3898,7 @@ if (capaStickers) {
 
             
 // Comprobar si el sticker está en una zona protegida
-const estabaBloqueado = stickerInvadeZonaB8(
+const estabaBloqueado = stickerInvadeZonaProtegida(
     stickerArrastrado.x,
     stickerArrastrado.y,
     stickerArrastrado.ancho,
@@ -3842,7 +3906,7 @@ const estabaBloqueado = stickerInvadeZonaB8(
 );
 
 // Comprobar la nueva posición
-const nuevaPosicionBloqueada = stickerInvadeZonaB8(
+const nuevaPosicionBloqueada = stickerInvadeZonaProtegida(
     nuevoX,
     nuevoY,
     stickerArrastrado.ancho,
