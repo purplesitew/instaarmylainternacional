@@ -3600,8 +3600,10 @@ if (capaStickers) {
         puntosToque.set(evento.pointerId, { x, y });
 
        
+      
         // ==========================================
         // AGRANDAR Y REDUCIR STICKERS CON DOS DEDOS
+        // PROTECCIÓN EXCLUSIVA B8
         // ==========================================
 
         if (puntosToque.size === 2 && stickerEnPinza) {
@@ -3617,6 +3619,12 @@ if (capaStickers) {
 
             if (distanciaInicialPinza <= 0) return;
 
+            // Guardar la posición y el tamaño actuales
+            const posicionAnteriorX = stickerEnPinza.x;
+            const posicionAnteriorY = stickerEnPinza.y;
+            const anchoAnterior = stickerEnPinza.ancho;
+            const altoAnterior = stickerEnPinza.alto;
+
             const escalaSolicitada =
                 distanciaActual / distanciaInicialPinza;
 
@@ -3624,7 +3632,7 @@ if (capaStickers) {
                 stickerEnPinza.origenAlto /
                 stickerEnPinza.origenAncho;
 
-            // Tamaño moderado: máximo 320 píxeles
+            // Tamaño máximo moderado
             const anchoMaximo = Math.min(
                 320,
                 320 / proporcion,
@@ -3647,18 +3655,15 @@ if (capaStickers) {
 
             const nuevoAlto = nuevoAncho * proporcion;
 
-            // Conservar el centro del sticker
+            // Mantener el centro del sticker
             const centroX =
-                stickerEnPinza.x + stickerEnPinza.ancho / 2;
+                posicionAnteriorX + anchoAnterior / 2;
 
             const centroY =
-                stickerEnPinza.y + stickerEnPinza.alto / 2;
+                posicionAnteriorY + altoAnterior / 2;
 
-            stickerEnPinza.ancho = nuevoAncho;
-            stickerEnPinza.alto = nuevoAlto;
-
-            // Evitar que salga de la credencial
-            stickerEnPinza.x = Math.max(
+            // Calcular posición nueva sin aplicarla todavía
+            const nuevoX = Math.max(
                 0,
                 Math.min(
                     centroX - nuevoAncho / 2,
@@ -3666,7 +3671,7 @@ if (capaStickers) {
                 )
             );
 
-            stickerEnPinza.y = Math.max(
+            const nuevoY = Math.max(
                 0,
                 Math.min(
                     centroY - nuevoAlto / 2,
@@ -3674,10 +3679,28 @@ if (capaStickers) {
                 )
             );
 
-            dibujarStickers();
+            // Comprobar si invade una zona protegida de B8
+            const invadeZonaProtegida = stickerInvadeZonaB8(
+                nuevoX,
+                nuevoY,
+                nuevoAncho,
+                nuevoAlto
+            );
+
+            // Aplicar el cambio solamente si está permitido
+            if (!invadeZonaProtegida) {
+
+                stickerEnPinza.x = nuevoX;
+                stickerEnPinza.y = nuevoY;
+                stickerEnPinza.ancho = nuevoAncho;
+                stickerEnPinza.alto = nuevoAlto;
+
+                dibujarStickers();
+            }
 
             return;
         }
+
 
 
       
