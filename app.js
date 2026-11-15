@@ -727,7 +727,13 @@ async function descargarPDFB1() {
             return;
         }
 
-        const { jsPDF } = window.jspdf;
+        if (!window.jspdf || !window.jspdf.jsPDF) {
+    throw new Error(
+        "No se pudo cargar la biblioteca PDF. Revisa tu conexión a internet y vuelve a intentarlo."
+    );
+}
+
+const { jsPDF } = window.jspdf;
 
         if (!jsPDF) {
             throw new Error("No se encontró la librería jsPDF.");
