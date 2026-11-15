@@ -543,6 +543,38 @@ const CONFIGURACION_B5_B10 = {
 
 
 // ==========================================
+// SELECCIONAR REVERSO AUTOMÁTICO DE B1
+// ==========================================
+
+function obtenerReversoB1(bias) {
+
+    const biasNormalizado = String(bias || "")
+        .trim()
+        .toUpperCase()
+        .replace(/\s+/g, "")
+        .replace(/[-_]/g, "");
+
+    const reversos = {
+        "JIN": "B1REVERSOJIN.jpg",
+        "SUGA": "B1REVERSOSUGA.jpg",
+        "YOONGI": "B1REVERSOSUGA.jpg",
+        "JHOPE": "B1REVERSOJHOPE.jpg",
+        "HOSEOK": "B1REVERSOJHOPE.jpg",
+        "JIMIN": "B1REVERSOJIMIN.jpg",
+        "V": "B1REVERSOV.jpg",
+        "TAEHYUNG": "B1REVERSOV.jpg",
+        "RM": "B1REVERSORM.jpg",
+        "NAMJOON": "B1REVERSORM.jpg",
+        "JUNGKOOK": "B1REVERSOJUNGKOOK.jpg",
+        "JK": "B1REVERSOJUNGKOOK.jpg",
+        "OT7": "B1REVERSOOT7.jpg"
+    };
+
+    return reversos[biasNormalizado] || null;
+}
+
+
+// ==========================================
 // GENERAR CREDENCIAL B1 CON LOS DATOS
 // ==========================================
 
@@ -663,8 +695,15 @@ contexto.fillText(datos.codigo, 160, 630, 270);
         pais: datos.pais,
         bias: datos.bias,
         codigo: datos.codigo
+      
     };
-
+    window.datosActualesPDF = {
+    plantilla: "B1",
+    nombre: datos.nombre,
+    pais: datos.pais,
+    bias: datos.bias,
+    codigo: datos.codigo
+};
   
     // Mostrar el editor
     if (creador) {
