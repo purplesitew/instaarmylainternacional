@@ -1083,7 +1083,7 @@ nombre: {
 
    
 bias: {
-    centerX: 148,
+    centerX: 243,
     baselineY: 730,
     maxWidth: 220,
     fontSize: 70,
