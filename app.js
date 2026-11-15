@@ -1885,6 +1885,13 @@ async function mostrarCredencialB6(datos) {
         CONFIGURACION_B6.bias
     );
 
+      // GUARDAR DATOS PARA REDIBUJARLOS SOBRE LOS STICKERS
+    window.datosActualesB6 = {
+        nombre: datos.nombre,
+        bias: datos.bias,
+        codigo: datos.codigo
+    };
+  
     // PREPARAR FOTOGRAFÍA
     credencialB5B10Activa = false;
     credencialB7B9Activa = false;
@@ -2087,12 +2094,6 @@ escribirDato(
     credencialB7B9Activa = false;
     baseCredencialSinFoto = null;
 
-  // GUARDAR DATOS PARA LOS STICKERS DE B6
-window.datosActualesB6 = {
-    nombre: datos.nombre,
-    bias: datos.bias,
-    codigo: datos.codigo
-};
   
     // MOSTRAR EDITOR
     creador.classList.add("oculta");
