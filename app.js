@@ -2087,6 +2087,13 @@ escribirDato(
     credencialB7B9Activa = false;
     baseCredencialSinFoto = null;
 
+  // GUARDAR DATOS PARA LOS STICKERS DE B6
+window.datosActualesB6 = {
+    nombre: datos.nombre,
+    bias: datos.bias,
+    codigo: datos.codigo
+};
+  
     // MOSTRAR EDITOR
     creador.classList.add("oculta");
     editor.classList.remove("oculta");
@@ -3318,6 +3325,9 @@ function dibujarStickers() {
     ) {
         dibujarDatosB5B10SobreStickers(contexto);
     }
+  if (plantillaSeleccionada === "B6.jpeg") {
+    dibujarDatosB6SobreStickers(contexto);
+}
   
 }
 // ==========================================
@@ -3576,6 +3586,123 @@ function dibujarDatosB5B10SobreStickers(contexto) {
     contexto.restore();
 }
 
+  // ==========================================
+// TEXTOS DE B6 POR ENCIMA DE LOS STICKERS
+// ==========================================
+
+function dibujarDatosB6SobreStickers(contexto) {
+
+    if (
+        plantillaSeleccionada !== "B6.jpeg" ||
+        !window.datosActualesB6
+    ) {
+        return;
+    }
+
+    const datos = window.datosActualesB6;
+
+    const canvasBase = document.getElementById("canvas-credencial");
+
+    if (!canvasBase || !capaStickers) return;
+
+    const rectBase = canvasBase.getBoundingClientRect();
+    const rectCapa = capaStickers.getBoundingClientRect();
+
+    if (
+        !rectBase.width ||
+        !rectBase.height ||
+        !rectCapa.width ||
+        !rectCapa.height
+    ) return;
+
+    const escalaX =
+        rectBase.width / CONFIGURACION_B6.width *
+        capaStickers.width / rectCapa.width;
+
+    const escalaY =
+        rectBase.height / CONFIGURACION_B6.height *
+        capaStickers.height / rectCapa.height;
+
+    const desplazamientoX =
+        (rectBase.left - rectCapa.left) *
+        capaStickers.width / rectCapa.width;
+
+    const desplazamientoY =
+        (rectBase.top - rectCapa.top) *
+        capaStickers.height / rectCapa.height;
+
+    contexto.save();
+
+    contexto.setTransform(
+        escalaX,
+        0,
+        0,
+        escalaY,
+        desplazamientoX,
+        desplazamientoY
+    );
+
+    function escribirDato(texto, configuracion, esCodigo = false) {
+
+        texto = String(texto || "");
+
+        let tamano = configuracion.fontSize;
+
+        contexto.save();
+
+        contexto.textAlign = "center";
+        contexto.textBaseline = "alphabetic";
+        contexto.font = `${tamano}px "${CONFIGURACION_B6.fuente}"`;
+
+        while (
+            contexto.measureText(texto).width > configuracion.maxWidth &&
+            tamano > 18
+        ) {
+            tamano--;
+            contexto.font = `${tamano}px "${CONFIGURACION_B6.fuente}"`;
+        }
+
+        contexto.fillStyle = configuracion.color;
+        contexto.strokeStyle = configuracion.outline;
+        contexto.lineWidth = esCodigo ? 6 : 5;
+        contexto.lineJoin = "round";
+
+        contexto.strokeText(
+            texto,
+            configuracion.centerX,
+            configuracion.baselineY
+        );
+
+        contexto.fillText(
+            texto,
+            configuracion.centerX,
+            configuracion.baselineY
+        );
+
+        contexto.restore();
+    }
+
+    // CÓDIGO
+    escribirDato(
+        datos.codigo,
+        CONFIGURACION_B6.codigo,
+        true
+    );
+
+    // NOMBRE
+    escribirDato(
+        datos.nombre,
+        CONFIGURACION_B6.nombre
+    );
+
+    // BIAS
+    escribirDato(
+        datos.bias,
+        CONFIGURACION_B6.bias
+    );
+
+    contexto.restore();
+}
   
 // ==========================================
 // TEXTOS DE B1 POR ENCIMA DE LOS STICKERS
