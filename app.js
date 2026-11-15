@@ -2152,6 +2152,21 @@ escribirDato(
         CONFIGURACION_B8.paisRegion
     );
 
+  
+    // ==========================================
+    // GUARDAR DATOS PARA STICKERS DE B8
+    // ==========================================
+
+    window.datosB8SobreStickers = {
+        nombre: datos.nombre,
+        armyTipo: armyTipoTexto,
+        codigo: datos.codigo,
+        fechaRegistro: fechaRegistroTexto,
+        pais: datos.pais
+    };
+
+
+
     // PREPARAR FOTOGRAFÍA
     credencialB5B10Activa = false;
     credencialB7B9Activa = false;
@@ -3378,6 +3393,12 @@ function dibujarStickers() {
     }
 
   
+    // B8: textos siempre encima de los stickers
+    if (plantillaSeleccionada === "B8.jpeg") {
+        dibujarDatosB8SobreStickers(contexto);
+    }
+
+  
 }
 // ==========================================
 // TEXTOS DE B4 POR ENCIMA DE LOS STICKERS
@@ -4253,6 +4274,177 @@ function dibujarDatosB1SobreStickers(contexto) {
              ...CONFIGURACION_B7_B9.bias,
              centerX: 158
          }
+     );
+
+     contexto.restore();
+ }
+
+  
+ // ==========================================
+ // TEXTOS DE B8 POR ENCIMA DE LOS STICKERS
+ // ==========================================
+
+ function dibujarDatosB8SobreStickers(contexto) {
+
+     if (
+         plantillaSeleccionada !== "B8.jpeg" ||
+         !window.datosB8SobreStickers
+     ) {
+         return;
+     }
+
+     const datos = window.datosB8SobreStickers;
+
+     const canvasBase = document.getElementById(
+         "canvas-credencial"
+     );
+
+     if (!canvasBase || !capaStickers) return;
+
+     const rectBase = canvasBase.getBoundingClientRect();
+     const rectCapa = capaStickers.getBoundingClientRect();
+
+     if (
+         !rectBase.width ||
+         !rectBase.height ||
+         !rectCapa.width ||
+         !rectCapa.height
+     ) return;
+
+     // Convertir las coordenadas de B8 a la capa de stickers
+     const escalaX =
+         rectBase.width / CONFIGURACION_B8.width *
+         capaStickers.width / rectCapa.width;
+
+     const escalaY =
+         rectBase.height / CONFIGURACION_B8.height *
+         capaStickers.height / rectCapa.height;
+
+     const desplazamientoX =
+         (rectBase.left - rectCapa.left) *
+         capaStickers.width / rectCapa.width;
+
+     const desplazamientoY =
+         (rectBase.top - rectCapa.top) *
+         capaStickers.height / rectCapa.height;
+
+     contexto.save();
+
+     contexto.setTransform(
+         escalaX,
+         0,
+         0,
+         escalaY,
+         desplazamientoX,
+         desplazamientoY
+     );
+
+     // Misma función de texto que utiliza B8 originalmente
+     function escribirDato(
+         texto,
+         config,
+         esCodigo = false,
+         fuente = "AlterCreedArmy"
+     ) {
+
+         if (!texto) return;
+
+         texto = String(texto);
+
+         let tamano = config.fontSize;
+
+         contexto.save();
+
+         contexto.textAlign = "left";
+         contexto.textBaseline = "alphabetic";
+         contexto.font = `${tamano}px "${fuente}"`;
+
+         while (
+             contexto.measureText(texto).width > config.maxWidth &&
+             tamano > 16
+         ) {
+             tamano--;
+             contexto.font = `${tamano}px "${fuente}"`;
+         }
+
+         if (esCodigo) {
+
+             contexto.fillStyle = "#ffffff";
+             contexto.strokeStyle = "#ff0000";
+             contexto.lineWidth = 5;
+
+         } else {
+
+             // Degradado original de B8
+             const degradado = contexto.createLinearGradient(
+                 0,
+                 config.baselineY - tamano,
+                 0,
+                 config.baselineY
+             );
+
+             degradado.addColorStop(0, "#ffffff");
+             degradado.addColorStop(0.45, "#e5e5e5");
+             degradado.addColorStop(1, "#888888");
+
+             contexto.fillStyle = degradado;
+             contexto.strokeStyle = "#333333";
+             contexto.lineWidth = 3;
+         }
+
+         contexto.lineJoin = "round";
+
+         const x = config.centerX - (config.maxWidth / 2);
+
+         contexto.strokeText(
+             texto,
+             x,
+             config.baselineY,
+             config.maxWidth
+         );
+
+         contexto.fillText(
+             texto,
+             x,
+             config.baselineY,
+             config.maxWidth
+         );
+
+         contexto.restore();
+     }
+
+     // NOMBRE
+     escribirDato(
+         datos.nombre,
+         CONFIGURACION_B8.nombre
+     );
+
+     // TIPO DE ARMY
+     escribirDato(
+         datos.armyTipo,
+         CONFIGURACION_B8.armyTipo
+     );
+
+     // CÓDIGO PERSONAL
+     escribirDato(
+         datos.codigo,
+         CONFIGURACION_B8.codigo,
+         true,
+         "ArialArmy"
+     );
+
+     // AÑO DE REGISTRO
+     escribirDato(
+         datos.fechaRegistro,
+         CONFIGURACION_B8.fechaRegistro,
+         false,
+         "ArialArmy"
+     );
+
+     // REGIÓN
+     escribirDato(
+         datos.pais,
+         CONFIGURACION_B8.paisRegion
      );
 
      contexto.restore();
