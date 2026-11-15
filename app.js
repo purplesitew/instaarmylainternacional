@@ -1070,23 +1070,27 @@ const CONFIGURACION_B7_B9 = {
         outline: "#ff4db8"
     },
 
-    nombre: {
-        centerX: 177,
-        baselineY: 620,
-        maxWidth: 250,
-        fontSize: 74,
-        color: "#ffffff",
-        outline: "#ff4db8"
-    },
+ 
+nombre: {
+    centerX: 177,
+    baselineY: 575,
+    maxWidth: 250,
+    fontSize: 74,
+    color: "#ffffff",
+    outline: "#ff4db8"
+},
 
-    bias: {
-        centerX: 148,
-        baselineY: 775,
-        maxWidth: 220,
-        fontSize: 70,
-        color: "#ffffff",
-        outline: "#ff4db8"
-    },
+
+   
+bias: {
+    centerX: 148,
+    baselineY: 730,
+    maxWidth: 220,
+    fontSize: 70,
+    color: "#ffffff",
+    outline: "#ff4db8"
+},
+
 
     qr: {
         x: 84,
