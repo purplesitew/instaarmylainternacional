@@ -1288,6 +1288,17 @@ escribirDato(
         centerX: 158
     }
 );
+      
+        // ==========================================
+        // GUARDAR DATOS PARA STICKERS B7 Y B9
+        // ==========================================
+
+        window.datosB7B9SobreStickers = {
+            nombre: datos.nombre,
+            pais: datos.pais,
+            bias: datos.bias,
+            codigo: datos.codigo
+        };
 
      // ACTIVAR CONTROL B7/B9
 credencialB7B9Activa = true;
@@ -3393,6 +3404,16 @@ function dibujarStickers() {
   if (plantillaSeleccionada === "B6.jpeg") {
     dibujarDatosB6SobreStickers(contexto);
 }
+
+  
+    // B7 y B9: textos por encima de los stickers
+    if (
+        plantillaSeleccionada === "B7.jpeg" ||
+        plantillaSeleccionada === "B9.jpeg"
+    ) {
+        dibujarDatosB7B9SobreStickers(contexto);
+    }
+
   
 }
 // ==========================================
@@ -4116,6 +4137,159 @@ function dibujarDatosB1SobreStickers(contexto) {
          datos.nombre,
          CONFIGURACION_B3.nombre,
          "Always in the Star"
+     );
+
+     contexto.restore();
+ }
+
+  
+ // ==========================================
+ // TEXTOS B7 Y B9 POR ENCIMA DE LOS STICKERS
+ // ==========================================
+
+ function dibujarDatosB7B9SobreStickers(contexto) {
+
+     if (
+         plantillaSeleccionada !== "B7.jpeg" &&
+         plantillaSeleccionada !== "B9.jpeg"
+     ) {
+         return;
+     }
+
+     const datos = window.datosB7B9SobreStickers;
+
+     if (!datos || !capaStickers) return;
+
+     const canvasBase = document.getElementById(
+         "canvas-credencial"
+     );
+
+     if (!canvasBase) return;
+
+     const rectBase = canvasBase.getBoundingClientRect();
+     const rectCapa = capaStickers.getBoundingClientRect();
+
+     if (
+         !rectBase.width ||
+         !rectBase.height ||
+         !rectCapa.width ||
+         !rectCapa.height
+     ) return;
+
+     // Alinear los textos con el canvas real de B7/B9
+     const escalaX =
+         (rectBase.width / CONFIGURACION_B7_B9.width) *
+         (capaStickers.width / rectCapa.width);
+
+     const escalaY =
+         (rectBase.height / CONFIGURACION_B7_B9.height) *
+         (capaStickers.height / rectCapa.height);
+
+     const desplazamientoX =
+         (rectBase.left - rectCapa.left) *
+         capaStickers.width / rectCapa.width;
+
+     const desplazamientoY =
+         (rectBase.top - rectCapa.top) *
+         capaStickers.height / rectCapa.height;
+
+     contexto.save();
+
+     contexto.setTransform(
+         escalaX,
+         0,
+         0,
+         escalaY,
+         desplazamientoX,
+         desplazamientoY
+     );
+
+     // Copiar el mismo sistema de texto original B7/B9
+     // El tamaño de la fuente se conserva como en el editor
+     const escalaFuenteX =
+         canvasBase.width / CONFIGURACION_B7_B9.width;
+
+     function escribirDato(texto, configuracion, esCodigo = false) {
+
+         if (!texto) return;
+
+         texto = String(texto);
+
+         const anchoMaximo =
+             configuracion.maxWidth * escalaFuenteX;
+
+         let tamano = configuracion.fontSize;
+
+         contexto.save();
+
+         contexto.textAlign = "center";
+         contexto.textBaseline = "alphabetic";
+
+         // Compensar la transformación para igualar
+         // el tamaño usado en el canvas original
+         contexto.font =
+             `${tamano / escalaFuenteX}px "PiedraArmy"`;
+
+         while (
+             contexto.measureText(texto).width >
+                 configuracion.maxWidth &&
+             tamano > 12
+         ) {
+             tamano--;
+
+             contexto.font =
+                 `${tamano / escalaFuenteX}px "PiedraArmy"`;
+         }
+
+         contexto.fillStyle = configuracion.color;
+         contexto.strokeStyle = configuracion.outline;
+         contexto.lineWidth = esCodigo ? 5 : 4;
+         contexto.lineJoin = "round";
+
+         contexto.strokeText(
+             texto,
+             configuracion.centerX,
+             configuracion.baselineY
+         );
+
+         contexto.fillText(
+             texto,
+             configuracion.centerX,
+             configuracion.baselineY
+         );
+
+         contexto.restore();
+     }
+
+     // CÓDIGO
+     escribirDato(
+         datos.codigo,
+         CONFIGURACION_B7_B9.codigo,
+         true
+     );
+
+     // PAÍS
+     escribirDato(
+         datos.pais,
+         CONFIGURACION_B7_B9.pais
+     );
+
+     // NOMBRE: conservar posición horizontal actual
+     escribirDato(
+         datos.nombre,
+         {
+             ...CONFIGURACION_B7_B9.nombre,
+             centerX: 165
+         }
+     );
+
+     // BIAS: conservar posición horizontal actual
+     escribirDato(
+         datos.bias,
+         {
+             ...CONFIGURACION_B7_B9.bias,
+             centerX: 158
+         }
      );
 
      contexto.restore();
