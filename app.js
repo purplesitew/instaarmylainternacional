@@ -1040,56 +1040,104 @@ fechaRegistro: {
 // ==========================================
 
 const CONFIGURACION_B7_B9 = {
-
     width: 720,
     height: 963,
 
     fuente: "PiedraArmy",
 
-codigo: {
-    centerX: 451,
-    baselineY: 250,
-    maxWidth: 150,
-    fontSize: 60,
-    color: "#ffffff",
-    outline: "#ff0000"
-},
+    fotografia: {
+        x: 86,
+        y: 174,
+        width: 182,
+        height: 265
+    },
 
-pais: {
-    centerX: 442,
-    baselineY: 390,
-    maxWidth: 165,
-    fontSize: 60,
-    color: "#ffffff",
-    outline: "#ff00a8"
-},
+    codigo: {
+        centerX: 424,
+        baselineY: 215,
+        maxWidth: 180,
+        fontSize: 78,
+        color: "#ffffff",
+        outline: "#ff0000"
+    },
 
-nombre: {
-    centerX: 275,
-    baselineY: 605,
-    maxWidth: 380,
-    fontSize: 68,
-    color: "#ffffff",
-    outline: "#ff00a8"
-},
+    pais: {
+        centerX: 436,
+        baselineY: 385,
+        maxWidth: 180,
+        fontSize: 60,
+        color: "#ffffff",
+        outline: "#ff4db8"
+    },
 
-bias: {
-    centerX: 268,
-    baselineY: 747,
-    maxWidth: 200,
-    fontSize: 54,
-    color: "#ffffff",
-    outline: "#ff00a8"
-},
-  
-fotografia: {
-    x: 96,
-    y: 186,
-    width: 158,
-    height: 220
-}
+    nombre: {
+        centerX: 177,
+        baselineY: 620,
+        maxWidth: 250,
+        fontSize: 74,
+        color: "#ffffff",
+        outline: "#ff4db8"
+    },
 
+    bias: {
+        centerX: 148,
+        baselineY: 775,
+        maxWidth: 220,
+        fontSize: 70,
+        color: "#ffffff",
+        outline: "#ff4db8"
+    },
+
+    qr: {
+        x: 84,
+        y: 806,
+        width: 97,
+        height: 106
+    },
+
+    spotify: {
+        x: 196,
+        y: 811,
+        width: 188,
+        height: 63
+    }
 };
+
+ // ==========================================
+ // ZONAS PROTEGIDAS EXCLUSIVAS B7 Y B9
+ // ==========================================
+
+ function obtenerZonasProtegidasB7B9() {
+
+     return [
+
+         // FOTOGRAFÍA
+         {
+             x: CONFIGURACION_B7_B9.fotografia.x,
+             y: CONFIGURACION_B7_B9.fotografia.y,
+             width: CONFIGURACION_B7_B9.fotografia.width,
+             height: CONFIGURACION_B7_B9.fotografia.height
+         },
+
+         // CÓDIGO QR
+         {
+             x: CONFIGURACION_B7_B9.qr.x,
+             y: CONFIGURACION_B7_B9.qr.y,
+             width: CONFIGURACION_B7_B9.qr.width,
+             height: CONFIGURACION_B7_B9.qr.height
+         },
+
+         // SPOTIFY
+         {
+             x: CONFIGURACION_B7_B9.spotify.x,
+             y: CONFIGURACION_B7_B9.spotify.y,
+             width: CONFIGURACION_B7_B9.spotify.width,
+             height: CONFIGURACION_B7_B9.spotify.height
+         }
+
+     ];
+ }
+
 // ==========================================
 // CONTROL EXCLUSIVO DE B7 Y B9
 // ==========================================
@@ -3182,17 +3230,29 @@ function stickerInvadeZonaProtegida(x, y, ancho, alto) {
     anchoBase = CONFIGURACION_B5_B10.imagen.width;
     altoBase = CONFIGURACION_B5_B10.imagen.height;
 
+
 } else if (plantillaSeleccionada === "B6.jpeg") {
 
-    // B6: proteger fotografía y Spotify
     zonas = obtenerZonasProtegidasB6();
 
     anchoBase = CONFIGURACION_B6.width;
     altoBase = CONFIGURACION_B6.height;
 
+} else if (
+    plantillaSeleccionada === "B7.jpeg" ||
+    plantillaSeleccionada === "B9.jpeg"
+) {
+
+    // B7 y B9: fotografía, QR y Spotify
+    zonas = obtenerZonasProtegidasB7B9();
+
+    anchoBase = CONFIGURACION_B7_B9.width;
+    altoBase = CONFIGURACION_B7_B9.height;
+
 } else {
     return false;
 }
+
 
 
 
