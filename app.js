@@ -2195,6 +2195,13 @@ escribirTextoAjustado(
         zonaCodigo.maxWidth
     );
 
+      // Guardar datos para mostrarlos encima de los stickers
+    window.datosB5B10SobreStickers = {
+        nombre: datos.nombre,
+        bias: datos.bias,
+        codigo: datos.codigo
+    };
+
     // MOSTRAR EDITOR
     if (creador) {
         creador.classList.add("oculta");
@@ -3269,6 +3276,12 @@ function dibujarStickers() {
   if (plantillaSeleccionada === "B4.jpeg") {
     dibujarDatosB4SobreStickers(contexto);
 }
+      if (
+        plantillaSeleccionada === "B5.jpeg" ||
+        plantillaSeleccionada === "B10.jpeg"
+    ) {
+        dibujarDatosB5B10SobreStickers(contexto);
+    }
   
 }
 // ==========================================
@@ -3400,7 +3413,132 @@ function dibujarDatosB4SobreStickers(contexto) {
 
     contexto.restore();
 }
+// ==========================================
+// TEXTOS DE B5 Y B10 POR ENCIMA DE LOS STICKERS
+// ==========================================
 
+function dibujarDatosB5B10SobreStickers(contexto) {
+
+    if (
+        (plantillaSeleccionada !== "B5.jpeg" &&
+         plantillaSeleccionada !== "B10.jpeg") ||
+        !window.datosB5B10SobreStickers
+    ) {
+        return;
+    }
+
+    const datos = window.datosB5B10SobreStickers;
+
+    const canvasBase = document.getElementById("canvas-credencial");
+
+    if (!canvasBase || !capaStickers) return;
+
+    const rectBase = canvasBase.getBoundingClientRect();
+    const rectStickers = capaStickers.getBoundingClientRect();
+
+    if (
+        !rectBase.width ||
+        !rectBase.height ||
+        !rectStickers.width ||
+        !rectStickers.height
+    ) return;
+
+    const escalaX =
+        rectBase.width / CONFIGURACION_B5_B10.imagen.width *
+        capaStickers.width / rectStickers.width;
+
+    const escalaY =
+        rectBase.height / CONFIGURACION_B5_B10.imagen.height *
+        capaStickers.height / rectStickers.height;
+
+    const desplazamientoX =
+        (rectBase.left - rectStickers.left) *
+        capaStickers.width / rectStickers.width;
+
+    const desplazamientoY =
+        (rectBase.top - rectStickers.top) *
+        capaStickers.height / rectStickers.height;
+
+    contexto.save();
+
+    contexto.setTransform(
+        escalaX,
+        0,
+        0,
+        escalaY,
+        desplazamientoX,
+        desplazamientoY
+    );
+
+    // ESTILO GENERAL
+    contexto.textAlign = "center";
+    contexto.textBaseline = "alphabetic";
+    contexto.fillStyle = "#ffffff";
+    contexto.strokeStyle = "transparent";
+    contexto.lineWidth = 0;
+
+    function escribirTextoAjustado(texto, centroX, baselineY, anchoMaximo) {
+
+        texto = String(texto || "");
+
+        let tamaño = 68;
+
+        contexto.font = `${tamaño}px "PiedraArmy"`;
+
+        while (
+            contexto.measureText(texto).width > anchoMaximo &&
+            tamaño > 30
+        ) {
+            tamaño--;
+            contexto.font = `${tamaño}px "PiedraArmy"`;
+        }
+
+        contexto.fillText(texto, centroX, baselineY);
+    }
+
+    // NOMBRE
+    escribirTextoAjustado(
+        datos.nombre,
+        CONFIGURACION_B5_B10.nombre.centerX - 270,
+        CONFIGURACION_B5_B10.nombre.baselineY,
+        CONFIGURACION_B5_B10.nombre.maxWidth
+    );
+
+    // BIAS
+    escribirTextoAjustado(
+        datos.bias,
+        CONFIGURACION_B5_B10.bias.centerX - 210,
+        CONFIGURACION_B5_B10.bias.baselineY,
+        CONFIGURACION_B5_B10.bias.maxWidth
+    );
+
+    // CÓDIGO
+    const zonaCodigo = CONFIGURACION_B5_B10.codigoPersonal;
+
+    contexto.textAlign = "center";
+    contexto.textBaseline = "middle";
+    contexto.font = '32px "PiedraArmy"';
+    contexto.fillStyle = "#ffffff";
+    contexto.strokeStyle = "#ff0000";
+    contexto.lineWidth = 5;
+    contexto.lineJoin = "round";
+
+    contexto.strokeText(
+        datos.codigo,
+        zonaCodigo.centerX,
+        zonaCodigo.centerY,
+        zonaCodigo.maxWidth
+    );
+
+    contexto.fillText(
+        datos.codigo,
+        zonaCodigo.centerX,
+        zonaCodigo.centerY,
+        zonaCodigo.maxWidth
+    );
+
+    contexto.restore();
+}
 
   
 // ==========================================
