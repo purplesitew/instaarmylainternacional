@@ -3009,14 +3009,39 @@ const capaStickers = document.getElementById("capa-stickers");
      });
  }
 
-  
-// ==========================================
+  // ==========================================
 // ZONAS PROTEGIDAS EXCLUSIVAS DE B8
 // ==========================================
 
 function obtenerZonasProtegidasB8() {
 
-  
+    if (plantillaSeleccionada !== "B8.jpeg") {
+        return [];
+    }
+
+    const foto = CONFIGURACION_B8.fotografia;
+
+    return [
+        // FOTO PRINCIPAL: aquí sí debe rebotar
+        {
+            x: foto.x,
+            y: foto.y,
+            width: foto.width,
+            height: foto.height
+        },
+
+        // ZONA INFERIOR: QR + SPOTIFY
+        // Aquí también debe rebotar
+        {
+            x: 390,
+            y: 760,
+            width: 250,
+            height: 180
+        }
+    ];
+}
+
+
 // ==========================================
 // COMPROBAR ZONAS PROTEGIDAS DE B8
 // ==========================================
@@ -3027,9 +3052,7 @@ function stickerInvadeZonaB8(x, y, ancho, alto) {
         return false;
     }
 
-    const canvasFoto = document.getElementById(
-        "canvas-credencial"
-    );
+    const canvasFoto = document.getElementById("canvas-credencial");
 
     if (!canvasFoto || !capaStickers) return false;
 
@@ -3045,7 +3068,6 @@ function stickerInvadeZonaB8(x, y, ancho, alto) {
         return true;
     }
 
-    // Convertir coordenadas de B8 a la capa de stickers
     const escalaX =
         (rectFoto.width / CONFIGURACION_B8.width) *
         (capaStickers.width / rectCapa.width);
@@ -3078,65 +3100,6 @@ function stickerInvadeZonaB8(x, y, ancho, alto) {
 
     });
 }
-
-
-    if (plantillaSeleccionada !== "B8.jpeg") {
-        return [];
-    }
-
-    const foto = CONFIGURACION_B8.fotografia;
-
-    return [
-        // Fotografía
-        {
-            x: foto.x,
-            y: foto.y,
-            width: foto.width,
-            height: foto.height
-        },
-
-        // Nombre
-        {
-            x: 370,
-            y: 310,
-            width: 230,
-            height: 55
-        },
-
-        // ARMY GIRL / ARMY BOY
-        {
-            x: 370,
-            y: 370,
-            width: 230,
-            height: 55
-        },
-
-        // Código personal
-        {
-            x: 370,
-            y: 445,
-            width: 240,
-            height: 55
-        },
-
-        // Año de registro
-        {
-            x: 370,
-            y: 515,
-            width: 230,
-            height: 55
-        },
-
-        // País / REGION
-        {
-            x: 370,
-            y: 630,
-            width: 230,
-            height: 60
-        }
-    ];
-}
-
   
  // ==========================================
  // ZONAS PROTEGIDAS EXCLUSIVAS DE B1
