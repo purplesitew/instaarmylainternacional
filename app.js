@@ -1285,7 +1285,7 @@ escribirDato(
     datos.bias,
     {
         ...CONFIGURACION_B7_B9.bias,
-        centerX: 158
+        centerX: 240
     }
 );
       
