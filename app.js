@@ -573,6 +573,283 @@ function obtenerReversoB1(bias) {
     return reversos[biasNormalizado] || null;
 }
 
+// ==========================================
+// CARGAR IMAGEN
+// ==========================================
+
+function cargarImagenPDF(ruta) {
+    return new Promise((resolve, reject) => {
+        const imagen = new Image();
+        imagen.onload = () => resolve(imagen);
+        imagen.onerror = () => reject(
+            new Error("No se pudo cargar la imagen: " + ruta)
+        );
+        imagen.src = ruta;
+    });
+}
+
+// ==========================================
+// UNIR CANVAS DE CREDENCIAL + STICKERS
+// ==========================================
+
+function obtenerImagenFrontalCredencial() {
+
+    const canvasBase = document.getElementById("canvas-credencial");
+    const capaStickers = document.getElementById("capa-stickers");
+
+    if (!canvasBase) {
+        throw new Error("No se encontró el canvas de la credencial.");
+    }
+
+    const canvasFinal = document.createElement("canvas");
+    canvasFinal.width = canvasBase.width;
+    canvasFinal.height = canvasBase.height;
+
+    const contextoFinal = canvasFinal.getContext("2d");
+
+    contextoFinal.drawImage(canvasBase, 0, 0);
+
+    if (capaStickers) {
+        contextoFinal.drawImage(capaStickers, 0, 0);
+    }
+
+    return canvasFinal.toDataURL("image/jpeg", 1.0);
+}
+
+// ==========================================
+// GIRAR IMAGEN 90° PARA EL PDF
+// ==========================================
+
+function rotarImagenDataURL(origen) {
+    return new Promise((resolve, reject) => {
+
+        const imagen = new Image();
+
+        imagen.onload = () => {
+
+            const canvas = document.createElement("canvas");
+            canvas.width = imagen.height;
+            canvas.height = imagen.width;
+
+            const contexto = canvas.getContext("2d");
+
+            contexto.translate(canvas.width / 2, canvas.height / 2);
+            contexto.rotate(-Math.PI / 2);
+
+            contexto.drawImage(
+                imagen,
+                -imagen.width / 2,
+                -imagen.height / 2
+            );
+
+            resolve(canvas.toDataURL("image/jpeg", 1.0));
+        };
+
+        imagen.onerror = () => reject(
+            new Error("No se pudo girar la imagen.")
+        );
+
+        imagen.src = origen;
+    });
+}
+
+// ==========================================
+// COLOCAR IMAGEN AJUSTADA EN UNA CAJA
+// ==========================================
+
+function agregarImagenAjustadaEnCaja(
+    pdf,
+    imagenData,
+    cajaX,
+    cajaY,
+    cajaAncho,
+    cajaAlto
+) {
+
+    const propiedades = pdf.getImageProperties(imagenData);
+
+    const anchoImagen = propiedades.width;
+    const altoImagen = propiedades.height;
+
+    const escala = Math.min(
+        cajaAncho / anchoImagen,
+        cajaAlto / altoImagen
+    );
+
+    const anchoFinal = anchoImagen * escala;
+    const altoFinal = altoImagen * escala;
+
+    const xFinal = cajaX + (cajaAncho - anchoFinal) / 2;
+    const yFinal = cajaY + (cajaAlto - altoFinal) / 2;
+
+    pdf.addImage(
+        imagenData,
+        "JPEG",
+        xFinal,
+        yFinal,
+        anchoFinal,
+        altoFinal
+    );
+}
+
+// ==========================================
+// AGREGAR IMAGEN COMO PÁGINA COMPLETA
+// ==========================================
+
+function agregarImagenPaginaCompleta(pdf, imagenData, margen = 10) {
+
+    const anchoPagina = pdf.internal.pageSize.getWidth();
+    const altoPagina = pdf.internal.pageSize.getHeight();
+
+    agregarImagenAjustadaEnCaja(
+        pdf,
+        imagenData,
+        margen,
+        margen,
+        anchoPagina - margen * 2,
+        altoPagina - margen * 2
+    );
+}
+
+// ==========================================
+// GENERAR PDF DE B1
+// ==========================================
+
+async function descargarPDFB1() {
+
+    try {
+
+        if (
+            !window.datosActualesPDF ||
+            window.datosActualesPDF.plantilla !== "B1"
+        ) {
+            alert("Primero abre una credencial B1 antes de descargar el PDF. 💜");
+            return;
+        }
+
+        const { jsPDF } = window.jspdf;
+
+        if (!jsPDF) {
+            throw new Error("No se encontró la librería jsPDF.");
+        }
+
+        const datos = window.datosActualesPDF;
+
+        const archivoReverso = obtenerReversoB1(datos.bias);
+
+        if (!archivoReverso) {
+            throw new Error(
+                "No se encontró el reverso para el bias: " + datos.bias
+            );
+        }
+
+        // Frente actual con stickers, textos y marcos
+        const frenteDataURL = obtenerImagenFrontalCredencial();
+
+        // Cargar imágenes auxiliares
+        const instrucciones = await cargarImagenPDF("./INSTRUCCIONESPDF.jpg");
+        const bienvenida = await cargarImagenPDF("./bienvenidapdf.jpg");
+        const decalogo = await cargarImagenPDF("./decalogopdf.jpg");
+        const reverso = await cargarImagenPDF("./" + archivoReverso);
+
+        // Convertir a dataURL
+        const canvasInstrucciones = document.createElement("canvas");
+        canvasInstrucciones.width = instrucciones.width;
+        canvasInstrucciones.height = instrucciones.height;
+        canvasInstrucciones.getContext("2d").drawImage(instrucciones, 0, 0);
+        const instruccionesDataURL = canvasInstrucciones.toDataURL("image/jpeg", 1.0);
+
+        const canvasBienvenida = document.createElement("canvas");
+        canvasBienvenida.width = bienvenida.width;
+        canvasBienvenida.height = bienvenida.height;
+        canvasBienvenida.getContext("2d").drawImage(bienvenida, 0, 0);
+        const bienvenidaDataURL = canvasBienvenida.toDataURL("image/jpeg", 1.0);
+
+        const canvasDecalogo = document.createElement("canvas");
+        canvasDecalogo.width = decalogo.width;
+        canvasDecalogo.height = decalogo.height;
+        canvasDecalogo.getContext("2d").drawImage(decalogo, 0, 0);
+        const decalogoDataURL = canvasDecalogo.toDataURL("image/jpeg", 1.0);
+
+        const canvasReverso = document.createElement("canvas");
+        canvasReverso.width = reverso.width;
+        canvasReverso.height = reverso.height;
+        canvasReverso.getContext("2d").drawImage(reverso, 0, 0);
+        const reversoDataURL = canvasReverso.toDataURL("image/jpeg", 1.0);
+
+        // Girar frente y reverso como en el ejemplo
+        const frenteGirado = await rotarImagenDataURL(frenteDataURL);
+        const reversoGirado = await rotarImagenDataURL(reversoDataURL);
+
+        // Crear PDF tamaño carta vertical
+        const pdf = new jsPDF({
+            orientation: "portrait",
+            unit: "mm",
+            format: "letter"
+        });
+
+        // ==========================================
+        // PÁGINA 1 - INSTRUCCIONES
+        // ==========================================
+        agregarImagenPaginaCompleta(pdf, instruccionesDataURL, 10);
+
+        // ==========================================
+        // PÁGINA 2 - FRENTE + REVERSO
+        // ==========================================
+        pdf.addPage("letter", "portrait");
+
+        const anchoPagina = pdf.internal.pageSize.getWidth();
+        const altoPagina = pdf.internal.pageSize.getHeight();
+
+        const margenLateral = 12;
+        const margenSuperior = 14;
+        const separacion = 12;
+
+        const cajaAncho = anchoPagina - margenLateral * 2;
+        const cajaAlto = (altoPagina - margenSuperior * 2 - separacion) / 2;
+
+        agregarImagenAjustadaEnCaja(
+            pdf,
+            frenteGirado,
+            margenLateral,
+            margenSuperior,
+            cajaAncho,
+            cajaAlto
+        );
+
+        agregarImagenAjustadaEnCaja(
+            pdf,
+            reversoGirado,
+            margenLateral,
+            margenSuperior + cajaAlto + separacion,
+            cajaAncho,
+            cajaAlto
+        );
+
+        // ==========================================
+        // PÁGINA 3 - BIENVENIDA
+        // ==========================================
+        pdf.addPage("letter", "portrait");
+        agregarImagenPaginaCompleta(pdf, bienvenidaDataURL, 10);
+
+        // ==========================================
+        // PÁGINA 4 - DECÁLOGO
+        // ==========================================
+        pdf.addPage("letter", "portrait");
+        agregarImagenPaginaCompleta(pdf, decalogoDataURL, 10);
+
+        const nombreArchivo =
+            "Insta-Army-B1-" +
+            String(datos.codigo || "credencial").replace(/\s+/g, "-") +
+            ".pdf";
+
+        pdf.save(nombreArchivo);
+
+    } catch (error) {
+        console.error("Error al generar el PDF de B1:", error);
+        alert(error.message);
+    }
+}
 
 // ==========================================
 // GENERAR CREDENCIAL B1 CON LOS DATOS
@@ -2371,6 +2648,18 @@ window.mostrarCredencialB5B10 = mostrarCredencialB5B10;
 document.addEventListener("DOMContentLoaded", () => {
 
   // ==========================================
+// BOTÓN PARA DESCARGAR PDF
+// ==========================================
+
+const btnDescargarPDF = document.getElementById("btnDescargarPDF");
+
+if (btnDescargarPDF) {
+    btnDescargarPDF.addEventListener("click", async () => {
+        await descargarPDFB1();
+    });
+}
+  
+  // ==========================================
 // DIBUJAR MARCO SOBRE LA FOTOGRAFÍA
 // ==========================================
 
@@ -2398,6 +2687,7 @@ function dibujarFotografiaB2(imagen) {
 
     const canvas = document.getElementById("canvas-credencial");
     const contexto = canvas.getContext("2d");
+   const btnDescargarPDF = document.getElementById("btn-descargar-pdf");
 
     const foto = CONFIGURACION_B2.fotografia;
 
