@@ -896,11 +896,20 @@ const CONFIGURACION_B6 = {
     width: 840,
     height: 1204,
 
+    fuente: "FankyBubbleArmy",
+
     fotografia: {
         x: 37,
         y: 47,
         width: 244,
         height: 310
+    },
+
+    spotify: {
+        x: 0,
+        y: 464,
+        width: 308,
+        height: 76
     },
 
     codigo: {
@@ -913,26 +922,44 @@ const CONFIGURACION_B6 = {
     },
 
     nombre: {
-    centerX: 555,
-    baselineY: 470,
-    maxWidth: 360,
-    fontSize: 110,
-    color: "#ffffff",
-    outline: "#f2d56b"
-},
+        centerX: 555,
+        baselineY: 470,
+        maxWidth: 360,
+        fontSize: 110,
+        color: "#ffffff",
+        outline: "#f2d56b"
+    },
 
-bias: {
-    centerX: 163,
-    baselineY: 650,
-    maxWidth: 220,
-    fontSize: 108,
-    color: "#ffffff",
-    outline: "#f2d56b"
-}
-  
+    bias: {
+        centerX: 163,
+        baselineY: 650,
+        maxWidth: 220,
+        fontSize: 108,
+        color: "#ffffff",
+        outline: "#f2d56b"
+    }
 };
 
+// ==========================================
+// ZONAS PROTEGIDAS EXCLUSIVAS B6
+// ==========================================
 
+function obtenerZonasProtegidasB6() {
+    return [
+        {
+            x: CONFIGURACION_B6.fotografia.x,
+            y: CONFIGURACION_B6.fotografia.y,
+            width: CONFIGURACION_B6.fotografia.width,
+            height: CONFIGURACION_B6.fotografia.height
+        },
+        {
+            x: CONFIGURACION_B6.spotify.x,
+            y: CONFIGURACION_B6.spotify.y,
+            width: CONFIGURACION_B6.spotify.width,
+            height: CONFIGURACION_B6.spotify.height
+        }
+    ];
+}
 
 // ==========================================
 // CONFIGURACIÓN EXCLUSIVA B8 CORREGIDA
@@ -3137,19 +3164,28 @@ function stickerInvadeZonaProtegida(x, y, ancho, alto) {
     anchoBase = CONFIGURACION_B4.width;
     altoBase = CONFIGURACION_B4.height;
 
+
 } else if (
     plantillaSeleccionada === "B5.jpeg" ||
     plantillaSeleccionada === "B10.jpeg"
 ) {
-    // B5 y B10 comparten las mismas zonas protegidas
     zonas = obtenerZonasProtegidasB5B10();
 
     anchoBase = CONFIGURACION_B5_B10.imagen.width;
     altoBase = CONFIGURACION_B5_B10.imagen.height;
 
+} else if (plantillaSeleccionada === "B6.jpeg") {
+
+    // B6: proteger fotografía y Spotify
+    zonas = obtenerZonasProtegidasB6();
+
+    anchoBase = CONFIGURACION_B6.width;
+    altoBase = CONFIGURACION_B6.height;
+
 } else {
     return false;
 }
+
 
 
 
