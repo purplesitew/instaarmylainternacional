@@ -711,6 +711,38 @@ function agregarImagenPaginaCompleta(pdf, imagenData, margen = 10) {
     );
 }
 
+
+ // ==========================================
+ // REVERSOS EXCLUSIVOS DE B2 PARA PDF
+ // ==========================================
+
+function obtenerReversoB2(bias) {
+
+    const biasNormalizado = String(bias || "")
+        .trim()
+        .toUpperCase()
+        .replace(/\s+/g, "")
+        .replace(/[-_]/g, "");
+
+    const reversos = {
+        JIN: "B2REVERSOJIN.jpg",
+        SUGA: "B2REVERSOSUGA.jpg",
+        YOONGI: "B2REVERSOSUGA.jpg",
+        JHOPE: "B2REVERSOJHOPE.jpg",
+        HOSEOK: "B2REVERSOJHOPE.jpg",
+        JIMIN: "B2REVERSOJIMIN.jpg",
+        V: "B2REVERSOV.jpg",
+        TAEHYUNG: "B2REVERSOV.jpg",
+        RM: "B2REVERSORM.jpg",
+        NAMJOON: "B2REVERSORM.jpg",
+        JUNGKOOK: "B2REVERSOJUNGKOOK.jpg",
+        JK: "B2REVERSOJUNGKOOK.jpg",
+        OT7: "B2REVERSOOT7.jpg"
+    };
+
+    return reversos[biasNormalizado] || null;
+}
+
 // ==========================================
 // GENERAR PDF DE B1
 // ==========================================
