@@ -1726,7 +1726,21 @@ async function mostrarCredencialPendiente(datos, archivoPlantilla) {
 
 async function mostrarCredencialB2(datos) {
 
-  window.datosCredencialActual = { ...datos };
+ 
+window.datosCredencialActual = { ...datos };
+
+// ==========================================
+// GUARDAR DATOS DE B2 PARA DESCARGAR PDF
+// ==========================================
+
+window.datosActualesPDF = {
+    plantilla: "B2",
+    nombre: datos.nombre,
+    pais: datos.pais,
+    bias: datos.bias,
+    codigo: datos.codigo
+};
+
   
     const editor = document.getElementById("editor-credencial");
     const creador = document.getElementById("creador-credencial");
