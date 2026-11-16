@@ -785,9 +785,13 @@ async function descargarPDFB1() {
 
        if (
     !window.datosActualesPDF ||
-    !["B1", "B2"].includes(window.datosActualesPDF.plantilla)
+    
+!["B1", "B2", "B3"].includes(window.datosActualesPDF.plantilla)
+
 ) {
-    alert("Primero abre una credencial B1 o B2 antes de descargar el PDF. 💜");
+    
+alert("Primero abre una credencial B1, B2 o B3 antes de descargar el PDF. 💜");
+
     return;
 }
 
@@ -806,10 +810,14 @@ const { jsPDF } = window.jspdf;
         const datos = window.datosActualesPDF;
 
         
+
 const archivoReverso =
-    datos.plantilla === "B2"
-        ? obtenerReversoB2(datos.bias)
-        : obtenerReversoB1(datos.bias);
+    datos.plantilla === "B3"
+        ? obtenerReversoB3(datos.bias)
+        : datos.plantilla === "B2"
+            ? obtenerReversoB2(datos.bias)
+            : obtenerReversoB1(datos.bias);
+
 
 
         if (!archivoReverso) {
@@ -1927,6 +1935,20 @@ window.datosActualesPDF = {
 // ==========================================
 
 async function mostrarCredencialB3(datos) {
+
+  
+    // ==========================================
+    // GUARDAR DATOS DE B3 PARA DESCARGAR PDF
+    // ==========================================
+
+    window.datosActualesPDF = {
+        plantilla: "B3",
+        nombre: datos.nombre,
+        pais: datos.pais,
+        bias: datos.bias,
+        codigo: datos.codigo
+    };
+
 
   window.datosActualesB3 = datos;
 
