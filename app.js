@@ -776,6 +776,37 @@ function obtenerReversoB3(bias) {
 }
 
 // ==========================================
+// REVERSOS EXCLUSIVOS DE B4 PARA PDF
+// ==========================================
+
+function obtenerReversoB4(bias) {
+
+    const biasNormalizado = String(bias || "")
+        .trim()
+        .toUpperCase()
+        .replace(/\s+/g, "")
+        .replace(/[-_]/g, "");
+
+    const reversos = {
+        JIN: "B4REVERSOJIN.jpg",
+        SUGA: "B4REVERSOSUGA.jpg",
+        YOONGI: "B4REVERSOSUGA.jpg",
+        JHOPE: "B4REVERSOJHOPE.jpg",
+        HOSEOK: "B4REVERSOJHOPE.jpg",
+        JIMIN: "B4REVERSOJIMIN.jpg",
+        V: "B4REVERSOV.jpg",
+        TAEHYUNG: "B4REVERSOV.jpg",
+        RM: "B4REVERSORM.jpg",
+        NAMJOON: "B4REVERSORM.jpg",
+        JUNGKOOK: "B4REVERSOJUNGKOOK.jpg",
+        JK: "B4REVERSOJUNGKOOK.jpg",
+        OT7: "B4REVERSOOT7.jpg"
+    };
+
+    return reversos[biasNormalizado] || null;
+}
+
+// ==========================================
 // GENERAR PDF DE B1
 // ==========================================
 
@@ -785,13 +816,9 @@ async function descargarPDFB1() {
 
        if (
     !window.datosActualesPDF ||
-    
-!["B1", "B2", "B3"].includes(window.datosActualesPDF.plantilla)
-
+    !["B1", "B2", "B3", "B4"].includes(window.datosActualesPDF.plantilla)
 ) {
-    
-alert("Primero abre una credencial B1, B2 o B3 antes de descargar el PDF. 💜");
-
+    alert("Primero abre una credencial B1, B2, B3 o B4 antes de descargar el PDF. 💜");
     return;
 }
 
@@ -812,11 +839,13 @@ const { jsPDF } = window.jspdf;
         
 
 const archivoReverso =
-    datos.plantilla === "B3"
+    datos.plantilla === "B2"
+        ? obtenerReversoB2(datos.bias)
+        : datos.plantilla === "B3"
         ? obtenerReversoB3(datos.bias)
-        : datos.plantilla === "B2"
-            ? obtenerReversoB2(datos.bias)
-            : obtenerReversoB1(datos.bias);
+        : datos.plantilla === "B4"
+        ? obtenerReversoB4(datos.bias)
+        : obtenerReversoB1(datos.bias);
 
 
 
@@ -2087,6 +2116,8 @@ async function mostrarCredencialB3(datos) {
 // ==========================================
 
 async function mostrarCredencialB4(datos) {
+
+  window.datosActualesPDF = { ...datos, plantilla: "B4" };
 
     const editor = document.getElementById("editor-credencial");
     const creador = document.getElementById("creador-credencial");
