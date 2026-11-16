@@ -924,6 +924,38 @@ function obtenerReversoB6(bias) {
 }
 
 
+ // ==========================================
+ // REVERSOS COMPARTIDOS DE B7 Y B9 PARA PDF
+ // ==========================================
+
+function obtenerReversoB7B9(bias) {
+
+    const biasNormalizado = String(bias || "")
+        .trim()
+        .toUpperCase()
+        .replace(/\s+/g, "")
+        .replace(/[-_]/g, "");
+
+    const reversos = {
+        JIN: "B7y9REVERSOJIN.jpg",
+        SUGA: "B7y9REVERSOSUGA.jpg",
+        YOONGI: "B7y9REVERSOSUGA.jpg",
+        JHOPE: "B7y9REVERSOJHOPE.jpg",
+        HOSEOK: "B7y9REVERSOJHOPE.jpg",
+        JIMIN: "B7y9REVERSOJIMIN.jpg",
+        V: "B7y9REVERSOV.jpg",
+        TAEHYUNG: "B7y9REVERSOV.jpg",
+        RM: "B7y9REVERSORM.jpg",
+        NAMJOON: "B7y9REVERSORM.jpg",
+        JUNGKOOK: "B7y9REVERSOJUNGKOOK.jpg",
+        JK: "B7y9REVERSOJUNGKOOK.jpg",
+        OT7: "B7y9REVERSOOT7.jpg"
+    };
+
+    return reversos[biasNormalizado] || null;
+}
+
+
 // ==========================================
 // GENERAR PDF DE B1
 // ==========================================
@@ -936,13 +968,17 @@ async function descargarPDFB1() {
     !window.datosActualesPDF ||
    
 
-!["B1", "B2", "B3", "B4", "B5", "B6", "B10"].includes(window.datosActualesPDF.plantilla)
+
+!["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B9", "B10"].includes(window.datosActualesPDF.plantilla)
+
 
 
 ) {
     
 
-alert("Primero abre una credencial B1, B2, B3, B4, B5, B6 o B10 antes de descargar el PDF. 💜");
+
+alert("Primero abre una credencial B1, B2, B3, B4, B5, B6, B7, B9 o B10 antes de descargar el PDF. 💜");
+
 
 
     return;
@@ -965,18 +1001,22 @@ const { jsPDF } = window.jspdf;
         
 
 
+
 const archivoReverso =
-    datos.plantilla === "B6"
-        ? obtenerReversoB6(datos.bias)
-        : datos.plantilla === "B5" || datos.plantilla === "B10"
-            ? obtenerReversoB5B10(datos.bias)
-            : datos.plantilla === "B4"
-                ? obtenerReversoB4(datos.bias)
-                : datos.plantilla === "B3"
-                    ? obtenerReversoB3(datos.bias)
-                    : datos.plantilla === "B2"
-                        ? obtenerReversoB2(datos.bias)
-                        : obtenerReversoB1(datos.bias);
+    datos.plantilla === "B7" || datos.plantilla === "B9"
+        ? obtenerReversoB7B9(datos.bias)
+        : datos.plantilla === "B6"
+            ? obtenerReversoB6(datos.bias)
+            : datos.plantilla === "B5" || datos.plantilla === "B10"
+                ? obtenerReversoB5B10(datos.bias)
+                : datos.plantilla === "B4"
+                    ? obtenerReversoB4(datos.bias)
+                    : datos.plantilla === "B3"
+                        ? obtenerReversoB3(datos.bias)
+                        : datos.plantilla === "B2"
+                            ? obtenerReversoB2(datos.bias)
+                            : obtenerReversoB1(datos.bias);
+
 
 
 
@@ -1725,6 +1765,20 @@ async function mostrarCredencialB7B9(datos, archivoPlantilla) {
             throw new Error("Plantilla B7/B9 no válida.");
         }
 
+       
+        // ==========================================
+        // GUARDAR DATOS DE B7 Y B9 PARA EL PDF
+        // ==========================================
+
+        window.datosActualesPDF = {
+            plantilla: archivoPlantilla === "B7PLANTILLA.jpg" ? "B7" : "B9",
+            nombre: datos.nombre,
+            pais: datos.pais,
+            bias: datos.bias,
+            codigo: datos.codigo
+        };
+
+      
         const editor = document.getElementById("editor-credencial");
         const creador = document.getElementById("creador-credencial");
         const canvas = document.getElementById("canvas-credencial");
