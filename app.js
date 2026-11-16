@@ -719,13 +719,13 @@ async function descargarPDFB1() {
 
     try {
 
-        if (
-            !window.datosActualesPDF ||
-            window.datosActualesPDF.plantilla !== "B1"
-        ) {
-            alert("Primero abre una credencial B1 antes de descargar el PDF. 💜");
-            return;
-        }
+       if (
+    !window.datosActualesPDF ||
+    !["B1", "B2"].includes(window.datosActualesPDF.plantilla)
+) {
+    alert("Primero abre una credencial B1 o B2 antes de descargar el PDF. 💜");
+    return;
+}
 
         if (!window.jspdf || !window.jspdf.jsPDF) {
     throw new Error(
