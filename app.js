@@ -903,11 +903,15 @@ async function descargarPDFB1() {
        if (
     !window.datosActualesPDF ||
    
-!["B1", "B2", "B3", "B4", "B5", "B10"].includes(window.datosActualesPDF.plantilla)
+
+!["B1", "B2", "B3", "B4", "B5", "B6", "B10"].includes(window.datosActualesPDF.plantilla)
+
 
 ) {
     
-alert("Primero abre una credencial B1, B2, B3, B4, B5 o B10 antes de descargar el PDF. 💜");
+
+alert("Primero abre una credencial B1, B2, B3, B4, B5, B6 o B10 antes de descargar el PDF. 💜");
+
 
     return;
 }
@@ -928,16 +932,20 @@ const { jsPDF } = window.jspdf;
 
         
 
+
 const archivoReverso =
-    datos.plantilla === "B5" || datos.plantilla === "B10"
-        ? obtenerReversoB5B10(datos.bias)
-        : datos.plantilla === "B4"
-            ? obtenerReversoB4(datos.bias)
-            : datos.plantilla === "B3"
-                ? obtenerReversoB3(datos.bias)
-                : datos.plantilla === "B2"
-                    ? obtenerReversoB2(datos.bias)
-                    : obtenerReversoB1(datos.bias);
+    datos.plantilla === "B6"
+        ? obtenerReversoB6(datos.bias)
+        : datos.plantilla === "B5" || datos.plantilla === "B10"
+            ? obtenerReversoB5B10(datos.bias)
+            : datos.plantilla === "B4"
+                ? obtenerReversoB4(datos.bias)
+                : datos.plantilla === "B3"
+                    ? obtenerReversoB3(datos.bias)
+                    : datos.plantilla === "B2"
+                        ? obtenerReversoB2(datos.bias)
+                        : obtenerReversoB1(datos.bias);
+
 
 
 
@@ -2505,6 +2513,20 @@ async function mostrarCredencialB6(datos) {
         bias: datos.bias,
         codigo: datos.codigo
     };
+
+  
+    // ==========================================
+    // GUARDAR DATOS DE B6 PARA DESCARGAR PDF
+    // ==========================================
+
+    window.datosActualesPDF = {
+        plantilla: "B6",
+        nombre: datos.nombre,
+        pais: datos.pais,
+        bias: datos.bias,
+        codigo: datos.codigo
+    };
+
   
     // PREPARAR FOTOGRAFÍA
     credencialB5B10Activa = false;
