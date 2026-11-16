@@ -588,9 +588,11 @@ function cargarImagenPDF(ruta) {
     });
 }
 
-// ==========================================
-// UNIR CANVAS DE CREDENCIAL + STICKERS
-// ==========================================
+
+ // ==========================================
+ // UNIR CREDENCIAL + STICKERS + MARCOS PARA PDF
+ // RESPETANDO SU POSICIÓN EN EL EDITOR
+ // ==========================================
 
 function obtenerImagenFrontalCredencial() {
 
@@ -602,19 +604,70 @@ function obtenerImagenFrontalCredencial() {
     }
 
     const canvasFinal = document.createElement("canvas");
+
     canvasFinal.width = canvasBase.width;
     canvasFinal.height = canvasBase.height;
 
     const contextoFinal = canvasFinal.getContext("2d");
 
-    contextoFinal.drawImage(canvasBase, 0, 0);
+    // Dibujar la credencial original
+    contextoFinal.drawImage(
+        canvasBase,
+        0,
+        0,
+        canvasFinal.width,
+        canvasFinal.height
+    );
 
     if (capaStickers) {
-        contextoFinal.drawImage(capaStickers, 0, 0);
+
+        // Medidas y posiciones reales en pantalla
+        const rectBase = canvasBase.getBoundingClientRect();
+        const rectStickers = capaStickers.getBoundingClientRect();
+
+        if (
+            rectBase.width > 0 &&
+            rectBase.height > 0 &&
+            rectStickers.width > 0 &&
+            rectStickers.height > 0
+        ) {
+
+            // Convertir posiciones de pantalla
+            // a coordenadas de la credencial
+            const escalaX = canvasBase.width / rectBase.width;
+            const escalaY = canvasBase.height / rectBase.height;
+
+            const x = (rectStickers.left - rectBase.left) * escalaX;
+            const y = (rectStickers.top - rectBase.top) * escalaY;
+
+            const ancho = rectStickers.width * escalaX;
+            const alto = rectStickers.height * escalaY;
+
+            // Colocar stickers y marcos en su posición real
+            contextoFinal.drawImage(
+                capaStickers,
+                x,
+                y,
+                ancho,
+                alto
+            );
+
+        } else {
+
+            // Respaldo si todavía no hay medidas visibles
+            contextoFinal.drawImage(
+                capaStickers,
+                0,
+                0,
+                canvasFinal.width,
+                canvasFinal.height
+            );
+        }
     }
 
     return canvasFinal.toDataURL("image/jpeg", 1.0);
 }
+
 
 // ==========================================
 // GIRAR IMAGEN 90° PARA EL PDF
