@@ -741,7 +741,12 @@ const { jsPDF } = window.jspdf;
 
         const datos = window.datosActualesPDF;
 
-        const archivoReverso = obtenerReversoB1(datos.bias);
+        
+const archivoReverso =
+    datos.plantilla === "B2"
+        ? obtenerReversoB2(datos.bias)
+        : obtenerReversoB1(datos.bias);
+
 
         if (!archivoReverso) {
             throw new Error(
