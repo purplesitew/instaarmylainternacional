@@ -4811,158 +4811,158 @@ function dibujarDatosB1SobreStickers(contexto) {
      contexto.restore();
  }
 
-  
+
  // ==========================================
- // TEXTOS B7 Y B9 POR ENCIMA DE LOS STICKERS
+ // TEXTOS B7 Y B9 ENCIMA DE LOS STICKERS
+ // ALINEADOS CON LA CREDENCIAL ORIGINAL
  // ==========================================
 
- function dibujarDatosB7B9SobreStickers(contexto) {
+function dibujarDatosB7B9SobreStickers(contexto) {
 
-     if (
-         plantillaSeleccionada !== "B7.jpeg" &&
-         plantillaSeleccionada !== "B9.jpeg"
-     ) {
-         return;
-     }
+    if (
+        plantillaSeleccionada !== "B7.jpeg" &&
+        plantillaSeleccionada !== "B9.jpeg"
+    ) {
+        return;
+    }
 
-     const datos = window.datosB7B9SobreStickers;
+    const datos = window.datosB7B9SobreStickers;
 
-     if (!datos || !capaStickers) return;
+    if (!datos || !capaStickers) return;
 
-     const canvasBase = document.getElementById(
-         "canvas-credencial"
-     );
+    const canvasBase =
+        document.getElementById("canvas-credencial");
 
-     if (!canvasBase) return;
+    if (!canvasBase) return;
 
-     const rectBase = canvasBase.getBoundingClientRect();
-     const rectCapa = capaStickers.getBoundingClientRect();
+    const rectBase = canvasBase.getBoundingClientRect();
+    const rectCapa = capaStickers.getBoundingClientRect();
 
-     if (
-         !rectBase.width ||
-         !rectBase.height ||
-         !rectCapa.width ||
-         !rectCapa.height
-     ) return;
+    if (
+        !rectBase.width ||
+        !rectBase.height ||
+        !rectCapa.width ||
+        !rectCapa.height
+    ) {
+        return;
+    }
 
-     // Alinear los textos con el canvas real de B7/B9
-     const escalaX =
-         (rectBase.width / CONFIGURACION_B7_B9.width) *
-         (capaStickers.width / rectCapa.width);
+    // Convertir las coordenadas del canvas original
+    // a la capa de stickers.
 
-     const escalaY =
-         (rectBase.height / CONFIGURACION_B7_B9.height) *
-         (capaStickers.height / rectCapa.height);
+    const escalaX =
+        (rectBase.width / canvasBase.width) *
+        (capaStickers.width / rectCapa.width);
 
-     const desplazamientoX =
-         (rectBase.left - rectCapa.left) *
-         capaStickers.width / rectCapa.width;
+    const escalaY =
+        (rectBase.height / canvasBase.height) *
+        (capaStickers.height / rectCapa.height);
 
-     const desplazamientoY =
-         (rectBase.top - rectCapa.top) *
-         capaStickers.height / rectCapa.height;
+    const desplazamientoX =
+        (rectBase.left - rectCapa.left) *
+        capaStickers.width / rectCapa.width;
 
-     contexto.save();
+    const desplazamientoY =
+        (rectBase.top - rectCapa.top) *
+        capaStickers.height / rectCapa.height;
 
-     contexto.setTransform(
-         escalaX,
-         0,
-         0,
-         escalaY,
-         desplazamientoX,
-         desplazamientoY
-     );
+    const escalaOriginalX =
+        canvasBase.width / CONFIGURACION_B7_B9.width;
 
-     // Copiar el mismo sistema de texto original B7/B9
-     // El tamaño de la fuente se conserva como en el editor
-     const escalaFuenteX =
-         canvasBase.width / CONFIGURACION_B7_B9.width;
+    const escalaOriginalY =
+        canvasBase.height / CONFIGURACION_B7_B9.height;
 
-     function escribirDato(texto, configuracion, esCodigo = false) {
+    contexto.save();
 
-         if (!texto) return;
+    contexto.setTransform(
+        escalaX,
+        0,
+        0,
+        escalaY,
+        desplazamientoX,
+        desplazamientoY
+    );
 
-         texto = String(texto);
+    // MISMA FUNCIÓN DE TEXTO QUE LA CREDENCIAL
 
-         const anchoMaximo =
-             configuracion.maxWidth * escalaFuenteX;
+    function escribirDato(texto, configuracion, esCodigo = false) {
 
-         let tamano = configuracion.fontSize;
+        if (!texto) return;
 
-         contexto.save();
+        texto = String(texto);
 
-         contexto.textAlign = "center";
-         contexto.textBaseline = "alphabetic";
+        const x =
+            configuracion.centerX * escalaOriginalX;
 
-         // Compensar la transformación para igualar
-         // el tamaño usado en el canvas original
-         contexto.font =
-             `${tamano / escalaFuenteX}px "PiedraArmy"`;
+        const y =
+            configuracion.baselineY * escalaOriginalY;
 
-         while (
-             contexto.measureText(texto).width >
-                 configuracion.maxWidth &&
-             tamano > 12
-         ) {
-             tamano--;
+        const anchoMaximo =
+            configuracion.maxWidth * escalaOriginalX;
 
-             contexto.font =
-                 `${tamano / escalaFuenteX}px "PiedraArmy"`;
-         }
+        let tamano = configuracion.fontSize;
 
-         contexto.fillStyle = configuracion.color;
-         contexto.strokeStyle = configuracion.outline;
-         contexto.lineWidth = esCodigo ? 5 : 4;
-         contexto.lineJoin = "round";
+        contexto.save();
 
-         contexto.strokeText(
-             texto,
-             configuracion.centerX,
-             configuracion.baselineY
-         );
+        contexto.textAlign = "center";
+        contexto.textBaseline = "alphabetic";
 
-         contexto.fillText(
-             texto,
-             configuracion.centerX,
-             configuracion.baselineY
-         );
+        contexto.font = `${tamano}px "PiedraArmy"`;
 
-         contexto.restore();
-     }
+        while (
+            contexto.measureText(texto).width > anchoMaximo &&
+            tamano > 12
+        ) {
+            tamano--;
 
-     // CÓDIGO
-     escribirDato(
-         datos.codigo,
-         CONFIGURACION_B7_B9.codigo,
-         true
-     );
+            contexto.font = `${tamano}px "PiedraArmy"`;
+        }
 
-     // PAÍS
-     escribirDato(
-         datos.pais,
-         CONFIGURACION_B7_B9.pais
-     );
+        contexto.fillStyle = configuracion.color;
+        contexto.strokeStyle = configuracion.outline;
+        contexto.lineWidth = esCodigo ? 5 : 4;
+        contexto.lineJoin = "round";
 
-     // NOMBRE: conservar posición horizontal actual
-     escribirDato(
-         datos.nombre,
-         {
-             ...CONFIGURACION_B7_B9.nombre,
-             centerX: 165
-         }
-     );
+        contexto.strokeText(texto, x, y);
+        contexto.fillText(texto, x, y);
 
-     // BIAS: conservar posición horizontal actual
-     escribirDato(
-         datos.bias,
-         {
-             ...CONFIGURACION_B7_B9.bias,
-             centerX: 158
-         }
-     );
+        contexto.restore();
+    }
 
-     contexto.restore();
- }
+    // CÓDIGO
+    escribirDato(
+        datos.codigo,
+        CONFIGURACION_B7_B9.codigo,
+        true
+    );
+
+    // PAÍS
+    escribirDato(
+        datos.pais,
+        CONFIGURACION_B7_B9.pais
+    );
+
+    // NOMBRE: MISMA POSICIÓN QUE EL ORIGINAL
+    escribirDato(
+        datos.nombre,
+        {
+            ...CONFIGURACION_B7_B9.nombre,
+            centerX: 165
+        }
+    );
+
+    // BIAS: MISMA POSICIÓN QUE EL ORIGINAL
+    escribirDato(
+        datos.bias,
+        {
+            ...CONFIGURACION_B7_B9.bias,
+            centerX: 240
+        }
+    );
+
+    contexto.restore();
+}
+
 
   
  // ==========================================
