@@ -86,15 +86,77 @@
         padding: 17px 12px;
     }
 }
+
+  
+/* ==========================================
+   ANUNCIO ADSTERRA EN PANTALLA DE INICIO
+   ========================================== */
+
+#pantalla-inicio {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+}
+
+#anuncio-inicio-army {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+
+    width: 300px;
+    max-width: calc(100vw - 20px);
+    height: 250px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#anuncio-inicio-contenido {
+    width: 300px;
+    height: 250px;
+    overflow: hidden;
+}
+
 </style>
 
 </head>
 
 <body>
 
-  <div id="pantalla-inicio">
-    <img src="./inicio.jpg" alt="Insta Army la internacional">
-  </div>
+  
+<div id="pantalla-inicio">
+
+    <img
+        src="./inicio.jpg"
+        alt="Insta Army la internacional"
+    >
+
+    <!-- ANUNCIO ADSTERRA - PANTALLA DE INICIO -->
+    <div id="anuncio-inicio-army">
+
+        <div id="anuncio-inicio-contenido">
+
+            <script>
+                atOptions = {
+                    'key': '50e7be8af78e7cea2bac4f7522ac654c',
+                    'format': 'iframe',
+                    'height': 250,
+                    'width': 300,
+                    'params': {}
+                };
+            </script>
+
+            <script src="https://bicea.org/22/50e7be8af78e7cea2bac4f7522ac654c"></script>
+
+        </div>
+
+    </div>
+
+</div>
+
     <!-- SALUDO DE RM -->
   <div id="pantalla-saludo" class="oculta">
 
