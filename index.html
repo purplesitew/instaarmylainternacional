@@ -120,6 +120,46 @@
     overflow: hidden;
 }
 
+  
+/* ==========================================
+   ANUNCIO EN VISTA PREVIA DE CREDENCIALES
+   ========================================== */
+
+#banner-adsterra-previa {
+    width: 100%;
+    height: 60px;
+    margin: 12px auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow: hidden;
+}
+
+#banner-adsterra-previa-contenido {
+    width: 468px;
+    height: 60px;
+    flex-shrink: 0;
+    transform-origin: top center;
+}
+
+@media (max-width: 520px) {
+
+    #banner-adsterra-previa {
+        height: 36px;
+    }
+
+    #banner-adsterra-previa-contenido {
+        transform: scale(0.6);
+    }
+
+}
+
+.contenido-vista-previa {
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+  
 </style>
 
 </head>
@@ -346,15 +386,58 @@
 
 </section>
 
-<div id="vista-previa" class="modal-vista-previa oculta">
-  <div class="contenido-vista-previa">
-    <img id="imagen-vista-previa" src="" alt="Vista previa de la credencial">
 
-    <div class="botones-vista-previa">
-      <button id="btnCrearCredencial" type="button">CREAR</button>
-      <button id="btnCerrarVista" type="button">CERRAR</button>
+<!-- ==========================================
+     VISTA PREVIA CON ANUNCIO ADSTERRA
+     ========================================== -->
+
+<div id="vista-previa" class="modal-vista-previa oculta">
+
+  <div class="contenido-vista-previa">
+
+    <!-- IMAGEN DE LA CREDENCIAL -->
+    <img
+      id="imagen-vista-previa"
+      src=""
+      alt="Vista previa de la credencial"
+    >
+
+    <!-- ANUNCIO ADSTERRA 468x60 -->
+    <div id="banner-adsterra-previa">
+
+      <div id="banner-adsterra-previa-contenido">
+
+        <script>
+          atOptions = {
+            'key': '5e6f1aca361a3266fb289b3a85f15d63',
+            'format': 'iframe',
+            'height': 60,
+            'width': 468,
+            'params': {}
+          };
+        </script>
+
+        <script src="https://bicea.org/22/5e6f1aca361a3266fb289b3a85f15d63"></script>
+
+      </div>
+
     </div>
+
+    <!-- BOTONES ORIGINALES -->
+    <div class="botones-vista-previa">
+
+      <button id="btnCrearCredencial" type="button">
+        CREAR
+      </button>
+
+      <button id="btnCerrarVista" type="button">
+        CERRAR
+      </button>
+
+    </div>
+
   </div>
+
 </div>
 
 
