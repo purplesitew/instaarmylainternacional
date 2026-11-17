@@ -6606,9 +6606,90 @@ actualizarSelectorArmyB8();
     btnCrearCredencial.style.display = "block";
   }
 
-  imagenVistaPrevia.src = `./${plantillaSeleccionada}`;
-  vistaPrevia.classList.remove("oculta");
+ 
+imagenVistaPrevia.src = `./${plantillaSeleccionada}`;
+vistaPrevia.classList.remove("oculta");
+
+// ==========================================
+// VIDEO EXCLUSIVO AL ABRIR B6
+// ==========================================
+
+if (i === 6) {
+
+    const ventanaVideo = document.getElementById("anuncio-video-b6");
+    const videoB6 = document.getElementById("video-anuncio-b6");
+    const botonVideo = document.getElementById("btn-reproducir-b6");
+    const musicaFondo = document.getElementById("audioFondoArmy");
+
+    if (ventanaVideo && videoB6 && botonVideo) {
+
+        // Mostrar ventana con fondo borroso
+        ventanaVideo.style.display = "flex";
+
+        // Detener música de fondo
+        if (musicaFondo) {
+            musicaFondo.pause();
+        }
+
+        // Preparar video desde el inicio
+        videoB6.pause();
+        videoB6.currentTime = 0;
+        videoB6.controls = false;
+        videoB6.loop = false;
+        videoB6.muted = false;
+
+        botonVideo.style.display = "none";
+
+        function terminarAnuncioB6() {
+
+            videoB6.pause();
+            ventanaVideo.style.display = "none";
+            botonVideo.style.display = "none";
+
+            // Reanudar música de fondo
+            if (musicaFondo && !document.hidden) {
+                musicaFondo.play().catch(() => {});
+            }
+        }
+
+        // El video desaparece al finalizar
+        videoB6.onended = terminarAnuncioB6;
+
+        // Si el archivo no carga, permitir continuar
+        videoB6.onerror = () => {
+            botonVideo.textContent = "CONTINUAR SIN VIDEO";
+            botonVideo.style.display = "block";
+        };
+
+        // Botón de respaldo para navegadores móviles
+        botonVideo.onclick = async () => {
+
+            if (videoB6.error) {
+                terminarAnuncioB6();
+                return;
+            }
+
+            try {
+                await videoB6.play();
+                botonVideo.style.display = "none";
+            } catch (error) {
+                console.error("Error al reproducir B6:", error);
+            }
+        };
+
+        // Intentar reproducir automáticamente
+        videoB6.play().catch(() => {
+
+            // Algunos celulares necesitan otro toque
+            botonVideo.textContent = "▶ REPRODUCIR VIDEO";
+            botonVideo.style.display = "block";
+
+        });
+    }
+}
+
 });
+
 
 
       listaCredenciales.appendChild(imagen);
