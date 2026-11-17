@@ -5464,13 +5464,7 @@ if (selectorBiasStickers && listaStickers) {
 
 });
 
-if (biasSeleccionado === "jhope") {
-    alert(
-        "Tamaño real de J-Hope: " +
-        imagen.naturalWidth + " × " +
-        imagen.naturalHeight + " píxeles"
-    );
-}
+
 
 imagenesStickers[biasSeleccionado] = imagen;
 
@@ -5565,17 +5559,13 @@ const alto = sticker.height * escalaY;
 
                 opcion.appendChild(miniatura);
 
-     opcion.addEventListener("click", () => {
-
-    alert(
-        "Tamaño real de la imagen: " +
-        imagen.naturalWidth + " × " +
-        imagen.naturalHeight
-    );
+     
+opcion.addEventListener("click", () => {
 
     colocarSticker(sticker, imagen);
 
 });
+
 
                 listaStickers.appendChild(opcion);
 
