@@ -1094,22 +1094,26 @@ const { jsPDF } = window.jspdf;
 
 
 
+
+const biasParaReverso = normalizarBias(datos.bias);
+
 const archivoReverso =
     datos.plantilla === "B8"
-        ? obtenerReversoB8(datos.bias)
+        ? obtenerReversoB8(biasParaReverso)
         : datos.plantilla === "B7" || datos.plantilla === "B9"
-            ? obtenerReversoB7B9(datos.bias)
+            ? obtenerReversoB7B9(biasParaReverso)
             : datos.plantilla === "B6"
-                ? obtenerReversoB6(datos.bias)
+                ? obtenerReversoB6(biasParaReverso)
                 : datos.plantilla === "B5" || datos.plantilla === "B10"
-                    ? obtenerReversoB5B10(datos.bias)
+                    ? obtenerReversoB5B10(biasParaReverso)
                     : datos.plantilla === "B4"
-                        ? obtenerReversoB4(datos.bias)
+                        ? obtenerReversoB4(biasParaReverso)
                         : datos.plantilla === "B3"
-                            ? obtenerReversoB3(datos.bias)
+                            ? obtenerReversoB3(biasParaReverso)
                             : datos.plantilla === "B2"
-                                ? obtenerReversoB2(datos.bias)
-                                : obtenerReversoB1(datos.bias);
+                                ? obtenerReversoB2(biasParaReverso)
+                                : obtenerReversoB1(biasParaReverso);
+
 
 
 
