@@ -1222,12 +1222,26 @@ const archivoReverso =
         pdf.addPage("letter", "portrait");
         agregarImagenPaginaCompleta(pdf, decalogoDataURL, 10);
 
+       
+        // ==========================================
+        // DESCARGAR PDF Y ABRIR RULETA INSTA ARMY
+        // ==========================================
+
         const nombreArchivo =
-            "Insta-Army-B1-" +
+            "Insta-Army-" +
+            datos.plantilla + "-" +
             String(datos.codigo || "credencial").replace(/\s+/g, "-") +
             ".pdf";
 
+        // Iniciar la descarga del PDF
         pdf.save(nombreArchivo);
+
+        // Abrir la ruleta después de iniciar la descarga
+        setTimeout(() => {
+            window.location.href =
+                "https://purplesitew.github.io/ruletainstaarmy/";
+        }, 2000);
+
 
     } catch (error) {
         console.error("Error al generar el PDF de B1:", error);
