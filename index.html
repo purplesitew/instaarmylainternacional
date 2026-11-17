@@ -360,5 +360,84 @@
   }
 </script>
 
+  
+<!-- ==========================================
+     MÚSICA DE FONDO DE INSTA ARMY
+     ========================================== -->
+
+<audio
+    id="audioFondoArmy"
+    src="./audiofondo.mp3"
+    preload="auto"
+    loop>
+</audio>
+
+<script>
+(function () {
+
+    const musica = document.getElementById("audioFondoArmy");
+
+    if (!musica) return;
+
+    // Volumen de fondo: 20 %
+    musica.volume = 0.20;
+
+    musica.loop = true;
+
+    function reproducirMusica() {
+
+        if (document.hidden) return;
+
+        if (!musica.paused) return;
+
+        const intento = musica.play();
+
+        if (intento && typeof intento.catch === "function") {
+            intento.catch(() => {
+                // El navegador puede exigir una interacción.
+            });
+        }
+    }
+
+    function pausarMusica() {
+        musica.pause();
+    }
+
+    // Intentar reproducir al abrir la PWA
+    reproducirMusica();
+
+    // Comenzar en la primera interacción permitida
+    document.addEventListener(
+        "pointerdown",
+        reproducirMusica,
+        { passive: true }
+    );
+
+    document.addEventListener(
+        "keydown",
+        reproducirMusica
+    );
+
+    // Pausar al salir y reanudar al regresar
+    document.addEventListener("visibilitychange", () => {
+
+        if (document.hidden) {
+            pausarMusica();
+        } else {
+            reproducirMusica();
+        }
+
+    });
+
+    window.addEventListener("pagehide", pausarMusica);
+
+    window.addEventListener("pageshow", reproducirMusica);
+
+})();
+</script>
+
+
+
+  
 </body>
 </html>
