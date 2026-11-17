@@ -690,11 +690,24 @@
 
     musica.loop = true;
 
-    function reproducirMusica() {
+   
+function reproducirMusica() {
 
-        if (document.hidden) return;
+    if (document.hidden) return;
 
-        if (!musica.paused) return;
+    // No reproducir música mientras esté abierto
+    // el anuncio de video de B6
+    const anuncioB6 = document.getElementById("anuncio-video-b6");
+
+    if (
+        anuncioB6 &&
+        anuncioB6.style.display === "flex"
+    ) {
+        return;
+    }
+
+    if (!musica.paused) return;
+
 
         const intento = musica.play();
 
