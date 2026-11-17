@@ -17,6 +17,77 @@
     gtag('js', new Date());
     gtag('config', 'G-2LMH8Q5TJ0');
   </script>
+
+  
+<style>
+/* ==========================================
+   BOTÓN PROFESIONAL PARA DESCARGAR PDF
+   ========================================== */
+
+#zona-descarga-pdf {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px 12px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#btnDescargarPDF {
+    display: block;
+    width: 100%;
+    max-width: 360px;
+    padding: 18px 24px;
+
+    background: linear-gradient(
+        135deg,
+        #ff4555 0%,
+        #e60026 50%,
+        #aa001b 100%
+    );
+
+    color: #ffffff;
+    border: 2px solid #ff7885;
+    border-radius: 16px;
+
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-align: center;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 6px 0 #780014,
+        0 10px 24px rgba(255, 0, 45, 0.35);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        filter 0.2s ease;
+}
+
+#btnDescargarPDF:hover {
+    filter: brightness(1.12);
+    transform: translateY(-2px);
+}
+
+#btnDescargarPDF:active {
+    transform: translateY(4px);
+    box-shadow:
+        0 2px 0 #780014,
+        0 5px 12px rgba(255, 0, 45, 0.25);
+}
+
+@media (max-width: 480px) {
+    #btnDescargarPDF {
+        font-size: 14px;
+        padding: 17px 12px;
+    }
+}
+</style>
+
 </head>
 
 <body>
