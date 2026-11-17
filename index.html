@@ -441,6 +441,93 @@
 </div>
 
 
+<!-- ==========================================
+     VIDEO ESPECIAL PARA VISTA PREVIA B6
+     ========================================== -->
+
+<div id="anuncio-video-b6">
+
+    <div id="contenedor-video-b6">
+
+        <video
+            id="video-anuncio-b6"
+            src="./anun1.mp4"
+            preload="auto"
+            playsinline
+        ></video>
+
+        <button
+            type="button"
+            id="btn-reproducir-b6"
+            style="display:none;"
+        >
+            ▶ REPRODUCIR VIDEO
+        </button>
+
+        <p>💜 El video debe terminar para continuar 💜</p>
+
+    </div>
+
+</div>
+
+<style>
+/* ==========================================
+   VENTANA DE VIDEO B6
+   ========================================== */
+
+#anuncio-video-b6 {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+
+    background: rgba(20, 5, 35, 0.45);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+#contenedor-video-b6 {
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+#video-anuncio-b6 {
+    display: block;
+    width: 100%;
+    max-height: 65vh;
+    object-fit: contain;
+
+    background: #000000;
+    border: 3px solid #bb77ff;
+    border-radius: 16px;
+
+    box-shadow: 0 0 35px rgba(187, 119, 255, 0.5);
+}
+
+#btn-reproducir-b6 {
+    margin: 14px auto;
+    padding: 12px 22px;
+
+    background: #8a2be2;
+    color: white;
+    font-weight: bold;
+    border: 0;
+    border-radius: 12px;
+}
+
+#contenedor-video-b6 p {
+    color: white;
+    font-size: 13px;
+    margin-top: 14px;
+}
+</style>
+
 <!-- =====================================
      EDITOR DE CREDENCIAL B1
 ===================================== -->
