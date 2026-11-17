@@ -956,6 +956,38 @@ function obtenerReversoB7B9(bias) {
 }
 
 
+ // ==========================================
+ // REVERSOS EXCLUSIVOS DE B8 PARA PDF
+ // ==========================================
+
+function obtenerReversoB8(bias) {
+
+    const biasNormalizado = String(bias || "")
+        .trim()
+        .toUpperCase()
+        .replace(/\s+/g, "")
+        .replace(/[-_]/g, "");
+
+    const reversos = {
+        JIN: "B8REVERSOJIN.jpg",
+        SUGA: "B8REVERSOSUGA.jpg",
+        YOONGI: "B8REVERSOSUGA.jpg",
+        JHOPE: "B8REVERSOJHOPE.jpg",
+        HOSEOK: "B8REVERSOJHOPE.jpg",
+        JIMIN: "B8REVERSOJIMIN.jpg",
+        V: "B8REVERSOV.jpg",
+        TAEHYUNG: "B8REVERSOV.jpg",
+        RM: "B8REVERSORM.jpg",
+        NAMJOON: "B8REVERSORM.jpg",
+        JUNGKOOK: "B8REVERSOJUNGKOOK.jpg",
+        JK: "B8REVERSOJUNGKOOK.jpg",
+        OT7: "B8REVERSOOT7.jpg"
+    };
+
+    return reversos[biasNormalizado] || null;
+}
+
+
 // ==========================================
 // GENERAR PDF DE B1
 // ==========================================
@@ -969,7 +1001,13 @@ async function descargarPDFB1() {
    
 
 
-!["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B9", "B10"].includes(window.datosActualesPDF.plantilla)
+
+
+
+!["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "B10"].includes(window.datosActualesPDF.plantilla)
+
+
+
 
 
 
@@ -977,7 +1015,8 @@ async function descargarPDFB1() {
     
 
 
-alert("Primero abre una credencial B1, B2, B3, B4, B5, B6, B7, B9 o B10 antes de descargar el PDF. 💜");
+alert("Primero abre una de las 10 credenciales antes de descargar el PDF. 💜");
+
 
 
 
@@ -1002,20 +1041,24 @@ const { jsPDF } = window.jspdf;
 
 
 
+
 const archivoReverso =
-    datos.plantilla === "B7" || datos.plantilla === "B9"
-        ? obtenerReversoB7B9(datos.bias)
-        : datos.plantilla === "B6"
-            ? obtenerReversoB6(datos.bias)
-            : datos.plantilla === "B5" || datos.plantilla === "B10"
-                ? obtenerReversoB5B10(datos.bias)
-                : datos.plantilla === "B4"
-                    ? obtenerReversoB4(datos.bias)
-                    : datos.plantilla === "B3"
-                        ? obtenerReversoB3(datos.bias)
-                        : datos.plantilla === "B2"
-                            ? obtenerReversoB2(datos.bias)
-                            : obtenerReversoB1(datos.bias);
+    datos.plantilla === "B8"
+        ? obtenerReversoB8(datos.bias)
+        : datos.plantilla === "B7" || datos.plantilla === "B9"
+            ? obtenerReversoB7B9(datos.bias)
+            : datos.plantilla === "B6"
+                ? obtenerReversoB6(datos.bias)
+                : datos.plantilla === "B5" || datos.plantilla === "B10"
+                    ? obtenerReversoB5B10(datos.bias)
+                    : datos.plantilla === "B4"
+                        ? obtenerReversoB4(datos.bias)
+                        : datos.plantilla === "B3"
+                            ? obtenerReversoB3(datos.bias)
+                            : datos.plantilla === "B2"
+                                ? obtenerReversoB2(datos.bias)
+                                : obtenerReversoB1(datos.bias);
+
 
 
 
@@ -2823,6 +2866,20 @@ escribirDato(
         fechaRegistro: fechaRegistroTexto,
         pais: datos.pais
     };
+
+    
+    // ==========================================
+    // GUARDAR DATOS DE B8 PARA DESCARGAR PDF
+    // ==========================================
+
+    window.datosActualesPDF = {
+        plantilla: "B8",
+        nombre: datos.nombre,
+        pais: datos.pais,
+        bias: datos.bias,
+        codigo: datos.codigo
+    };
+
 
 
 
