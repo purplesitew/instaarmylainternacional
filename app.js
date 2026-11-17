@@ -542,6 +542,58 @@ const CONFIGURACION_B5_B10 = {
  }
 
 
+ // ==========================================
+ // RECONOCER DIFERENTES NOMBRES DEL BIAS
+ // ==========================================
+
+function normalizarBias(bias) {
+
+    const texto = String(bias || "")
+        .trim()
+        .toUpperCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[\s\-_]/g, "");
+
+    const equivalencias = {
+        RM: "RM",
+        NAMJOON: "RM",
+        KIMNAMJOON: "RM",
+
+        JIN: "JIN",
+        SEOKJIN: "JIN",
+        KIMSEOKJIN: "JIN",
+
+        SUGA: "SUGA",
+        YOONGI: "SUGA",
+        MINYOONGI: "SUGA",
+        AGUSTD: "SUGA",
+
+        JHOPE: "JHOPE",
+        HOSEOK: "JHOPE",
+        JUNGHOSEOK: "JHOPE",
+        HOBI: "JHOPE",
+
+        JIMIN: "JIMIN",
+        PARKJIMIN: "JIMIN",
+
+        V: "V",
+        TAEHYUNG: "V",
+        KIMTAEHYUNG: "V",
+        TAE: "V",
+
+        JUNGKOOK: "JUNGKOOK",
+        JEONJUNGKOOK: "JUNGKOOK",
+        JK: "JUNGKOOK",
+        KOOKIE: "JUNGKOOK",
+
+        OT7: "OT7",
+        BTS: "OT7"
+    };
+
+    return equivalencias[texto] || texto;
+}
+
 // ==========================================
 // SELECCIONAR REVERSO AUTOMÁTICO DE B1
 // ==========================================
