@@ -978,6 +978,20 @@ function reproducirMusica() {
             📸 ABRIR MI GALERÍA 💜
         </button>
 
+        
+<!-- BOTÓN SPOTIFY - PLAYLIST INSTA ARMY -->
+
+<a
+    id="btn-playlist-foto"
+    href="https://open.spotify.com/playlist/1KNdecXoqalSDlybpfWrAT?si=-d_0fRk4QAyScARo68Amrw&amp;utm_source=copy-link&amp;pi=f4HT-TwbSbOvV"
+    target="_blank"
+    rel="noopener noreferrer"
+    style="display:none;"
+>
+    🎵 AGREGAR PLAYLIST
+</a>
+
+      
     </div>
 
 </div>
@@ -1036,6 +1050,40 @@ function reproducirMusica() {
     font-weight: bold;
     cursor: pointer;
 }
+  
+/* ==========================================
+   BOTÓN VERDE DE PLAYLIST SPOTIFY
+   ========================================== */
+
+#btn-playlist-foto {
+    display: none;
+    width: fit-content;
+    max-width: 90%;
+    margin: 15px auto;
+    padding: 15px 25px;
+
+    background: #1DB954;
+    color: #ffffff;
+
+    border: 2px solid #69ef99;
+    border-radius: 14px;
+
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    text-align: center;
+    text-decoration: none;
+
+    box-shadow: 0 5px 18px rgba(29, 185, 84, 0.45);
+
+    cursor: pointer;
+}
+
+#btn-playlist-foto:active {
+    background: #148b3d;
+    transform: scale(0.97);
+}
+
 </style>
 
 <script>
@@ -1049,6 +1097,36 @@ function reproducirMusica() {
     const botonGaleria = document.getElementById(
         "btn-abrir-galeria-foto"
     );
+  
+    // BOTÓN PARA AGREGAR LA PLAYLIST
+    const botonPlaylist = document.getElementById(
+        "btn-playlist-foto"
+    );
+
+    // Aparece durante los últimos 10 segundos del video
+    video.addEventListener("timeupdate", () => {
+
+        if (!botonPlaylist) return;
+
+        if (
+            Number.isFinite(video.duration) &&
+            video.duration > 0 &&
+            video.duration - video.currentTime <= 10
+        ) {
+            botonPlaylist.style.display = "block";
+        }
+
+    });
+
+    // Conservar el botón visible cuando termine
+    video.addEventListener("ended", () => {
+
+        if (botonPlaylist) {
+            botonPlaylist.style.display = "block";
+        }
+
+    });
+
     const mensaje = document.getElementById("mensaje-video-foto");
     const inputFoto = document.getElementById("fotoArmy");
     const musica = document.getElementById("audioFondoArmy");
@@ -1078,7 +1156,11 @@ function reproducirMusica() {
     function mostrarVideo() {
 
         ventana.style.display = "flex";
-
+           // Ocultar playlist al iniciar un nuevo video
+if (botonPlaylist) {
+    botonPlaylist.style.display = "none";
+}
+      
         if (musica) {
             musica.pause();
         }
