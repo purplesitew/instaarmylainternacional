@@ -872,6 +872,16 @@ function reproducirMusica() {
 
     if (document.hidden) return;
 
+  
+    // No reproducir música mientras está abierto
+    // el video previo a seleccionar fotografía
+    const anuncioFoto = document.getElementById("anuncio-video-foto");
+
+    if (anuncioFoto && anuncioFoto.style.display === "flex") {
+        return;
+    }
+
+
     // No reproducir música mientras esté abierto
     // el anuncio de video de B6
     const anuncioB6 = document.getElementById("anuncio-video-b6");
@@ -932,6 +942,230 @@ function reproducirMusica() {
 })();
 </script>
 
+
+<!-- ==========================================
+     VIDEO ANTES DE SELECCIONAR FOTOGRAFÍA
+     ========================================== -->
+
+<div id="anuncio-video-foto" role="dialog"
+     aria-modal="true"
+     aria-label="Video antes de seleccionar fotografía"
+     style="display:none;">
+
+    <div id="contenedor-video-foto">
+
+        <video
+            id="video-previo-foto"
+            src="./videoparafoto.mp4"
+            preload="auto"
+            playsinline
+            disablepictureinpicture
+        ></video>
+
+        <p id="mensaje-video-foto">
+            💜 Mira el video para continuar 💜
+        </p>
+
+        <button type="button"
+                id="btn-reproducir-video-foto"
+                style="display:none;">
+            ▶ REPRODUCIR VIDEO
+        </button>
+
+        <button type="button"
+                id="btn-abrir-galeria-foto"
+                style="display:none;">
+            📸 ABRIR MI GALERÍA 💜
+        </button>
+
+    </div>
+
+</div>
+
+<style>
+/* ==========================================
+   VENTANA DE VIDEO PARA FOTOGRAFÍA
+   ========================================== */
+
+#anuncio-video-foto {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    background: rgba(15, 5, 30, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+#contenedor-video-foto {
+    width: 100%;
+    max-width: 390px;
+    text-align: center;
+}
+
+#video-previo-foto {
+    display: block;
+    width: 100%;
+    max-height: 65vh;
+    object-fit: contain;
+    background: #000;
+    border: 3px solid #c58aff;
+    border-radius: 16px;
+    box-shadow: 0 0 30px rgba(170, 90, 255, 0.5);
+}
+
+#mensaje-video-foto {
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    margin: 16px 0;
+}
+
+#btn-reproducir-video-foto,
+#btn-abrir-galeria-foto {
+    margin: 15px auto;
+    padding: 15px 22px;
+    border: 2px solid #d6a4ff;
+    border-radius: 14px;
+    background: #6a0dad;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+</style>
+
+<script>
+(function () {
+
+    const ventana = document.getElementById("anuncio-video-foto");
+    const video = document.getElementById("video-previo-foto");
+    const botonReproducir = document.getElementById(
+        "btn-reproducir-video-foto"
+    );
+    const botonGaleria = document.getElementById(
+        "btn-abrir-galeria-foto"
+    );
+    const mensaje = document.getElementById("mensaje-video-foto");
+    const inputFoto = document.getElementById("fotoArmy");
+    const musica = document.getElementById("audioFondoArmy");
+
+    if (!ventana || !video || !inputFoto) return;
+
+    let permitirGaleria = false;
+
+    function reanudarMusica() {
+        if (musica && !document.hidden) {
+            musica.play().catch(() => {});
+        }
+    }
+
+    function terminarVideo() {
+
+        video.pause();
+
+        mensaje.textContent =
+            "💜 Video terminado. Ya puedes seleccionar tu foto 💜";
+
+        botonReproducir.style.display = "none";
+        botonGaleria.style.display = "inline-block";
+        botonGaleria.focus();
+    }
+
+    function mostrarVideo() {
+
+        ventana.style.display = "flex";
+
+        if (musica) {
+            musica.pause();
+        }
+
+        video.pause();
+        video.currentTime = 0;
+        video.controls = false;
+        video.loop = false;
+        video.muted = false;
+
+        botonGaleria.style.display = "none";
+        botonReproducir.style.display = "none";
+
+        mensaje.textContent =
+            "💜 Mira el video para continuar 💜";
+
+        video.onended = terminarVideo;
+
+        video.onerror = () => {
+            mensaje.textContent =
+                "No se pudo cargar el video. Puedes continuar.";
+            terminarVideo();
+        };
+
+        video.play().catch(() => {
+            botonReproducir.style.display = "inline-block";
+        });
+    }
+
+    // Interceptar los dos botones que permiten subir foto
+    const etiquetasFoto = document.querySelectorAll(
+        'label[for="fotoArmy"]'
+    );
+
+    etiquetasFoto.forEach((etiqueta) => {
+
+        etiqueta.addEventListener("click", (evento) => {
+
+            evento.preventDefault();
+            evento.stopPropagation();
+
+            mostrarVideo();
+
+        }, true);
+    });
+
+    // Evitar abrir el selector directamente
+    inputFoto.addEventListener("click", (evento) => {
+
+        if (!permitirGaleria) {
+            evento.preventDefault();
+            evento.stopPropagation();
+            mostrarVideo();
+        }
+
+    }, true);
+
+    // Reproducir si el celular requiere otro toque
+    botonReproducir.addEventListener("click", () => {
+
+        video.play().then(() => {
+            botonReproducir.style.display = "none";
+        }).catch(() => {
+            mensaje.textContent =
+                "No se pudo reproducir el video.";
+        });
+
+    });
+
+    // Solo se habilita al terminar el video
+    botonGaleria.addEventListener("click", () => {
+
+        ventana.style.display = "none";
+        reanudarMusica();
+
+        permitirGaleria = true;
+
+        try {
+            inputFoto.click();
+        } finally {
+            permitirGaleria = false;
+        }
+
+    });
+
+})();
+</script>
 
 
   
