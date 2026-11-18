@@ -267,11 +267,188 @@
        LISTA DE LAS 10 CREDENCIALES
        ========================================== -->
 
+  
   <div id="lista-credenciales" class="lista-credenciales">
-
     <!-- Aquí aparecerán las 10 plantillas -->
   </div>
+
+  <!-- ==========================================
+       BANNER ANIMADO DE REDES SOCIALES
+       ========================================== -->
+
+  <div id="zona-banner-redes-army">
+
+    <button
+      type="button"
+      id="btn-banner-redes-army"
+      aria-expanded="false"
+      aria-controls="enlaces-redes-army"
+    >
+      <video
+        id="video-banner-redes-army"
+        src="./bannerredes.mp4"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+      ></video>
+
+      <span>💜 TOCA PARA VER NUESTRAS REDES 💜</span>
+    </button>
+
+    <div id="enlaces-redes-army" hidden>
+
+      <a
+        href="https://www.instagram.com/instaarmyapp?avpt=dWo3cjNnOGZ1MzY="
+        target="_blank"
+        rel="noopener noreferrer"
+        class="red-army"
+      >
+        📸 Instagram
+      </a>
+
+      <a
+        href="https://www.tiktok.com/@.insta.army?_r=1&amp;_t=ZS-9BUe94W2gWS"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="red-army"
+      >
+        🎵 TikTok
+      </a>
+
+      <a
+        href="https://whatsapp.com/channel/0029Vajbcp8HrDZaqeDwz40B"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="red-army"
+      >
+        💬 WhatsApp
+      </a>
+
+      <a
+        href="https://open.spotify.com/user/31xaeo7phap7drobik6xnzcqku7y?si=uslDZHkaSKGEr3KkowHR7Q&amp;utm_source=copy-link"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="red-army"
+      >
+        🎧 Spotify
+      </a>
+
+    </div>
+
+  </div>
+
+  <style>
+    /* BANNER DE REDES SOCIALES */
+
+    #zona-banner-redes-army {
+      width: 100%;
+      max-width: 360px;
+      margin: 30px auto;
+      padding: 0 12px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+
+    #btn-banner-redes-army {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 10px;
+      background: linear-gradient(135deg, #51206f, #290e42);
+      border: 2px solid #c58aff;
+      border-radius: 18px;
+      color: white;
+      font-size: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 5px 20px rgba(142, 53, 211, 0.35);
+    }
+
+    #video-banner-redes-army {
+      display: block;
+      width: 100%;
+      max-height: 220px;
+      object-fit: contain;
+      border-radius: 12px;
+      background: #180b24;
+      pointer-events: none;
+    }
+
+    #enlaces-redes-army[hidden] {
+      display: none !important;
+    }
+
+    #enlaces-redes-army {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .red-army {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 10px 6px;
+      border-radius: 12px;
+      background: #6a0dad;
+      border: 1px solid #c58aff;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: bold;
+      box-sizing: border-box;
+    }
+
+    .red-army:active {
+      background: #943ee0;
+    }
+  </style>
+
+  <script>
+    (function () {
+
+      const boton = document.getElementById(
+        "btn-banner-redes-army"
+      );
+
+      const enlaces = document.getElementById(
+        "enlaces-redes-army"
+      );
+
+      const video = document.getElementById(
+        "video-banner-redes-army"
+      );
+
+      if (!boton || !enlaces || !video) return;
+
+      // Iniciar el video en silencio
+      video.muted = true;
+      video.play().catch(() => {});
+
+      // Mostrar u ocultar las redes al tocar el banner
+      boton.addEventListener("click", () => {
+
+        const mostrar = enlaces.hidden;
+
+        enlaces.hidden = !mostrar;
+        boton.setAttribute(
+          "aria-expanded",
+          String(mostrar)
+        );
+
+      });
+
+    })();
+  </script>
+
 </section>
+
 
 <section id="creador-credencial" class="oculta">
 
