@@ -3244,16 +3244,228 @@ window.mostrarCredencialB5B10 = mostrarCredencialB5B10;
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  // ==========================================
-// BOTÓN PARA DESCARGAR PDF
+ // ==========================================
+// VENTANA PREVIA ANTES DE DESCARGAR PDF
 // ==========================================
 
 const btnDescargarPDF = document.getElementById("btnDescargarPDF");
+const modalDescargaTikTok = document.getElementById("modalDescargaTikTok");
+const textoEsperaPDF = document.getElementById("textoEsperaPDF");
+const btnCompartirTikTokAntesPDF = document.getElementById("btnCompartirTikTokAntesPDF");
+const btnDescargarPDFAhora = document.getElementById("btnDescargarPDFAhora");
+const btnCerrarModalDescargaPDF = document.getElementById("btnCerrarModalDescargaPDF");
+
+let temporizadorEsperaPDF = null;
+
+function dataURLaArchivo(dataURL, nombreArchivo) {
+
+    const partes = dataURL.split(",");
+    const mime = partes[0].match(/:(.*?);/)[1];
+    const binario = atob(partes[1]);
+
+    let longitud = binario.length;
+    const arreglo = new Uint8Array(longitud);
+
+    while (longitud--) {
+        arreglo[longitud] = binario.charCodeAt(longitud);
+    }
+
+    return new File(
+        [arreglo],
+        nombreArchivo,
+        { type: mime }
+    );
+}
+
+function descargarArchivoTemporal(archivo) {
+
+    const url = URL.createObjectURL(archivo);
+
+    const enlace = document.createElement("a");
+    enlace.href = url;
+    enlace.download = archivo.name;
+
+    document.body.appendChild(enlace);
+    enlace.click();
+    enlace.remove();
+
+    setTimeout(() => {
+        URL.revokeObjectURL(url);
+    }, 1000);
+}
+
+function cerrarModalDescargaTikTok() {
+
+    if (temporizadorEsperaPDF) {
+        clearInterval(temporizadorEsperaPDF);
+        temporizadorEsperaPDF = null;
+    }
+
+    if (modalDescargaTikTok) {
+        modalDescargaTikTok.classList.add("oculta");
+    }
+
+    if (btnDescargarPDFAhora) {
+        btnDescargarPDFAhora.classList.add("oculta");
+    }
+
+    if (btnCerrarModalDescargaPDF) {
+        btnCerrarModalDescargaPDF.classList.add("oculta");
+    }
+}
+
+function abrirModalDescargaTikTok() {
+
+    if (!window.datosActualesPDF) {
+        alert("Primero abre una credencial antes de descargar el PDF. 💜");
+        return;
+    }
+
+    if (!modalDescargaTikTok || !textoEsperaPDF) return;
+
+    let segundosRestantes = 8;
+
+    modalDescargaTikTok.classList.remove("oculta");
+
+    if (btnDescargarPDFAhora) {
+        btnDescargarPDFAhora.classList.add("oculta");
+    }
+
+    if (btnCerrarModalDescargaPDF) {
+        btnCerrarModalDescargaPDF.classList.add("oculta");
+    }
+
+    textoEsperaPDF.textContent =
+        "Tu PDF estará listo en " +
+        segundosRestantes +
+        " segundos...";
+
+    if (temporizadorEsperaPDF) {
+        clearInterval(temporizadorEsperaPDF);
+    }
+
+    temporizadorEsperaPDF = setInterval(() => {
+
+        segundosRestantes--;
+
+        if (segundosRestantes > 0) {
+
+            textoEsperaPDF.textContent =
+                "Tu PDF estará listo en " +
+                segundosRestantes +
+                " segundos...";
+
+            return;
+        }
+
+        clearInterval(temporizadorEsperaPDF);
+        temporizadorEsperaPDF = null;
+
+        textoEsperaPDF.textContent =
+            "Ya puedes descargar tu PDF 💜";
+
+        if (btnDescargarPDFAhora) {
+            btnDescargarPDFAhora.classList.remove("oculta");
+        }
+
+        if (btnCerrarModalDescargaPDF) {
+            btnCerrarModalDescargaPDF.classList.remove("oculta");
+        }
+
+    }, 1000);
+}
+
+async function compartirCredencialTikTok() {
+
+    try {
+
+        const imagenTikTokDataURL =
+            await crearImagenCredencialTikTok();
+
+        const archivoTikTok = dataURLaArchivo(
+            imagenTikTokDataURL,
+            "credencial-instaarmy-tiktok.jpg"
+        );
+
+        if (
+            navigator.canShare &&
+            navigator.canShare({
+                files: [archivoTikTok]
+            })
+        ) {
+
+            await navigator.share({
+                files: [archivoTikTok],
+                title: "Mi credencial Insta Army",
+                text: "Por fin tengo mi credencial y fue súper fácil 💜"
+            });
+
+            return;
+        }
+
+        // Si el dispositivo no soporta compartir archivos,
+        // descargar la imagen y abrir TikTok como apoyo.
+        descargarArchivoTemporal(archivoTikTok);
+
+        window.open(
+            "https://www.tiktok.com/upload?lang=es",
+            "_blank"
+        );
+
+        alert(
+            "Se descargó la imagen para TikTok. Ahora puedes subirla desde tu dispositivo. 💜"
+        );
+
+    } catch (error) {
+
+        if (error && error.name === "AbortError") {
+            return;
+        }
+
+        console.error(
+            "Error al compartir en TikTok:",
+            error
+        );
+
+        alert(
+            "No se pudo preparar la imagen para TikTok."
+        );
+    }
+}
 
 if (btnDescargarPDF) {
-    btnDescargarPDF.addEventListener("click", async () => {
-        await descargarPDFB1();
+    btnDescargarPDF.addEventListener("click", (evento) => {
+        evento.preventDefault();
+        abrirModalDescargaTikTok();
     });
+}
+
+if (btnCompartirTikTokAntesPDF) {
+    btnCompartirTikTokAntesPDF.addEventListener(
+        "click",
+        async () => {
+            await compartirCredencialTikTok();
+        }
+    );
+}
+
+if (btnDescargarPDFAhora) {
+    btnDescargarPDFAhora.addEventListener(
+        "click",
+        async () => {
+            cerrarModalDescargaTikTok();
+            await descargarPDFB1();
+        }
+    );
+}
+
+if (btnCerrarModalDescargaPDF) {
+    btnCerrarModalDescargaPDF.addEventListener(
+        "click",
+        () => {
+            cerrarModalDescargaTikTok();
+        }
+    );
 }
   
   // ==========================================
