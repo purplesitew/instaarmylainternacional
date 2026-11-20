@@ -774,12 +774,13 @@ async function crearImagenCredencialTikTok() {
     // ==========================================
     // TEXTO GRANDE PARA TIKTOK
     // ==========================================
-
-    const lineas = [
-        "POR FIN TENGO",
-        "MI CREDENCIAL",
-        "Y FUE SÚPER FÁCIL 💜"
-    ];
+const lineas = [
+    "YA TODAS LAS ARMYS",
+    "ESTÁN HACIENDO",
+    "SU CREDENCIAL",
+    "SIN PAG@R",
+    "UN SOLO PESO 💜"
+];
 
     const tamanoInicial = Math.round(ancho * 0.075);
     let tamano = tamanoInicial;
