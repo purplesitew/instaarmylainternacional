@@ -721,6 +721,120 @@ function obtenerImagenFrontalCredencial() {
 }
 
 
+
+// ==========================================
+// CREAR IMAGEN EXCLUSIVA PARA COMPARTIR
+// EN TIKTOK - CREDENCIALES B1 A B10
+// ==========================================
+
+async function crearImagenCredencialTikTok() {
+
+    // Obtener la credencial personalizada completa
+    // con datos, fotografía, stickers y marcos
+    const imagenOriginal = obtenerImagenFrontalCredencial();
+
+    const imagen = await cargarImagenPDF(imagenOriginal);
+
+    // Crear un canvas independiente
+    const canvasTikTok = document.createElement("canvas");
+
+    canvasTikTok.width = imagen.naturalWidth;
+    canvasTikTok.height = imagen.naturalHeight;
+
+    const contexto = canvasTikTok.getContext("2d");
+
+    // Dibujar la credencial original
+    contexto.drawImage(
+        imagen,
+        0,
+        0,
+        canvasTikTok.width,
+        canvasTikTok.height
+    );
+
+    const ancho = canvasTikTok.width;
+    const alto = canvasTikTok.height;
+
+    // ==========================================
+    // FRANJA CENTRAL PARA RESALTAR EL MENSAJE
+    // ==========================================
+
+    const altoFranja = alto * 0.32;
+    const inicioFranja = (alto - altoFranja) / 2;
+
+    contexto.fillStyle = "rgba(37, 5, 60, 0.78)";
+
+    contexto.fillRect(
+        0,
+        inicioFranja,
+        ancho,
+        altoFranja
+    );
+
+    // ==========================================
+    // TEXTO GRANDE PARA TIKTOK
+    // ==========================================
+
+    const lineas = [
+        "POR FIN TENGO",
+        "MI CREDENCIAL",
+        "Y FUE SÚPER FÁCIL 💜"
+    ];
+
+    const tamanoInicial = Math.round(ancho * 0.075);
+    let tamano = tamanoInicial;
+
+    contexto.textAlign = "center";
+    contexto.textBaseline = "middle";
+    contexto.lineJoin = "round";
+
+    // Ajustar tamaño para que el texto no se salga
+    do {
+
+        contexto.font = `bold ${tamano}px Arial`;
+
+        const cabe = lineas.every(linea =>
+            contexto.measureText(linea).width <= ancho * 0.92
+        );
+
+        if (cabe || tamano <= 18) break;
+
+        tamano -= 2;
+
+    } while (true);
+
+    const espacioLineas = tamano * 1.45;
+
+    const centroY = alto / 2;
+
+    contexto.lineWidth = Math.max(3, tamano * 0.09);
+    contexto.strokeStyle = "#310044";
+    contexto.fillStyle = "#ffffff";
+
+    lineas.forEach((linea, indice) => {
+
+        const y = centroY +
+            (indice - 1) * espacioLineas;
+
+        contexto.strokeText(
+            linea,
+            ancho / 2,
+            y
+        );
+
+        contexto.fillText(
+            linea,
+            ancho / 2,
+            y
+        );
+
+    });
+
+    // Esta imagen es solo para TikTok.
+    // No modifica la credencial ni el PDF.
+    return canvasTikTok.toDataURL("image/jpeg", 0.95);
+}
+
 // ==========================================
 // GIRAR IMAGEN 90° PARA EL PDF
 // ==========================================
