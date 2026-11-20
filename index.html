@@ -159,6 +159,100 @@
     overflow-y: auto;
 }
 
+  /* ==========================================
+   MODAL PREVIO A LA DESCARGA DEL PDF
+   ========================================== */
+
+#modalDescargaTikTok {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+    box-sizing: border-box;
+
+    background: rgba(18, 8, 30, 0.72);
+    backdrop-filter: blur(8px);
+}
+
+#contenidoModalDescargaTikTok {
+    width: 100%;
+    max-width: 430px;
+
+    background: linear-gradient(
+        180deg,
+        #2a0f43 0%,
+        #180b24 100%
+    );
+
+    border: 2px solid #c58aff;
+    border-radius: 22px;
+
+    padding: 24px 18px;
+    box-sizing: border-box;
+    text-align: center;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+#contenidoModalDescargaTikTok h3 {
+    margin: 0 0 12px 0;
+    color: #ffffff;
+    font-size: 22px;
+}
+
+#mensajeModalDescargaTikTok {
+    color: #f3e8ff;
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+
+#textoEsperaPDF {
+    color: #ffd6f4;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 18px;
+}
+
+#btnCompartirTikTokAntesPDF,
+#btnDescargarPDFAhora,
+#btnCerrarModalDescargaPDF {
+    display: block;
+    width: 100%;
+    max-width: 320px;
+    margin: 12px auto 0 auto;
+    padding: 15px 18px;
+
+    border: none;
+    border-radius: 16px;
+
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+#btnCompartirTikTokAntesPDF {
+    background: linear-gradient(135deg, #111111 0%, #1d1d1d 100%);
+    color: #ffffff;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+#btnDescargarPDFAhora {
+    background: linear-gradient(135deg, #ff4555 0%, #d90027 100%);
+    color: #ffffff;
+    box-shadow: 0 6px 18px rgba(255, 0, 60, 0.35);
+}
+
+#btnCerrarModalDescargaPDF {
+    background: #5f5f5f;
+    color: #ffffff;
+}
   
 </style>
 
@@ -951,6 +1045,37 @@
         📄 DESCARGAR MI CREDENCIAL EN PDF 💜
     </button>
 
+</div>
+  <!-- =====================================
+     VENTANA PREVIA ANTES DE DESCARGAR PDF
+===================================== -->
+
+<div id="modalDescargaTikTok" class="oculta">
+    <div id="contenidoModalDescargaTikTok">
+
+        <h3>ANTES DE DESCARGAR TU PDF 💜</h3>
+
+        <p id="mensajeModalDescargaTikTok">
+            La credencial es totalmente gratis, apóyanos compartiéndola en TikTok mientras tu PDF está listo.
+        </p>
+
+        <p id="textoEsperaPDF">
+            Tu PDF estará listo en 8 segundos...
+        </p>
+
+        <button type="button" id="btnCompartirTikTokAntesPDF">
+            COMPARTIR EN TIKTOK
+        </button>
+
+        <button type="button" id="btnDescargarPDFAhora" class="oculta">
+            DESCARGAR MI PDF
+        </button>
+
+        <button type="button" id="btnCerrarModalDescargaPDF" class="oculta">
+            CERRAR
+        </button>
+
+    </div>
 </div>
 
 
