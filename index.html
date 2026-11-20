@@ -827,6 +827,65 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
+  
+<!-- ==========================================
+     VENTANA PARA COMPARTIR CREDENCIAL
+     ANTES DE DESCARGAR PDF
+     ========================================== -->
+
+<div id="modalCompartirPDF" class="oculta">
+
+    <div class="contenidoCompartirPDF">
+
+        <h2>
+            💜 ¡TU CREDENCIAL ES TOTALMENTE GRATIS! 💜
+        </h2>
+
+        <p>
+            Apóyanos compartiéndola en TikTok
+            mientras tu PDF está listo.
+        </p>
+
+        <!-- Vista de la credencial para TikTok -->
+        <img
+            id="imagenCompartirPDF"
+            alt="Mi credencial personalizada para TikTok"
+        >
+
+        <!-- Compartir en TikTok -->
+        <button
+            type="button"
+            id="btnCompartirCredencialTikTok"
+        >
+            🎵 COMPARTIR EN TIKTOK
+        </button>
+
+        <!-- Cuenta regresiva -->
+        <p id="contadorDescargaPDF">
+            ⏳ Preparando tu PDF...
+        </p>
+
+        <!-- Aparece después de 8 segundos -->
+        <button
+            type="button"
+            id="btnDescargaFinalPDF"
+            style="display:none;"
+        >
+            📄 DESCARGAR MI PDF 💜
+        </button>
+
+        <!-- Cerrar ventana -->
+        <button
+            type="button"
+            id="btnCerrarCompartirPDF"
+        >
+            CERRAR
+        </button>
+
+    </div>
+
+</div>
+
 <script type="module" src="./app.js"></script>
 
 
