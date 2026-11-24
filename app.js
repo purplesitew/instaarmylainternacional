@@ -7113,10 +7113,141 @@ if (formularioRegistro) {
     }
 
 
-    if (!nombre || !pais || !bias || !whatsapp) {
-      alert("Completa todos los campos.");
-      return;
+    // ==========================================
+// VALIDACIÓN DE DATOS DEL REGISTRO
+// ==========================================
+
+function mostrarErrorRegistro(id, mensaje) {
+
+    const campo = document.getElementById(id);
+
+    if (!campo) return;
+
+    const errorAnterior = document.getElementById(
+        "error-" + id
+    );
+
+    if (errorAnterior) {
+        errorAnterior.remove();
     }
+
+    campo.style.border = "2px solid #ff4444";
+
+    const aviso = document.createElement("div");
+
+    aviso.id = "error-" + id;
+    aviso.textContent = "⚠️ " + mensaje;
+    aviso.style.color = "#ff7777";
+    aviso.style.fontSize = "14px";
+    aviso.style.fontWeight = "bold";
+    aviso.style.marginTop = "5px";
+    aviso.style.marginBottom = "10px";
+    aviso.setAttribute("role", "alert");
+
+    campo.after(aviso);
+
+    campo.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+
+    campo.focus({ preventScroll: true });
+
+    campo.addEventListener("input", () => {
+        campo.style.border = "";
+        aviso.remove();
+    }, { once: true });
+}
+
+// VALIDAR NOMBRE
+
+if (
+    !nombre ||
+    !/^[\p{L}\p{M} .'-]+$/u.test(nombre) ||
+    !/\p{L}/u.test(nombre)
+) {
+    mostrarErrorRegistro(
+        "nombreArmy",
+        "Escribe correctamente tu nombre, sin números ni símbolos extraños."
+    );
+    return;
+}
+
+// VALIDAR PAÍS
+
+if (
+    !pais ||
+    !/^[\p{L}\p{M} .'-]+$/u.test(pais) ||
+    !/\p{L}/u.test(pais)
+) {
+    mostrarErrorRegistro(
+        "paisArmy",
+        "Escribe correctamente el nombre de tu país."
+    );
+    return;
+}
+
+// VALIDAR BIAS
+
+const biasPermitidos = [
+    "RM",
+    "JIN",
+    "SUGA",
+    "JHOPE",
+    "JIMIN",
+    "V",
+    "JUNGKOOK",
+    "OT7"
+];
+
+if (!biasPermitidos.includes(normalizarBias(bias))) {
+
+    mostrarErrorRegistro(
+        "biasArmy",
+        "Escribe un bias válido: RM, Jin, Suga, J-Hope, Jimin, V, Jungkook u OT7."
+    );
+
+    return;
+}
+
+// VALIDAR WHATSAPP INTERNACIONAL
+
+const numeroLimpio = whatsapp.replace(/[\s()-]/g, "");
+
+if (!numeroLimpio.startsWith("+")) {
+
+    mostrarErrorRegistro(
+        "whatsappArmy",
+        "Agrega el signo + y la lada internacional de tu WhatsApp. Ejemplo: +52 para México."
+    );
+
+    return;
+}
+
+if (!/^\+[1-9][0-9]{6,14}$/.test(numeroLimpio)) {
+
+    mostrarErrorRegistro(
+        "whatsappArmy",
+        "Tu número de WhatsApp está incompleto o contiene caracteres incorrectos."
+    );
+
+    return;
+}
+
+// VALIDAR NÚMEROS DE MÉXICO
+
+if (
+    numeroLimpio.startsWith("+52") &&
+    !/^\+52[0-9]{10}$/.test(numeroLimpio)
+) {
+
+    mostrarErrorRegistro(
+        "whatsappArmy",
+        "Para México debes ingresar +52 seguido de 10 dígitos."
+    );
+
+    return;
+}
 
     let tipo = "nuevo";
     let codigoAnterior = "";
@@ -7126,11 +7257,27 @@ if (formularioRegistro) {
       codigoAnterior = document
         .getElementById("codigoAnterior")
         .value.trim().toUpperCase();
+// VALIDAR CÓDIGO DE CREDENCIAL ANTERIOR
 
-      if (!codigoAnterior) {
-        alert("Escribe tu código de credencial.");
-        return;
-      }
+if (!codigoAnterior) {
+
+    mostrarErrorRegistro(
+        "codigoAnterior",
+        "Escribe el código de tu credencial anterior."
+    );
+
+    return;
+}
+
+if (!/^[A-Z]+[0-9]+$/.test(codigoAnterior)) {
+
+    mostrarErrorRegistro(
+        "codigoAnterior",
+        "Tu código debe contener letras seguidas de números. Ejemplo: A125 o K230."
+    );
+
+    return;
+}
     }
 
     try {
