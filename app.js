@@ -7279,12 +7279,36 @@ if (!/^[A-Z]+[0-9]+$/.test(codigoAnterior)) {
     return;
 }
     }
+// ==========================================
+// CONFIRMAR DATOS ANTES DEL REGISTRO
+// ==========================================
 
-    try {
-      botonContinuar.disabled = true;
-      botonContinuar.textContent = "ENVIANDO...";
+const confirmarRegistro = confirm(
+    "💜 REVISA TUS DATOS 💜\n\n" +
 
-      await authReady;
+    "Nombre: " + nombre + "\n\n" +
+    "País: " + pais + "\n\n" +
+    "Bias: " + bias + "\n\n" +
+    "WhatsApp: " + whatsapp + "\n\n" +
+
+    (tipo === "anterior"
+        ? "Código anterior: " + codigoAnterior + "\n\n"
+        : "") +
+
+    "¿Todos tus datos son correctos?\n\n" +
+
+    "Presiona ACEPTAR para continuar o CANCELAR para corregir tus datos."
+);
+
+if (!confirmarRegistro) {
+    return;
+}
+
+try {
+  botonContinuar.disabled = true;
+  botonContinuar.textContent = "ENVIANDO...";
+
+  await authReady;
 
       const usuario = auth.currentUser;
 
@@ -7421,10 +7445,22 @@ if (resultado.codigo) {
 
 }
    
-    } finally {
-      botonContinuar.disabled = false;
-      botonContinuar.textContent = "CONTINUAR";
-    }
+   } catch (error) {
+
+    console.error("Error en el registro:", error);
+
+    alert(
+        "⚠️ NO SE PUDO COMPLETAR EL REGISTRO 💜\n\n" +
+        (error.message || "Ocurrió un error inesperado.") +
+        "\n\nRevisa tus datos o tu conexión a internet."
+    );
+
+} finally {
+
+    botonContinuar.disabled = false;
+    botonContinuar.textContent = "CONTINUAR";
+
+}
 
   });
 }
