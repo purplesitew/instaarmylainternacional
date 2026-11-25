@@ -633,7 +633,248 @@
 
 </script>
 
-<!-- FIN DEL ACCESO DE ADMINISTRADORES -->
+
+<!-- ==========================================
+     BOTÓN DE BIOGRAFÍA INSTA ARMY
+========================================== -->
+
+<button
+    type="button"
+    id="btnBiografiaArmy"
+    aria-label="Ver biografía"
+>
+    <img
+        src="./botonbiografia.png"
+        alt="Ver biografía"
+    >
+</button>
+
+<!-- VENTANA DE VIDEO PANTALLA COMPLETA -->
+
+<div id="modalBiografiaArmy" class="oculta">
+
+    <button
+        type="button"
+        id="cerrarBiografiaArmy"
+    >
+        ✖ CERRAR VIDEO
+    </button>
+
+    <video
+        id="videoBiografiaArmy"
+        src="./vidbiografia.mp4"
+        preload="metadata"
+        playsinline
+        controls
+    ></video>
+
+</div>
+
+<style>
+
+/* ==========================================
+   BOTÓN PNG DE BIOGRAFÍA
+========================================== */
+
+#btnBiografiaArmy {
+    position: fixed;
+
+    top: 12px;
+    left: 124px;
+
+    z-index: 10001;
+
+    width: 100px;
+    height: auto;
+
+    padding: 0;
+    margin: 0;
+
+    background: transparent;
+    border: none;
+
+    cursor: pointer;
+}
+
+#btnBiografiaArmy img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+/* ==========================================
+   VENTANA DE VIDEO PANTALLA COMPLETA
+========================================== */
+
+#modalBiografiaArmy {
+    position: fixed;
+    inset: 0;
+
+    z-index: 1000002;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+
+    background: rgba(0, 0, 0, 0.97);
+}
+
+#modalBiografiaArmy.oculta {
+    display: none !important;
+}
+
+/* VIDEO ADAPTABLE A CELULAR Y COMPUTADORA */
+
+#videoBiografiaArmy {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    background: #000000;
+}
+
+/* ==========================================
+   BOTÓN CERRAR VIDEO
+========================================== */
+
+#cerrarBiografiaArmy {
+    position: absolute;
+
+    top: max(20px, env(safe-area-inset-top));
+    right: 15px;
+
+    z-index: 1000003;
+
+    padding: 13px 18px;
+
+    background: #6a0dad;
+    color: #ffffff;
+
+    border: 2px solid #c58aff;
+    border-radius: 25px;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow: 0 0 15px
+        rgba(170, 90, 255, 0.6);
+}
+
+</style>
+
+<script>
+
+(function () {
+
+    // ELEMENTOS DE BIOGRAFÍA
+
+    const boton = document.getElementById(
+        "btnBiografiaArmy"
+    );
+
+    const modal = document.getElementById(
+        "modalBiografiaArmy"
+    );
+
+    const video = document.getElementById(
+        "videoBiografiaArmy"
+    );
+
+    const cerrar = document.getElementById(
+        "cerrarBiografiaArmy"
+    );
+
+    const musicaFondo = document.getElementById(
+        "audioFondoArmy"
+    );
+
+    if (!boton || !modal || !video || !cerrar) {
+        return;
+    }
+
+    let musicaEstabaSonando = false;
+
+    // ==========================================
+    // ABRIR BIOGRAFÍA
+    // ==========================================
+
+    boton.addEventListener("click", async () => {
+
+        modal.classList.remove("oculta");
+
+        // Pausar la música de fondo
+        const musica = document.getElementById(
+            "audioFondoArmy"
+        );
+
+        musicaEstabaSonando =
+            !!musica && !musica.paused;
+
+        if (musica) {
+            musica.pause();
+        }
+
+        // Iniciar video desde el principio
+        video.pause();
+        video.currentTime = 0;
+
+        video.muted = false;
+        video.controls = true;
+
+        try {
+            await video.play();
+        } catch (error) {
+            console.log(
+                "Toca reproducir para iniciar el video."
+            );
+        }
+
+    });
+
+    // ==========================================
+    // CERRAR BIOGRAFÍA
+    // ==========================================
+
+    cerrar.addEventListener("click", () => {
+
+        // Detener video
+        video.pause();
+        video.currentTime = 0;
+
+        // Cerrar ventana
+        modal.classList.add("oculta");
+
+        // Reanudar música de fondo si estaba sonando
+        const musica = document.getElementById(
+            "audioFondoArmy"
+        );
+
+        if (
+            musica &&
+            musicaEstabaSonando &&
+            !document.hidden
+        ) {
+            musica.play().catch(() => {});
+        }
+
+    });
+
+})();
+
+</script>
+
+<!-- FIN DE BIOGRAFÍA INSTA ARMY -->
+
 
     <button id="btnInstalar" class="boton-instalar" aria-label="Instalar Insta Army">
   <img src="./botondescarga.png" alt="Instalar aplicación">
