@@ -6908,132 +6908,134 @@ if (btnContinuarSaludo) {
       imagen.className = "plantilla-credencial";
 
      
+
 imagen.addEventListener("click", () => {
 
-  baseCredencialSinFoto = null;
-  
-  // Desactivar la función exclusiva de B5 y B10
-  credencialB5B10Activa = false;
+    baseCredencialSinFoto = null;
 
-  // Guardar la plantilla seleccionada
-  plantillaSeleccionada = `B${i}.jpeg`;
+    // Desactivar configuración exclusiva B5 y B10
+    credencialB5B10Activa = false;
 
-  // Mostrar el selector solo para B8
-if (plantillaSeleccionada === "B8.jpeg") {
-    armyTipoSeleccionadoB8 = "";
-}
+    // Guardar plantilla seleccionada
+    plantillaSeleccionada = `B${i}.jpeg`;
 
-actualizarSelectorArmyB8();
+    // Selector exclusivo de B8
+    if (plantillaSeleccionada === "B8.jpeg") {
+        armyTipoSeleccionadoB8 = "";
+    }
 
-  // Registrar que esta credencial ya fue vista
-  credencialesVistas.add(i);
+    actualizarSelectorArmyB8();
 
-  // Mostrar CREAR solamente después de revisar las 10
-  if (credencialesVistas.size === 10) {
-    btnCrearCredencial.style.display = "block";
-  }
+    // Registrar plantilla visitada
+    credencialesVistas.add(i);
 
- 
-imagenVistaPrevia.src = `./${plantillaSeleccionada}`;
-vistaPrevia.classList.remove("oculta");
+    // Mostrar CREAR después de visitar las 10
+    if (credencialesVistas.size === 10) {
+        btnCrearCredencial.style.display = "block";
+    }
 
-// ==========================================
-// VIDEO EXCLUSIVO AL ABRIR B6
-// ==========================================
+    // Mostrar vista previa
+    imagenVistaPrevia.src = `./${plantillaSeleccionada}`;
+    vistaPrevia.classList.remove("oculta");
 
-if (i === 6) {
+    // ==========================================
+    // VIDEO B6 - UNA SOLA VEZ POR DISPOSITIVO
+    // ==========================================
 
-    const ventanaVideo = document.getElementById("anuncio-video-b6");
-    const videoB6 = document.getElementById("video-anuncio-b6");
-    const botonVideo = document.getElementById("btn-reproducir-b6");
-    const musicaFondo = document.getElementById("audioFondoArmy");
+    if (
+        i === 6 &&
+        localStorage.getItem("videoB6Visto") !== "si"
+    ) {
 
-    if (ventanaVideo && videoB6 && botonVideo) {
+        const ventanaVideo =
+            document.getElementById("anuncio-video-b6");
 
-        // Mostrar ventana con fondo borroso
-        ventanaVideo.style.display = "flex";
+        const videoB6 =
+            document.getElementById("video-anuncio-b6");
 
-        // Detener música de fondo
-        if (m
-if (i === 6 && localStorage.getItem("videoB6Visto") !== "si") {
+        const botonVideo =
+            document.getElementById("btn-reproducir-b6");
 
-    const ventanaVideo = document.getElementById("anuncio-video-b6");
-    const videoB6 = document.getElementById("video-anuncio-b6");
-    const botonVideo = document.getElementById("btn-reproducir-b6");
-    const musicaFondo = document.getElementById("audioFondoArmy");
+        const musicaFondo =
+            document.getElementById("audioFondoArmy");
 
-    if (ventanaVideo && videoB6 && botonVideo) {
+        if (ventanaVideo && videoB6 && botonVideo) {
 
-        // Mostrar video solamente si no se ha visto
-        ventanaVideo.style.display = "flex";
+            ventanaVideo.style.display = "flex";
 
-        // Pausar música de fondo
-        if (musicaFondo) {
-            musicaFondo.pause();
-        }
-
-        // Preparar video
-        videoB6.pause();
-        videoB6.currentTime = 0;
-        videoB6.controls = false;
-        videoB6.loop = false;
-        videoB6.muted = false;
-
-        botonVideo.style.display = "none";
-
-        function terminarAnuncioB6(completado = false) {
+            if (musicaFondo) {
+                musicaFondo.pause();
+            }
 
             videoB6.pause();
-            ventanaVideo.style.display = "none";
+            videoB6.currentTime = 0;
+            videoB6.controls = false;
+            videoB6.loop = false;
+            videoB6.muted = false;
+
             botonVideo.style.display = "none";
 
-            // Guardar solamente si terminó completo
-            if (completado) {
-                localStorage.setItem("videoB6Visto", "si");
-            }
+            function terminarAnuncioB6(completado) {
 
-            // Reanudar música
-            if (musicaFondo && !document.hidden) {
-                musicaFondo.play().catch(() => {});
-            }
-        }
+                videoB6.pause();
 
-        // Cuando termina, guardar que ya fue visto
-        videoB6.onended = () => {
-            terminarAnuncioB6(true);
-        };
-
-        // Si falla el video, permitir continuar
-        videoB6.onerror = () => {
-            botonVideo.textContent = "CONTINUAR SIN VIDEO";
-            botonVideo.style.display = "block";
-        };
-
-        // Botón de respaldo para celulares
-        botonVideo.onclick = async () => {
-
-            if (videoB6.error) {
-                terminarAnuncioB6(false);
-                return;
-            }
-
-            try {
-                await videoB6.play();
+                ventanaVideo.style.display = "none";
                 botonVideo.style.display = "none";
-            } catch (error) {
-                console.error("Error al reproducir B6:", error);
+
+                // Guardar solo si terminó el video
+                if (completado) {
+                    localStorage.setItem(
+                        "videoB6Visto",
+                        "si"
+                    );
+                }
+
+                if (musicaFondo && !document.hidden) {
+                    musicaFondo.play().catch(() => {});
+                }
             }
-        };
 
-        // Reproducción automática
-        videoB6.play().catch(() => {
+            videoB6.onended = () => {
+                terminarAnuncioB6(true);
+            };
 
-            botonVideo.textContent = "▶ REPRODUCIR VIDEO";
-            botonVideo.style.display = "block";
+            videoB6.onerror = () => {
+                botonVideo.textContent =
+                    "CONTINUAR SIN VIDEO";
 
-        });
+                botonVideo.style.display = "block";
+            };
+
+            botonVideo.onclick = async () => {
+
+                if (videoB6.error) {
+                    terminarAnuncioB6(false);
+                    return;
+                }
+
+                try {
+                    await videoB6.play();
+                    botonVideo.style.display = "none";
+                } catch (error) {
+                    console.error(
+                        "Error al reproducir B6:",
+                        error
+                    );
+                }
+            };
+
+            videoB6.play().catch(() => {
+
+                botonVideo.textContent =
+                    "▶ REPRODUCIR VIDEO";
+
+                botonVideo.style.display = "block";
+            });
+        }
     }
-}
+
+});
+
 
 
 
