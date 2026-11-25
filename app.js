@@ -6954,11 +6954,25 @@ if (i === 6) {
         ventanaVideo.style.display = "flex";
 
         // Detener música de fondo
+        if (m
+if (i === 6 && localStorage.getItem("videoB6Visto") !== "si") {
+
+    const ventanaVideo = document.getElementById("anuncio-video-b6");
+    const videoB6 = document.getElementById("video-anuncio-b6");
+    const botonVideo = document.getElementById("btn-reproducir-b6");
+    const musicaFondo = document.getElementById("audioFondoArmy");
+
+    if (ventanaVideo && videoB6 && botonVideo) {
+
+        // Mostrar video solamente si no se ha visto
+        ventanaVideo.style.display = "flex";
+
+        // Pausar música de fondo
         if (musicaFondo) {
             musicaFondo.pause();
         }
 
-        // Preparar video desde el inicio
+        // Preparar video
         videoB6.pause();
         videoB6.currentTime = 0;
         videoB6.controls = false;
@@ -6967,32 +6981,39 @@ if (i === 6) {
 
         botonVideo.style.display = "none";
 
-        function terminarAnuncioB6() {
+        function terminarAnuncioB6(completado = false) {
 
             videoB6.pause();
             ventanaVideo.style.display = "none";
             botonVideo.style.display = "none";
 
-            // Reanudar música de fondo
+            // Guardar solamente si terminó completo
+            if (completado) {
+                localStorage.setItem("videoB6Visto", "si");
+            }
+
+            // Reanudar música
             if (musicaFondo && !document.hidden) {
                 musicaFondo.play().catch(() => {});
             }
         }
 
-        // El video desaparece al finalizar
-        videoB6.onended = terminarAnuncioB6;
+        // Cuando termina, guardar que ya fue visto
+        videoB6.onended = () => {
+            terminarAnuncioB6(true);
+        };
 
-        // Si el archivo no carga, permitir continuar
+        // Si falla el video, permitir continuar
         videoB6.onerror = () => {
             botonVideo.textContent = "CONTINUAR SIN VIDEO";
             botonVideo.style.display = "block";
         };
 
-        // Botón de respaldo para navegadores móviles
+        // Botón de respaldo para celulares
         botonVideo.onclick = async () => {
 
             if (videoB6.error) {
-                terminarAnuncioB6();
+                terminarAnuncioB6(false);
                 return;
             }
 
@@ -7004,18 +7025,15 @@ if (i === 6) {
             }
         };
 
-        // Intentar reproducir automáticamente
+        // Reproducción automática
         videoB6.play().catch(() => {
 
-            // Algunos celulares necesitan otro toque
             botonVideo.textContent = "▶ REPRODUCIR VIDEO";
             botonVideo.style.display = "block";
 
         });
     }
 }
-
-});
 
 
 
