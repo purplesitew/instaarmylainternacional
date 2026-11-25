@@ -405,6 +405,236 @@
   </div>
 
   <main id="aplicacion" class="oculta">
+    
+<!-- ==========================================
+     BOTÓN SUPERIOR DE ADMINISTRADORES
+     INSTA ARMY LA INTERNACIONAL
+========================================== -->
+
+<button
+    type="button"
+    id="btnAdminArmy"
+    aria-label="Acceso para administradores"
+>
+    <img
+        src="./botonadministradores.png"
+        alt="Administradores"
+    >
+</button>
+
+<!-- VENTANA DE ADVERTENCIA -->
+
+<div id="modalAdminArmy" class="oculta">
+
+    <div id="contenidoAdminArmy">
+
+        <h2>🔒 ÁREA RESTRINGIDA 🔒</h2>
+
+        <p class="alertaAdminArmy">
+            ⚠️ AVISO IMPORTANTE ⚠️
+        </p>
+
+        <p>
+            Esta sección es exclusivamente
+            para personal autorizado y
+            administradores de
+            Insta Army la Internacional.
+        </p>
+
+        <p>
+            Si no perteneces al equipo
+            administrativo, te pedimos
+            por favor que no ingreses.
+        </p>
+
+        <div class="botonesAdminArmy">
+
+            <button
+                type="button"
+                id="entrarAdminArmy"
+            >
+                🔓 ENTRAR
+            </button>
+
+            <button
+                type="button"
+                id="cerrarAdminArmy"
+            >
+                ✖ CERRAR
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+
+/* BOTÓN PNG SUPERIOR */
+
+#btnAdminArmy {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    z-index: 10001;
+
+    width: 100px;
+    height: auto;
+
+    padding: 0;
+    margin: 0;
+
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+#btnAdminArmy img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+/* FONDO OSCURO DE LA VENTANA */
+
+#modalAdminArmy {
+    position: fixed;
+    inset: 0;
+    z-index: 1000001;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(10, 0, 20, 0.88);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    padding: 20px;
+}
+
+#modalAdminArmy.oculta {
+    display: none !important;
+}
+
+/* CUADRO DE ADVERTENCIA */
+
+#contenidoAdminArmy {
+    width: 100%;
+    max-width: 380px;
+
+    padding: 28px 20px;
+    box-sizing: border-box;
+
+    background: linear-gradient(
+        160deg,
+        #35154f,
+        #180b24
+    );
+
+    border: 2px solid #c58aff;
+    border-radius: 22px;
+
+    color: white;
+    text-align: center;
+
+    box-shadow: 0 0 30px
+        rgba(170, 90, 255, 0.45);
+}
+
+#contenidoAdminArmy h2 {
+    color: #e9c5ff;
+    font-size: 22px;
+    margin: 0 0 20px;
+}
+
+#contenidoAdminArmy p {
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.alertaAdminArmy {
+    color: #ff8d9d;
+    font-weight: bold;
+}
+
+/* BOTONES ENTRAR Y CERRAR */
+
+.botonesAdminArmy {
+    display: flex;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.botonesAdminArmy button {
+    flex: 1;
+    padding: 14px 8px;
+
+    border: none;
+    border-radius: 14px;
+
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#entrarAdminArmy {
+    background: #6a0dad;
+}
+
+#cerrarAdminArmy {
+    background: #555555;
+}
+
+</style>
+
+<script>
+
+(function () {
+
+    const boton =
+        document.getElementById("btnAdminArmy");
+
+    const modal =
+        document.getElementById("modalAdminArmy");
+
+    const entrar =
+        document.getElementById("entrarAdminArmy");
+
+    const cerrar =
+        document.getElementById("cerrarAdminArmy");
+
+    if (!boton || !modal || !entrar || !cerrar) {
+        return;
+    }
+
+    // ABRIR ADVERTENCIA
+    boton.addEventListener("click", () => {
+        modal.classList.remove("oculta");
+    });
+
+    // CERRAR ADVERTENCIA
+    cerrar.addEventListener("click", () => {
+        modal.classList.add("oculta");
+    });
+
+    // ENTRAR AL SMARTLINK
+    entrar.addEventListener("click", () => {
+
+        window.location.href =
+            "https://arwf.org/4/48f699d1ce8fdb028c5da863cb56ff61";
+
+    });
+
+})();
+
+</script>
+
+<!-- FIN DEL ACCESO DE ADMINISTRADORES -->
+
     <button id="btnInstalar" class="boton-instalar" aria-label="Instalar Insta Army">
   <img src="./botondescarga.png" alt="Instalar aplicación">
 </button>
