@@ -7289,11 +7289,11 @@ if (!codigoAnterior) {
     return;
 }
 
-if (!/^[A-Z]+[0-9]+$/.test(codigoAnterior)) {
+if (!/^(?:[A-Z]+[0-9]+|[1-9]\d*K[1-9]\d{0,2})$/i.test(codigoAnterior)) {
 
     mostrarErrorRegistro(
         "codigoAnterior",
-        "Tu código debe contener letras seguidas de números. Ejemplo: A125 o K230."
+        "Revisa tu código. Ejemplos válidos: A125, K230, 2K19, 3K125."
     );
 
     return;
